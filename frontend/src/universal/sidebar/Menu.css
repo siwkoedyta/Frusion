@@ -1,0 +1,54 @@
+#menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    color: #9A9A9A;
+    font-size: 1.5rem;
+    font-weight: 500;
+    list-style-type: none;
+    gap: 1rem;
+}
+
+#home::before,
+#statusFrusion::before,
+#fruits::before,
+#boxes::before,
+#clients::before,
+#logOut::before {
+    content: "";
+    display: inline-block;
+    vertical-align: text-bottom;
+    width: 1.5em;
+    height: 1.5em;
+    margin-right: 0.5rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+#home::before {
+    background-image: url(./../icons/Home.png);
+}
+
+#statusFrusion::before{
+    background-image: url(./../icons/status_ikon.png);
+}
+
+#fruits::before {
+    background-image: url(./../icons/Raspberry.png);
+}
+
+#boxes::before {
+    background-image: url(./../icons/OpenParcel.png);
+}
+
+#clients::before {
+    background-image: url(./../icons/Account.png);
+}
+
+#logOut::before {
+    background-image: url(./../icons/Logout.png);
+}
+

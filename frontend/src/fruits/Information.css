@@ -1,0 +1,22 @@
+.featuredField{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    padding: 1rem 2rem;
+    border-radius: 2.5rem;
+
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+    background: #D1D3C4;
+    font-size:2rem;
+    font-weight: 500;
+    color: #351431;
+    min-width: 20vw;
+    width: calc(100% - 4rem - 2rem);
+
+}
+
+#featuredFieldTitleList{
+    margin-bottom:2rem
+}

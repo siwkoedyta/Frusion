@@ -1,0 +1,14 @@
+.logoWithName {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+}
+
+.name{
+    font-size: 2.5rem;
+    letter-spacing: 0.6rem;
+    text-transform: capitalize;
+    color: #9A9A9A;
+    padding-left:0.4rem;
+}
