@@ -1,4 +1,4 @@
-import Fruit from './fruits/Fruit.js';
+import Fruit from './pages/fruits/Fruit.js';
 
 function App() {
   return (

@@ -6,10 +6,6 @@ export default function Information(){
         <div className='information'>
             <div className='featuredField' id='featuredFieldTitleList'>Fruit</div>
             <RecordList/>
-            <RecordList/>
-            <RecordList/>
-            <RecordList/>
-            <RecordList/>
         </div>
     )
 }

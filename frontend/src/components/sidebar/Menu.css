@@ -29,26 +29,26 @@
 
 
 #home::before {
-    background-image: url(./../icons/Home.png);
+    background-image: url(../../assets/images/Home.png);
 }
 
 #statusFrusion::before{
-    background-image: url(./../icons/status_ikon.png);
+    background-image: url(../../assets/images/status_ikon.png);
 }
 
 #fruits::before {
-    background-image: url(./../icons/Raspberry.png);
+    background-image: url(../../assets/images/Raspberry.png);
 }
 
 #boxes::before {
-    background-image: url(./../icons/OpenParcel.png);
+    background-image: url(../../assets/images/OpenParcel.png);
 }
 
 #clients::before {
-    background-image: url(./../icons/Account.png);
+    background-image: url(../../assets/images/Account.png);
 }
 
 #logOut::before {
-    background-image: url(./../icons/Logout.png);
+    background-image: url(../../assets/images/Logout.png);
 }
 

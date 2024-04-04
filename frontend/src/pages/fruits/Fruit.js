@@ -1,5 +1,5 @@
-import Sidebar from './../universal/sidebar/Sidebar.js'
-import Content from './Content.js'
+import Sidebar from '../../components/sidebar/Sidebar'
+import Content from '../../pages/fruits/Content'
 import './Fruit.css'
 
 export default function Fruit() {
