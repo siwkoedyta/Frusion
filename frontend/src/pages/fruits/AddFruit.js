@@ -1,9 +1,9 @@
-import './Methods.css';
+import './Fruits.css';
 import React, { useState } from 'react';
 import '../../api/addFruit.js'
 import { addFruit } from '../../api/addFruit.js';
 
-export default function AddFruit() {
+export default function AddFruit({ onUpdate }) {
   const [fruitName, setFruitName] = useState('');
 
   const handleInputChange = (event) => {
@@ -18,8 +18,8 @@ export default function AddFruit() {
 
     return addFruit(fruitName)
       .then(res => {
-        alert('dodano')
         setFruitName('')
+        onUpdate();
       })
       .catch(errors => alert(errors))
   };

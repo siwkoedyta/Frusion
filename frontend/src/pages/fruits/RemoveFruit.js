@@ -1,18 +1,43 @@
-import './Methods.css'
+import './Fruits.css'
 
-export default function RemoveFruit(){
-    return(
-        <div className='methodPlace'>
-            Remove fruit
-            <div>
-                <select id="fruit" name="fruit">
-                    <option value="apple">Apple</option>
-                    <option value="banana">Banana</option>
-                    <option value="orange">Orange</option>
-                </select>
-            </div>
+import React, { useState } from 'react';
+import { removeFruit } from '../../api/removeFruit';
 
-            <button>Remove</button>
-        </div>
-    )
+export default function RemoveFruit({fruits, onUpdate}) {
+  const [selectedFruit, setSelectedFruit] = useState('');
+
+  const handleFruitChange = (event) => {
+    setSelectedFruit(event.target.value);
+  };
+
+  const handleRemoveFruit = async () => {
+    if (!selectedFruit) {
+      alert('Please select a fruit');
+      return;
+    }
+
+    removeFruit(selectedFruit)
+    .then(() => {
+      setSelectedFruit('');
+      onUpdate()
+    })
+    .catch(error => {
+      alert('Error removing fruit: ' + error);
+    });
+  };
+
+  return (
+    <div className='methodPlace'>
+      Remove fruit
+      <div>
+        <select id="fruit" name="fruit" value={selectedFruit} onChange={handleFruitChange}>
+          <option value="">Select a fruit</option>
+          {fruits.map(fruit => (
+            <option key={fruit.id} value={fruit.id}>{fruit.name}</option>
+          ))}
+        </select>
+      </div>
+      <button onClick={handleRemoveFruit}>Remove</button>
+    </div>
+  );
 }

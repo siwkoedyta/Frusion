@@ -1,9 +1,9 @@
-import Fruit from './pages/fruits/Fruit.js';
+import Fruits from './pages/fruits/Fruits.js';
 
 function App() {
   return (
     <div className="App">
-    <Fruit/>
+    <Fruits/>
     </div>
   );
 }

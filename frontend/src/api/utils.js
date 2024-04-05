@@ -12,7 +12,6 @@ export async function fetchPut(path, body = null) {
     return fetchUtil('PUT', path, body)
 }
 
-
 export async function fetchDelete(path, body = null) {
     return fetchUtil('DELETE', path, body)
 }
@@ -31,7 +30,8 @@ export async function fetchUtil(method, path, body = null) {
                 return res.json()
                     .then(body => { throw body.errors })
             }
-            return res.json()
+            if(res.headers.get("content-length") == 0) return {};
+            return res.json();
         })
         .catch(error => { throw ['INTERNAL'] });
 }

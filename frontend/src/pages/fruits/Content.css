@@ -1,8 +1,0 @@
-.contentInterior{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    width: 100%;
-    background: #E9E9E9;
-    padding-top:4.5rem;
-}
