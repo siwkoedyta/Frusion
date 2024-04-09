@@ -15,7 +15,8 @@
 #fruits::before,
 #boxes::before,
 #clients::before,
-#logOut::before {
+#logOut::before,
+#changePassword::before {
     content: "";
     display: inline-block;
     vertical-align: text-bottom;
@@ -51,4 +52,9 @@
 #logOut::before {
     background-image: url(../../assets/images/Logout.png);
 }
+
+#changePassword::before {
+    background-image: url(../../assets/images/PadlockOutline.png);
+}
+
 

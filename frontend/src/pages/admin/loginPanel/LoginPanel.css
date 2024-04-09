@@ -1,0 +1,37 @@
+#informationPanelLog, #createAccountPanelLog{
+    color: #351431;
+}
+
+#createAccountPanelLog, .buttonArrow, #inputPanelLog, .buttonPanel, .left, .middle, .right{
+    display: flex;
+}
+
+#informationPanelLog{
+    height: 3vh;
+}
+
+#createAccountButtonPanelLog{
+    all: unset;
+    margin-left: 0.5rem;
+    text-decoration: underline;
+}
+
+#inputPanelLog{
+    flex-direction: column;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+#signInButtonPanelRegistration{
+    transform: scaleX(-1); 
+}
+
+#rightPanelLog{
+    min-width: 20vw;
+}
+
+
+
+
+  

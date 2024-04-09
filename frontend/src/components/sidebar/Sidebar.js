@@ -1,13 +1,13 @@
 import './Sidebar.css';
 import Logo from './../logo/Logo.js'
-import Menu from './Menu.js'
+import AdminMenu from './AdminMenu.js'
+import ClientMenu from './ClientMenu.js'
 
-export default function Sidebar() {
+export default function Sidebar({ menuType }) {
   return (
     <aside className="sidebar-container">
-        <Logo/>
-        <Menu/>
+      <Logo />
+      {menuType === 'admin' ? <AdminMenu /> : <ClientMenu />}
     </aside>
   );
 }
-

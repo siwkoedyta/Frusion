@@ -1,38 +1,193 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.panels {
+  background: #e9e9e9;
   min-height: 100vh;
+  font-family: 'Century Gothic';
+}
+
+.page{
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Century Gothic';
+}
+
+.contentInterior{
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  width: 100%;
+  background: #E9E9E9;
+  padding-top:4.5rem;
+  justify-content: flex-start;
 }
 
-.App-link {
-  color: #61dafb;
+.contentInterior > div:not(:first-child) {
+  margin-top: 1.5rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.mainContent{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
+  background: #E9E9E9;
+}
+
+input,
+select {
+    width:20vw;
+    height: 64px;
+    border: none;
+    border-radius: 2.5rem;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    color: #9A9A9A;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    background: #FFF;
+    display: block;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
+
+input::placeholder{
+    color: #9A9A9A;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 12vw;
+  height: 3rem;
+  color: #E9E9E9;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border: none;
+  outline: none;
+  background: linear-gradient(135deg, #775253 0%, #351431 100%);
+  cursor: pointer;
+  transition: 0.2s;
+  border-radius: 2.5rem;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+}
+
+
+.featuredField{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+  padding: 1rem 2rem;
+  border-radius: 2.5rem;
+
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+  background: #D1D3C4;
+  font-size:2rem;
+  font-weight: 500;
+  color: #351431;
+  width: calc(100% - 4rem - 2rem);
+
+}
+
+.methodPlace {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+  min-width: 20vw;
+  background-color: #D9D9D9;
+  border-radius: 2.5rem;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #351431;
+}
+
+.titleMethod{
+  height: 5vh;;
+}
+
+.buttonMethod{
+  margin-top: 1vh;
+}
+
+.field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: fit-content;
+  width: 100vw;
+  background: #FFF;
+  border-radius: 2.5rem;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+  padding: 1rem 2rem;
+  width: calc(100% - 4rem);
+  font-weight:500;
+  font-size:1.5rem;
+  margin-bottom:1rem;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.field > div:first-child {
+  max-width: 15rem; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.field-content {
+  max-width: calc(100% - 4rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.calendar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  width: 12rem;
+  background: #FFF;
+  border-radius: 2.5rem;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+  padding: 1rem 2rem;
+
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: #9A9A9A;
+  font-weight: 400;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.parameters, .parametersSummary{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.parametersSummary{
+  font-size: 1.2rem;
+}
+
+.nameTransactionList{
+  color: #9A9A9A;
+}
+
+.titleSummary{
+  font-weight: 650;
+  height: 5vh;
 }

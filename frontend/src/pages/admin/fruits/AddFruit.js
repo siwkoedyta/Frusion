@@ -1,7 +1,6 @@
-import './Fruits.css';
 import React, { useState } from 'react';
-import '../../api/addFruit.js'
-import { addFruit } from '../../api/addFruit.js';
+import '../../../api/addFruit.js'
+import { addFruit } from '../../../api/addFruit.js';
 
 export default function AddFruit({ onUpdate }) {
   const [fruitName, setFruitName] = useState('');
@@ -26,7 +25,7 @@ export default function AddFruit({ onUpdate }) {
 
   return (
     <div className='methodPlace'>
-      Add Fruit
+      <div className='titleMethod'>Add fruit</div>
       <div>
         <input
           type="text"
@@ -37,7 +36,7 @@ export default function AddFruit({ onUpdate }) {
           placeholder="Name of the fruit"
         />
       </div>
-      <button onClick={handleAddFruit}>Add</button>
+      <button  className='buttonMethod' onClick={handleAddFruit}>Add</button>
     </div>
   );
 }

@@ -1,7 +1,5 @@
-import './Fruits.css'
-
 import React, { useState } from 'react';
-import { removeFruit } from '../../api/removeFruit';
+import { removeFruit } from '../../../api/removeFruit';
 
 export default function RemoveFruit({fruits, onUpdate}) {
   const [selectedFruit, setSelectedFruit] = useState('');
@@ -28,7 +26,7 @@ export default function RemoveFruit({fruits, onUpdate}) {
 
   return (
     <div className='methodPlace'>
-      Remove fruit
+      <div className='titleMethod'>Remove fruit</div>
       <div>
         <select id="fruit" name="fruit" value={selectedFruit} onChange={handleFruitChange}>
           <option value="">Select a fruit</option>
@@ -37,7 +35,7 @@ export default function RemoveFruit({fruits, onUpdate}) {
           ))}
         </select>
       </div>
-      <button onClick={handleRemoveFruit}>Remove</button>
+      <button className='buttonMethod' onClick={handleRemoveFruit}>Remove</button>
     </div>
   );
 }

@@ -1,0 +1,11 @@
+#titlePanelRegistration{
+    height: 7vh;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #351431;
+}
+
+#buttonsPanelRegistration{
+    display: flex;
+    justify-content: space-evenly;
+}

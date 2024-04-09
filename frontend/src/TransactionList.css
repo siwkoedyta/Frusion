@@ -1,0 +1,36 @@
+.weightPriceTransaction, .valueTransaction, .priceTransaction, .boxesTransaction{
+    display: flex;
+}
+
+.valueTransaction, .weightTransaction, .quantityBox, .price{
+    margin-right:0.5rem;
+}
+
+.multiplier, .priceTransaction{
+    margin-left:0.5rem;
+}
+
+.priceTransaction, .boxesTransaction{
+    font-size: 1.2rem;
+}
+
+.weightPriceTransaction{
+    align-items:baseline;
+}
+
+.priceTransaction, .priceTransaction, .boxesTransaction{
+    color: #9A9A9A;
+}
+
+.priceTransaction, .priceTransaction, .boxesTransaction{
+    font-weight: 400;
+}
+
+#featuredFieldValueTransaction{
+    min-width: 10vw;
+    max-width: 7rem;
+    margin-left: 1rem;
+    font-size: 1.6rem;
+    font-weight: 550;
+}
+

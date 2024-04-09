@@ -1,0 +1,52 @@
+#summaryField{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem;
+}
+
+#statusSummaryField{
+    display: flex;
+    flex-direction: column;
+    min-width: 25vw;
+}
+
+.transaction {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%;
+}
+
+.valueTransactions, .priceSummary, .boxesSummary{
+    display: flex;
+
+}
+
+.price, .box, .typeBox{
+    margin-left:0.5rem;
+}
+
+.weight{
+    margin-right: 0.5rem;
+    margin-left: 2.4rem;
+}
+
+.price, .nominal, .box, .typeBox{
+    color: #9A9A9A;
+    font-weight: 400;
+}
+
+.nameFruit{
+    margin-bottom: 1rem;
+    font-weight: 650;
+}
+
+.valueTransactions, .nameFruit{
+    font-size: 1.6rem;
+}
+
+.valueTransactions{
+    margin-right: 1rem;
+}
+

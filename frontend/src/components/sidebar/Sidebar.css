@@ -1,14 +1,11 @@
 .sidebar-container {
-    display: flex;
-    flex-direction: column;
-
     width: 20rem;
     min-width: 20rem;
     max-width: 20rem;
-    height: 100vh;
+
+    flex: 0 0 auto;
     background: linear-gradient(209deg, #351431 2.27%, #775253 89.74%);
     padding-top: 1.5rem;
-
     overflow-y: auto;
 }
 

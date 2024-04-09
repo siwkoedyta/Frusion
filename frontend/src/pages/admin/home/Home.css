@@ -1,0 +1,23 @@
+#buttonSummaryHome {
+    min-width: 26vw;
+}
+
+#homeField, #methodPlaceHome{
+    min-width: 26vw;
+}
+
+#buttonHome{
+    font-size: 2rem;
+    width: 100%;
+    height: auto;
+    padding: 2rem 7rem;
+    margin-bottom: 1rem;
+}
+
+#frusionName{
+    padding-bottom: 1rem;
+    font-size:2.5rem;
+    color: #351431;
+    letter-spacing: 0.6rem;
+    text-transform: capitalize;
+}

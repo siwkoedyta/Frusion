@@ -1,0 +1,78 @@
+.nameSection{
+    font-size:2rem;
+    font-weight: 500;
+    color: #351431;
+    margin-bottom: 1rem;
+}
+
+#statusMainContent > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#featuredFieldStatusBoxes, #featuredFieldStatusAmount{
+    margin-bottom:1rem;
+    min-width: 15vw;
+    justify-content: space-between;
+    font-size: 1.5rem;
+}
+
+#statusFieldBoxes, #statusFieldAmount{
+    min-width: 15vw;
+    font-weight: 200;
+}
+
+#statusPriceField{
+    display: flex;
+    color: #9A9A9A;
+}
+
+#statusPriceFieldALL{
+    display: flex;
+    color: #351431;
+}
+
+#statusFieldAmount > div,
+#statusFieldBoxes > div,
+#featuredFieldStatusBoxes > div,
+#featuredFieldStatusAmount > div {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+#statusPriceALL{
+    margin-right: 0.5rem;
+}
+
+#statusCalendar, #startCalendar, #endCalendar{
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+#statusCalendar{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.titleCalendar{
+    min-width: 10rem;
+    color: #351431;
+    font-size: 1.5rem;
+}
+
+#endDate{
+    margin-right: -2.3rem;
+}
+
+#startingDate{
+    margin-right: 0.5rem;
+}
+
+#statusCalendar > * {
+    margin-bottom: 1rem; /* Dodaj margines dolny dla elementów potomnych */
+  }

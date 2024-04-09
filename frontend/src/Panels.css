@@ -1,0 +1,55 @@
+.captionButton{
+    color: #351431;
+}
+
+.logoWithName{
+    justify-content: center;
+}
+
+input{
+    max-width: 20vw;
+    min-width: 20vw;
+}
+
+.buttonArrow{
+    align-items: center;
+    height: 12vh;
+}
+
+.captionButton{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.buttonPanel {
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 2.5rem;
+    padding: 0;
+}
+
+.buttonPanel svg {
+    width: 100%;
+    height: 100%;
+}
+
+.left{
+    justify-content: left;
+    min-width: 10vw;
+}
+
+.middle{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.right{
+    justify-content: right;
+    min-width: 10vw;
+}

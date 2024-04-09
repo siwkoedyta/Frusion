@@ -1,7 +1,5 @@
-import './Fruits.css'
-
 import React, { useState } from 'react';
-import { setFruitPrice } from '../../api/setFruitPrice';
+import { setFruitPrice } from '../../../api/setFruitPrice';
 
 export default function SetPrice({ fruits, onUpdate }) {
   const [selectedFruit, setSelectedFruit] = useState('');
@@ -36,7 +34,8 @@ export default function SetPrice({ fruits, onUpdate }) {
 
   return (
     <div className='methodPlace'>
-      Set the price
+
+      <div className='titleMethod'>Set the price</div>
       <div>
         <select id="fruit" name="fruit" value={selectedFruit} onChange={handleFruitChange}>
           <option value="">Select a fruit</option>
@@ -57,7 +56,7 @@ export default function SetPrice({ fruits, onUpdate }) {
         />
       </div>
 
-      <button onClick={handleSetPrice}>Set</button>
+      <button className='buttonMethod' onClick={handleSetPrice}>Set</button>
     </div>
   );
 }
