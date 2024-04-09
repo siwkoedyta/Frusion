@@ -1,15 +1,15 @@
 import './Menu.css'
+import CustomLink from './CustomLink'
 
 export default function Menu(){
     return(
-        <ul id="menu">
-            <li id="home">Home</li>
-            <li id="statusFrusion">Status Frusion</li>
-            <li id="fruits">Fruits</li>
-            <li id="boxes">Boxes</li>
-            <li id="clients">Clients</li>
-            <li id="logOut">Log out</li>
+        <ul className="menu">
+            <CustomLink id="home" to='/Home'>Home</CustomLink>
+            <CustomLink id="statusFrusion" to='/Status'>Status Frusion</CustomLink>
+            <CustomLink id="fruits" to='/Fruits'>Fruits</CustomLink>
+            <CustomLink id="boxes" to='/Boxes'>Boxes</CustomLink>
+            <CustomLink id="clients" to='/Clients'>Clients</CustomLink>
+            <CustomLink id="logOut" to='/LoginPanel'>Log out</CustomLink>
         </ul>
     )
 }
-

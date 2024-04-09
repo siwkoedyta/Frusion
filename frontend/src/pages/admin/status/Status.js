@@ -1,4 +1,4 @@
-import Sidebar from '../../../components/sidebar/Sidebar'
+
 import './Status.css'
 import StatusSummaryList from './StatusSummaryList';
 import StatusAmmountList from './StatusAmmountList';
@@ -8,7 +8,6 @@ import StatusCalendar from './StatusCalendar';
 export default function Status() {
   return (
     <div className='page'>
-      <Sidebar menuType="admin"/>
       <div className='contentInterior'>
         <StatusCalendar/>
         <div className='mainContent' id='statusMainContent'>

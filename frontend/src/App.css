@@ -1,3 +1,18 @@
+.App {
+  display: flex;
+  justify-content: center; /* Centruje zawartość w poziomie */
+  align-items: center; /* Centruje zawartość w pionie */
+}
+
+.content-container {
+  display: flex;
+  width: 100%; /* Ustawia szerokość kontenera na 100% */
+}
+
+.main-content {
+  flex: 1;
+}
+
 .panels {
   background: #e9e9e9;
   min-height: 100vh;

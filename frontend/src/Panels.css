@@ -24,6 +24,23 @@ input{
 }
 
 .buttonPanel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 12vw;
+    height: 3rem;
+    color: #E9E9E9;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border: none;
+    outline: none;
+    background: linear-gradient(135deg, #775253 0%, #351431 100%);
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 2.5rem;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+    
     align-items: center;
     justify-content: center;
     align-items: center;

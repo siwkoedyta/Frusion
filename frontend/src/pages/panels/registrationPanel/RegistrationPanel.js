@@ -1,6 +1,7 @@
 import './RegistrationPanel.css'
-import Wave from'../../../components/wave/Wave.js'
+import Wave from '../../../components/wave/Wave.js';
 import Arrow from '../../../components/arrow/Arrow.js';
+import { Link } from 'react-router-dom';
 
 export default function RegistrationPanel() {
   return (
@@ -19,7 +20,7 @@ export default function RegistrationPanel() {
             <div id='buttonsPanelRegistration'>
                 <div className='left'>
                     <div className='buttonArrow'>
-                        <button className='buttonPanel' id='signInButtonPanelRegistration'><Arrow/></button>
+                        <Link to="/Home" className='buttonPanel' id='signInButtonPanelRegistration'><Arrow/></Link>
                         <div className='captionButton'>Sign in</div>
                     </div>
                 </div>
@@ -27,7 +28,7 @@ export default function RegistrationPanel() {
                 <div className='right'>
                     <div className='buttonArrow'>
                         <div className='captionButton'>Create</div>
-                        <button className='buttonPanel'><Arrow/></button>
+                        <Link to="/LoginPanel" className='buttonPanel'><Arrow/></Link>
                     </div>
                 </div>
 

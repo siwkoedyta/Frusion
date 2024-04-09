@@ -1,11 +1,10 @@
-import Sidebar from '../../../components/sidebar/Sidebar'
+
 import ClientSummaryList from './ClientSummaryList';
 import ClientTransactionList from './ClientTrasactionList';
 
 export default function ClientHome() {
   return (
     <div className='page'>
-      <Sidebar menuType="client"/>
       <div className='contentInterior'>
 
         <div className='calendar'>

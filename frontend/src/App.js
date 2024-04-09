@@ -7,27 +7,50 @@ import Boxes from './pages/admin/boxes/Boxes.js';
 import Clients from './pages/admin/clients/Clients.js';
 import Fruits from './pages/admin/fruits/Fruits.js';
 import Home from './pages/admin/home/Home.js';
-import LoginPanel from './pages/admin/loginPanel/LoginPanel.js';
+import LoginPanel from './pages/panels/loginPanel/LoginPanel.js';
 import Status from './pages/admin/status/Status.js';
-import RegistrationPanel from './pages/admin/registrationPanel/RegistrationPanel.js';
+import RegistrationPanel from './pages/panels/registrationPanel/RegistrationPanel.js';
 import ClientHome from './pages/client/clientHome/ClientHome.js';
 import ClientChangePassword from './pages/client/clientChangePassword/ClientChangePassword.js';
+import Sidebar from './components/sidebar/Sidebar.js';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 
 function App() {
+  const location = useLocation();
+
+  const hideSidebarPaths = ['/LoginPanel', '/RegistrationPanel'];
+  const shouldHideSidebar = hideSidebarPaths.includes(location.pathname);
+
   return (
     <div className="App">
-    {/* <LoginPanel/> */}
-    {/* <RegistrationPanel/> */}
-    {/* <Home/> */}
-    {/* <Status/> */}
-    {/* <Fruits/> */}
-    {/* <Boxes/> */}
-    {/* <Clients/> */}
-    {/* <ClientHome/> */}
-    {/* <ClientChangePassword/> */}
+      <div className="content-container">
+        {!shouldHideSidebar && <Sidebar menuType='admin'/>}
+        <div className="main-content">
+        <Routes>
+          <Route path='/Home' element={<Home/>}/>
+          <Route path='/Status' element={<Status/>}/>
+          <Route path='/Fruits' element={<Fruits/>}/>
+          <Route path='/Boxes' element={<Boxes/>}/>
+          <Route path='/Clients' element={<Clients/>}/>
+          <Route path='/LoginPanel' element={<LoginPanel/>}/>
+          <Route path='/RegistrationPanel' element={<RegistrationPanel/>}/>
+        </Routes>
+        </div>
+      </div>
     </div>
   );
 }
 
 export default App;
+
+
+
+
+
+{/* <Routes>
+<Route path='/ClientHome' element={<ClientHome/>}/>
+<Route path='/ClientChangePassword' element={<ClientChangePassword/>}/>
+<Route path='/LoginPanel' element={<LoginPanel/>}/>
+<Route path='/RegistrationPanel' element={<RegistrationPanel/>}/>
+</Routes> */}

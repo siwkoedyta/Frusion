@@ -1,4 +1,3 @@
-import Sidebar from '../../../components/sidebar/Sidebar.js'
 import FruitsList from './FruitsList.js';
 import SetPrice from './SetPrice.js'
 import AddFruit from './AddFruit.js'
@@ -21,7 +20,6 @@ export default function Fruits() {
 
   return (
     <div className='page'>
-      <Sidebar menuType="admin"/>
       <div className='mainContent' id='mainContentFruitBoxes'>
         <div>
             <div className='featuredField' id='featuredFieldTitleList'>Fruit</div>

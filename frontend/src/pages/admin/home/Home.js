@@ -1,4 +1,4 @@
-import Sidebar from '../../../components/sidebar/Sidebar'
+
 import './Home.css'
 import SummaryList from './SummaryList';
 import TransactionList from './TransactionList';
@@ -7,7 +7,6 @@ import TransactionList from './TransactionList';
 export default function Home() {
   return (
     <div className='page'>
-      <Sidebar menuType="admin"/>
       <div className='contentInterior'>
         <div id='frusionName'>Your Frusion</div>
         <div className='calendar'>
