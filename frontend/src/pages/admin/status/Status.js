@@ -24,7 +24,7 @@ export default function Status() {
                 <StatusBoxesList/>
             </div>
             <div>
-                <div className='nameSection'>Ammount</div>
+                <div className='nameSection'>Amount</div>
                 <div className='featuredField' id='featuredFieldStatusAmount'>
                     <div>ALL</div>
                     <div id='statusPriceFieldALL'>

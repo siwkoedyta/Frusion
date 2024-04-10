@@ -23,6 +23,7 @@ export async function fetchUtil(method, path, body = null) {
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: "include",
         body: body == null ? body : JSON.stringify(body)
     })
         .then(res => {
@@ -30,8 +31,11 @@ export async function fetchUtil(method, path, body = null) {
                 return res.json()
                     .then(body => { throw body.errors })
             }
-            if(res.headers.get("content-length") == 0) return {};
+            if(res.headers.get("content-length") === "0") return {};
             return res.json();
         })
-        .catch(error => { throw ['INTERNAL'] });
+        .catch(error => {
+            console.log("fetch error", error) 
+            throw ['INTERNAL'] 
+        });
 }

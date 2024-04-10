@@ -5,9 +5,9 @@ export default function ClientsRemove() {
       <div className='methodPlace'>
       <div className='titleMethod'>Remove client</div>
         <div>
-          <input
-            placeholder="Email"
-          />
+          <select>
+            <option value="">Select a client</option>
+          </select>
         </div>
         <button className='buttonMethod' >Remove</button>
       </div>
