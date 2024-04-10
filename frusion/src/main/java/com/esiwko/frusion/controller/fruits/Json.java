@@ -14,6 +14,4 @@ public interface Json {
 
     record SetPriceRequest(BigDecimal price) {
     }
-
-
 }

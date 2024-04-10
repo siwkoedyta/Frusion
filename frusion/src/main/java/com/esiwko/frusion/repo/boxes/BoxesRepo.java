@@ -1,40 +1,32 @@
 package com.esiwko.frusion.repo.boxes;
 
-
 import com.esiwko.frusion.controller.boxes.Json;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
 public class BoxesRepo {
-    private Map<String, Json.Boxes> boxes = new HashMap<>();
-
-    public void addFruit(Json.Box fruit){
-        boxes.put(fruit.id(), fruit);
+    private Map<String, Json.Box> boxes = new HashMap<>();
+    public Json.Box getBoxById(String boxId) {
+        return boxes.get(boxId);
+    }
+    public void addBox(Json.Box box) {
+        boxes.put(box.Id(), box);
     }
 
-    public void archiveFruit(String fruitId){
-        Json.Fruit fruit = fruits.get(fruitId);
-        if (fruit != null) {
-            fruit =  new Json.Fruit(fruitId, fruit.name(), fruit.price(), true);
-            fruits.put(fruitId, fruit);
+    public void archiveBox(String Id) {
+        Json.Box box = boxes.get(Id);
+        if (box != null) {
+            box = new Json.Box(Id, box.name(), box.weight(), true);
+            boxes.put(Id, box);
         }
     }
 
-    public Collection<Json.Fruit> getAllFruits(){
-        return fruits.values();
-    }
-
-    public void setFruitsPrice(String fruitId, BigDecimal newPrice){
-        Json.Fruit fruit = fruits.get(fruitId);
-        if (fruit != null) {
-            fruit = new Json.Fruit(fruitId, fruit.name(), newPrice, fruit.archived());
-            fruits.put(fruitId, fruit);
-        }
+    public Collection<Json.Box> getAllBoxes() {
+        return boxes.values();
     }
 
 }

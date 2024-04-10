@@ -20,16 +20,6 @@ public class FrusionApplication implements WebMvcConfigurer {
         SpringApplication.run(FrusionApplication.class, args);
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(List.of("*"));
-//        configuration.setAllowedMethods(List.of("*"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -37,11 +27,5 @@ public class FrusionApplication implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // Allowed HTTP methods
                 .allowedHeaders("*"); // Allowed headers
     }
-
-//	@Bean
-//	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//		http.cors(cors -> cors.disable());
-//		return http.build();
-//	}
 
 }
