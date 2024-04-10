@@ -1,7 +1,7 @@
 package com.esiwko.frusion.controller.boxes;
 
 import com.esiwko.frusion.controller.errors.BadRequestEx;
-import com.esiwko.frusion.repo.boxes.BoxesRepo;
+import com.esiwko.frusion.repo.inmem.boxes.BoxesRepo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;

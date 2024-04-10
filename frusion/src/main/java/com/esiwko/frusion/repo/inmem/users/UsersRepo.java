@@ -1,4 +1,4 @@
-package com.esiwko.frusion.repo.users;
+package com.esiwko.frusion.repo.inmem.users;
 
 import com.esiwko.frusion.controller.users.Json;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.esiwko.frusion.repo.clients;
+package com.esiwko.frusion.repo.inmem.clients;
 
 import com.esiwko.frusion.controller.clients.Json;
 import org.springframework.stereotype.Component;

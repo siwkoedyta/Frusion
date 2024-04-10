@@ -1,7 +1,7 @@
 package com.esiwko.frusion.controller.clients;
 
 import com.esiwko.frusion.controller.errors.BadRequestEx;
-import com.esiwko.frusion.repo.clients.ClientsRepo;
+import com.esiwko.frusion.repo.inmem.clients.ClientsRepo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;

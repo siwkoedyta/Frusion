@@ -1,4 +1,4 @@
-package com.esiwko.frusion.repo.boxes;
+package com.esiwko.frusion.repo.inmem.boxes;
 
 import com.esiwko.frusion.controller.boxes.Json;
 import org.springframework.stereotype.Component;

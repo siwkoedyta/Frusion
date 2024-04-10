@@ -1,6 +1,6 @@
 package com.esiwko.frusion.controller.users;
 
-import com.esiwko.frusion.repo.users.UsersRepo;
+import com.esiwko.frusion.repo.inmem.users.UsersRepo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
