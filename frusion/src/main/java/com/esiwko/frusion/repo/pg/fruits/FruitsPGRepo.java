@@ -21,4 +21,6 @@ public interface FruitsPGRepo extends JpaRepository<FruitEntity, String> {
     void setArchived(String fruitId, String adminId);
 
     List<FruitEntity> findAllByAdminId(String adminId);
+    FruitEntity findByName(String name);
 }
+

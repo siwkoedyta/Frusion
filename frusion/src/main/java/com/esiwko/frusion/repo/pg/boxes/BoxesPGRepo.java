@@ -16,4 +16,5 @@ public interface BoxesPGRepo extends JpaRepository<BoxEntity, String> {
     void setArchived(String boxId, String adminId);
 
     List<BoxEntity> findAllByAdminId(String adminId);
+    BoxEntity findByName(String name);
 }

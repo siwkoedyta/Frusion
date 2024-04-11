@@ -1,68 +1,96 @@
-//package com.esiwko.frusion.controller.transactions;
-//
-//import com.esiwko.frusion.controller.errors.BadRequestEx;
-//import com.esiwko.frusion.repo.inmem.transactions.TransactionsRepo;
-//import com.esiwko.frusion.repo.inmem.boxes.BoxesRepo;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.math.BigDecimal;
-//import java.util.Collection;
-//import java.util.UUID;
-//
-//@RestController
-//public class TransactionsController {
-//    private final TransactionsRepo transactionsRepo;
-//    private final BoxesRepo boxesRepo;
-//    private final FruitsRepo fruitsRepo;
-//
-//
-//    public TransactionsController(TransactionsRepo transactionsRepo, BoxesRepo boxesRepo, FruitsRepo fruitsRepo) {
-//        this.transactionsRepo = transactionsRepo;
-//        this.boxesRepo = boxesRepo;
-//        this.fruitsRepo = fruitsRepo;
-//    }
-//
-//    @PostMapping("/transactions")
-//    public Json.AddTransactionResponse add(@RequestBody Json.AddTransactionRequest req) {
-//        var id = UUID.randomUUID().toString();
-//        if (req.clientId().isBlank() || req.fruitId().isBlank() || req.boxId().isBlank() || req.quantityBoxes() <= 0) {
-//            throw new BadRequestEx("Invalid transaction data");
-//        }
-//
-//        var fruit = fruitsRepo.getFruitById(req.fruitId());
-//        var box = boxesRepo.getBoxById(req.boxId());
-//
-//        if (fruit == null || box == null) {
-//            throw new BadRequestEx("Invalid fruit or box ID");
-//        }
-//
-//        double boxWeight = box.weight();
-//        double transactionWeight = req.weight();
-//        int quantityBoxes = req.quantityBoxes();
-//        BigDecimal fruitPrice = fruit.price();
-//
-//        BigDecimal boxWeightTotal = BigDecimal.valueOf(boxWeight * quantityBoxes);
-//        BigDecimal transactionWeightTotal = BigDecimal.valueOf(transactionWeight);
-//        BigDecimal difference = transactionWeightTotal.subtract(boxWeightTotal);
-//
-//        BigDecimal amount = difference.multiply(fruitPrice).setScale(2, BigDecimal.ROUND_HALF_UP);
-//
-//        Json.Transaction transaction = new Json.Transaction(
-//                id,
-//                req.clientId(),
-//                req.fruitId(),
-//                req.weight(),
-//                req.boxId(),
-//                req.quantityBoxes(),
-//                amount
-//        );
-//
-//        transactionsRepo.addTransaction(transaction);
-//        return new Json.AddTransactionResponse(transaction.id());
-//    }
-//
-//    @GetMapping("/transactions")
-//    public Collection<Json.Transaction> getAll() {
-//        return transactionsRepo.getAllTransactions();
-//    }
-//}
+package com.esiwko.frusion.controller.transactions;
+
+import com.esiwko.frusion.controller.errors.BadRequestEx;
+import com.esiwko.frusion.repo.pg.admins.AdminEntity;
+import com.esiwko.frusion.repo.pg.boxes.BoxEntity;
+import com.esiwko.frusion.repo.pg.boxes.BoxesPGRepo;
+import com.esiwko.frusion.repo.pg.fruits.FruitEntity;
+import com.esiwko.frusion.repo.pg.fruits.FruitsPGRepo;
+import com.esiwko.frusion.repo.pg.transactions.TransactionEntity;
+import com.esiwko.frusion.repo.pg.transactions.TransactionPGRepo;
+import com.esiwko.frusion.repo.pg.users.UserEntity;
+import com.esiwko.frusion.repo.pg.users.UsersPGRepo;
+import lombok.RequiredArgsConstructor;
+import lombok.val;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.Date;
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.UUID;
+
+@RestController
+@RequiredArgsConstructor
+
+public class TransactionsController {
+    private final TransactionPGRepo transactionsRepo;
+    private final FruitsPGRepo fruitsRepo;
+    private final BoxesPGRepo boxesRepo;
+    private final UsersPGRepo usersRepo;
+
+    @PostMapping("/transactions")
+    public Json.AddTransactionResponse add(@CookieValue("adminId") String adminId, @RequestBody Json.AddTransactionRequest req) throws ChangeSetPersister.NotFoundException {
+        var id = UUID.randomUUID().toString();
+
+        FruitEntity fruit = fruitsRepo.findByName(req.fruitName());
+        BoxEntity box = boxesRepo.findByName(req.boxName());
+        Optional<UserEntity> user = usersRepo.findById(req.userId());
+        UserEntity userEntity = user.orElseThrow(ChangeSetPersister.NotFoundException::new);
+
+        if (fruit == null || box == null) {
+            throw new BadRequestEx("Invalid fruit or box ID");
+        }
+
+        val admin = new AdminEntity();
+        admin.setId(adminId);
+
+        LocalDate today = LocalDate.now();
+        Date transactionDate = java.sql.Date.valueOf(today);
+
+        double boxWeight = box.getWeight();
+        double weightGross = req.weightGross();
+        int numberOfBoxes = req.numberOfBoxes();
+        BigDecimal price = fruit.getPrice();
+
+        BigDecimal boxWeightTotal = BigDecimal.valueOf(boxWeight * numberOfBoxes);
+        BigDecimal weightGrossBigDecimal = BigDecimal.valueOf(weightGross);
+        BigDecimal weightNet = weightGrossBigDecimal.subtract(boxWeightTotal);
+
+        BigDecimal amount = weightNet.multiply(price).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+        transactionsRepo.save(new TransactionEntity(
+                id,
+                userEntity,
+                admin,
+                req.weightGross(),
+                box.getId(),
+                req.numberOfBoxes(),
+                transactionDate,
+                weightNet.doubleValue(),
+                amount,
+                price
+        ));
+
+        return new Json.AddTransactionResponse(id);
+    }
+
+    @GetMapping("transactions")
+    public Collection<Json.Transaction> getAll(@CookieValue("adminId") String adminId) {
+        return transactionsRepo.findAllByAdminId(adminId)
+                .stream().map(t -> new Json.Transaction(
+                        t.getId(),
+                        t.getWeight_gross(),
+                        t.getBox_id(),
+                        t.getNumber_of_boxes(),
+                        t.getTransaction_date(),
+                        t.getWeight_net(),
+                        t.getAmount(),
+                        t.getPrice()
+                )).toList();
+    }
+
+    
+}
