@@ -1,12 +1,14 @@
 import React from 'react';
 
-export default function ClientsList() {
+export default function ClientsList({ clients }) {
   return (
-      <div className='field'>
-        <div className='field-content'>
-          Jan Kowalski
+    <div>
+      {clients.map(client => (
+        <div key={client.id} className='field' id={`field-${client.id}`}>
+          <div className='field-content'>{client.firstName} {client.lastName}</div>
+          <div id='clientsListEmail'>{client.email}</div>
         </div>
-        <div id='clientsListEmail'>jkowalski@gmail.com</div>
-      </div>
+      ))}
+    </div>
   );
 }

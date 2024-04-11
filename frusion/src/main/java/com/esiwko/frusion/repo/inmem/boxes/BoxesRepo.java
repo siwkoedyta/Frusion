@@ -1,6 +1,7 @@
 package com.esiwko.frusion.repo.inmem.boxes;
 
 import com.esiwko.frusion.controller.boxes.Json;
+import com.esiwko.frusion.repo.pg.boxes.BoxEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -14,7 +15,7 @@ public class BoxesRepo {
         return boxes.get(boxId);
     }
     public void addBox(Json.Box box) {
-        boxes.put(box.Id(), box);
+        boxes.put(box.id(), box);
     }
 
     public void archiveBox(String Id) {
@@ -28,5 +29,4 @@ public class BoxesRepo {
     public Collection<Json.Box> getAllBoxes() {
         return boxes.values();
     }
-
 }

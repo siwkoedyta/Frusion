@@ -37,8 +37,9 @@ public class FruitsController {
     }
 
     @DeleteMapping("fruits/{id}")
-    public void remove(@CookieValue("adminId") String adminId, @PathVariable String id) {
+    public Json.RemoveFruitResponse remove(@CookieValue("adminId") String adminId, @PathVariable String id) {
         fruitsRepo.setArchived(id, adminId);
+        return new Json.RemoveFruitResponse(id);
     }
 
     @GetMapping("fruits")

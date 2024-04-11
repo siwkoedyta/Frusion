@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { setFruitPrice } from '../../../api/setFruitPrice';
+import { setFruitPrice } from '../../../api/fruit/setFruitPrice';
 
 export default function SetPrice({ fruits, onUpdate }) {
   const [selectedFruit, setSelectedFruit] = useState('');

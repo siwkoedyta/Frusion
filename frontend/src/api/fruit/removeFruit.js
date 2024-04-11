@@ -1,4 +1,4 @@
-import { fetchDelete } from './utils';
+import { fetchDelete } from '../utils';
 
 export async function removeFruit(fruitId) {
     return fetchDelete(

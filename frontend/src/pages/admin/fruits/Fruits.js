@@ -4,7 +4,7 @@ import AddFruit from './AddFruit.js'
 import RemoveFruit from './RemoveFruit.js'
 import React, { useState, useEffect } from 'react';
 import './Fruit.css'
-import { getAllFruits } from '../../../api/getAllFruits.js';
+import { getAllFruits } from '../../../api/fruit/getAllFruits.js';
 
 
 export default function Fruits() {

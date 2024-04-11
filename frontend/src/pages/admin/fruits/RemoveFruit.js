@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { removeFruit } from '../../../api/removeFruit';
+import { removeFruit } from '../../../api/fruit/removeFruit';
 
-export default function RemoveFruit({fruits, onUpdate}) {
+export default function RemoveFruit({ fruits, onUpdate }) {
   const [selectedFruit, setSelectedFruit] = useState('');
 
   const handleFruitChange = (event) => {
@@ -31,7 +31,7 @@ export default function RemoveFruit({fruits, onUpdate}) {
         <select id="fruit" name="fruit" value={selectedFruit} onChange={handleFruitChange}>
           <option value="">Select a fruit</option>
           {fruits.map(fruit => (
-            <option key={fruit.id} value={fruit.id}>{fruit.name}</option>
+            <option key={fruit.id} value={fruit.id}>{fruit.id}</option>
           ))}
         </select>
       </div>

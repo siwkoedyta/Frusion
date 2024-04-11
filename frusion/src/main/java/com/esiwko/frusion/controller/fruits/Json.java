@@ -14,4 +14,7 @@ public interface Json {
 
     record SetPriceRequest(BigDecimal price) {
     }
+
+    record RemoveFruitResponse(String id) {
+    }
 }

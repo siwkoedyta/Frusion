@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import '../../../api/addFruit.js'
-import { addFruit } from '../../../api/addFruit.js';
+import { addFruit } from '../../../api/fruit/addFruit.js';
 
 export default function AddFruit({ onUpdate }) {
   const [fruitName, setFruitName] = useState('');
