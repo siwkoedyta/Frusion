@@ -15,5 +15,4 @@ public interface UsersPGRepo extends JpaRepository<UserEntity, String> {
     void setArchived(String userId, String adminId);
 
     List<UserEntity> findAllByAdminId(String adminId);
-    Optional<UserEntity> findById(String userId);
 }

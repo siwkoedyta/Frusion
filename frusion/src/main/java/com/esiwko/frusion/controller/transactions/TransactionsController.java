@@ -1,5 +1,5 @@
 package com.esiwko.frusion.controller.transactions;
-
+import org.springframework.format.annotation.DateTimeFormat;
 import com.esiwko.frusion.controller.errors.BadRequestEx;
 import com.esiwko.frusion.repo.pg.admins.AdminEntity;
 import com.esiwko.frusion.repo.pg.boxes.BoxEntity;
@@ -32,13 +32,12 @@ public class TransactionsController {
     private final UsersPGRepo usersRepo;
 
     @PostMapping("/transactions")
-    public Json.AddTransactionResponse add(@CookieValue("adminId") String adminId, @RequestBody Json.AddTransactionRequest req) throws ChangeSetPersister.NotFoundException {
+    public Json.AddTransactionResponse add(@CookieValue("adminId") String adminId, @RequestBody Json.AddTransactionRequest req) {
         var id = UUID.randomUUID().toString();
 
-        FruitEntity fruit = fruitsRepo.findByName(req.fruitName());
-        BoxEntity box = boxesRepo.findByName(req.boxName());
-        Optional<UserEntity> user = usersRepo.findById(req.userId());
-        UserEntity userEntity = user.orElseThrow(ChangeSetPersister.NotFoundException::new);
+        FruitEntity fruit = fruitsRepo.findById(req.fruitId()).orElseThrow(() -> new BadRequestEx("FRUIT_ILLEGAL"));
+        BoxEntity box = boxesRepo.findById(req.boxId()).orElseThrow(() -> new BadRequestEx("BOX_ILLEGAL"));
+        UserEntity user = usersRepo.findById(req.userId()).orElseThrow(() -> new BadRequestEx("USER_ILLEGAL"));
 
         if (fruit == null || box == null) {
             throw new BadRequestEx("Invalid fruit or box ID");
@@ -48,7 +47,6 @@ public class TransactionsController {
         admin.setId(adminId);
 
         LocalDate today = LocalDate.now();
-        Date transactionDate = java.sql.Date.valueOf(today);
 
         double boxWeight = box.getWeight();
         double weightGross = req.weightGross();
@@ -63,15 +61,16 @@ public class TransactionsController {
 
         transactionsRepo.save(new TransactionEntity(
                 id,
-                userEntity,
+                user,
                 admin,
                 req.weightGross(),
                 box.getId(),
                 req.numberOfBoxes(),
-                transactionDate,
+                today,
                 weightNet.doubleValue(),
                 amount,
-                price
+                price,
+                fruit
         ));
 
         return new Json.AddTransactionResponse(id);
@@ -88,9 +87,10 @@ public class TransactionsController {
                         t.getTransaction_date(),
                         t.getWeight_net(),
                         t.getAmount(),
-                        t.getPrice()
+                        t.getPrice(),
+                        t.getFruit().getId()
                 )).toList();
     }
 
-    
+
 }

@@ -43,7 +43,8 @@ CREATE TABLE IF NOT EXISTS public.transactions
     transaction_date date NOT NULL,
     weight_net numeric NOT NULL,
     amount numeric NOT NULL,
-    "priceFruit" numeric NOT NULL,
+    price numeric NOT NULL,
+    fruit_id character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "Transaction_pkey" PRIMARY KEY (id)
 );
 

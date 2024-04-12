@@ -1,15 +1,15 @@
 package com.esiwko.frusion.repo.pg.transactions;
 
 import com.esiwko.frusion.repo.pg.admins.AdminEntity;
+import com.esiwko.frusion.repo.pg.boxes.BoxEntity;
+import com.esiwko.frusion.repo.pg.fruits.FruitEntity;
 import com.esiwko.frusion.repo.pg.users.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.Date;
-
+import java.time.LocalDate;
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @Entity
 @Table(name = "transactions")
@@ -34,11 +34,15 @@ public class TransactionEntity {
 
     private int number_of_boxes;
 
-    private Date transaction_date;
+    private LocalDate transaction_date;
 
     private double weight_net;
 
     private BigDecimal amount;
 
     private BigDecimal price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fruit_id", nullable = false)
+    private FruitEntity fruit;
 }
