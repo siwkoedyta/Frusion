@@ -1,7 +1,7 @@
-#summaryField{
+.summaryField{
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 26vw;
     padding: 1rem;
 }
 

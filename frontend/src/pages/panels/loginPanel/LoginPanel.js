@@ -4,7 +4,7 @@ import './LoginPanel.css';
 import Wave from '../../../components/wave/Wave.js';
 import Logo from '../../../components/logo/Logo.js';
 import Arrow from '../../../components/arrow/Arrow.js';
-import { auth } from '../../../api/auth.js';
+import { auth } from '../../../api/auth/auth.js';
 
 export default function LoginPanel() {
   const [email, setEmail] = useState("");

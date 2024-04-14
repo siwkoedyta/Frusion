@@ -2,7 +2,7 @@
     min-width: 26vw;
 }
 
-#homeField, #methodPlaceHome{
+.homeField, #methodPlaceHome{
     min-width: 26vw;
 }
 
@@ -20,4 +20,11 @@
     color: #351431;
     letter-spacing: 0.6rem;
     text-transform: capitalize;
+}
+
+.transparent-field {
+    display: flex;
+    min-width: 26vw;
+    justify-content: center;
+    align-items: center;
 }

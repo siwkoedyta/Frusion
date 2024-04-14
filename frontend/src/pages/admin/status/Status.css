@@ -45,9 +45,10 @@
     margin-right: 0.5rem;
 }
 
-#statusCalendar, #startCalendar, #endCalendar{
+#startCalendar, #endCalendar{
     display: flex;
-    align-items: center;
+    justify-content: center;
+    align-items:baseline ;
     font-weight: 500;
 }
 

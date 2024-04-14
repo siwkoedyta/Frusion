@@ -1,12 +1,12 @@
 .App {
   display: flex;
-  justify-content: center; /* Centruje zawartość w poziomie */
-  align-items: center; /* Centruje zawartość w pionie */
+  justify-content: center;
+  align-items: center;
 }
 
 .content-container {
   display: flex;
-  width: 100%; /* Ustawia szerokość kontenera na 100% */
+  width: 100%;
 }
 
 .main-content {
@@ -168,25 +168,15 @@ button {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.calendar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: fit-content;
-  width: 12rem;
-  background: #FFF;
-  border-radius: 2.5rem;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
-  padding: 1rem 2rem;
 
-  font-weight: 500;
+.calendar {
   font-size: 1.5rem;
   color: #9A9A9A;
   font-weight: 400;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
-.parameters, .parametersSummary{
+.parameters, .parametersSummary, .nameFruitValueTransaction{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -205,4 +195,9 @@ button {
 .titleSummary{
   font-weight: 650;
   height: 5vh;
+}
+
+.calendar-container {
+  position: relative;
+  display: inline-block;
 }

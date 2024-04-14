@@ -10,7 +10,7 @@
     margin-left:0.5rem;
 }
 
-.priceTransaction, .boxesTransaction{
+.priceTransaction, .boxesTransaction, .nameFruitTransaction{
     font-size: 1.2rem;
 }
 
@@ -18,7 +18,7 @@
     align-items:baseline;
 }
 
-.priceTransaction, .priceTransaction, .boxesTransaction{
+.priceTransaction, .priceTransaction, .boxesTransaction, .nameFruitTransaction{
     color: #9A9A9A;
 }
 
@@ -26,7 +26,13 @@
     font-weight: 400;
 }
 
-#featuredFieldValueTransaction{
+.nameFruitValueTransaction{
+    display: flex;
+    flex-direction: column;
+    align-items:end;
+}
+
+.featuredFieldValueTransaction{
     min-width: 10vw;
     max-width: 7rem;
     margin-left: 1rem;
@@ -34,3 +40,6 @@
     font-weight: 550;
 }
 
+.nameFruitTransaction{
+    margin-right: 1.5rem;
+}

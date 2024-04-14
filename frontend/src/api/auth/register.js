@@ -1,4 +1,4 @@
-import { fetchPost } from './utils'
+import { fetchPost } from '../utils'
 
 export async function register( email, password, frusionName ) {
   return fetchPost(

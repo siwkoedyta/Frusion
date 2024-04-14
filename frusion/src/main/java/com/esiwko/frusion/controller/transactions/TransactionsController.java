@@ -81,6 +81,7 @@ public class TransactionsController {
         return transactionsRepo.findAllByAdminId(adminId)
                 .stream().map(t -> new Json.Transaction(
                         t.getId(),
+                        t.getUser().getId(),
                         t.getWeight_gross(),
                         t.getBox_id(),
                         t.getNumber_of_boxes(),

@@ -3,7 +3,7 @@ import Wave from '../../../components/wave/Wave.js';
 import Arrow from '../../../components/arrow/Arrow.js';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
-import { register } from '../../../api/register.js';
+import { register } from '../../../api/auth/register.js';
 
 
 export default function RegistrationPanel() {

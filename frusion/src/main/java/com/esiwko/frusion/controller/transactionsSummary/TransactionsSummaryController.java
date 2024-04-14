@@ -28,19 +28,18 @@ public class TransactionsSummaryController {
     private final BoxesPGRepo boxesRepo;
 
     @GetMapping("transactionsSummary")
-    public Json.TransactionsSummaryResponse getAll(@CookieValue("adminId") String adminId,
-                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+    public List<Json.FruitSummary> getAll(@CookieValue("adminId") String adminId,
+                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         List<TransactionEntity> transactions = transactionsRepo.getAllTransactions(adminId, startDate, endDate);
 
-        List<Json.FruitSummary> fruitsSummaries = transactions.stream()
+        return transactions.stream()
                 .collect(Collectors.groupingBy(t -> t.getFruit().getId()))
                 .values().stream()
                 .map(this::calculateFruitSummary)
                 .toList();
-
-        return new Json.TransactionsSummaryResponse(fruitsSummaries);
     }
+
 
     private Json.FruitSummary calculateFruitSummary(Collection<TransactionEntity> transactions) {
         TransactionEntity firstTransaction = transactions.stream().findFirst().orElse(null);

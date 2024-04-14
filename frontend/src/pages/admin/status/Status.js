@@ -5,6 +5,7 @@ import StatusAmmountList from './StatusAmmountList';
 import StatusBoxesList from './StatusBoxesList';
 import StatusCalendar from './StatusCalendar';
 
+
 export default function Status() {
   return (
     <div className='page'>
