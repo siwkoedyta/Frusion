@@ -2,8 +2,12 @@
     min-width: 26vw;
 }
 
-.homeField, #methodPlaceHome{
+.homeField {
     min-width: 26vw;
+}
+
+#methodPlaceHome{
+    min-width: 27.5vw;
 }
 
 #buttonHome{
@@ -12,6 +16,7 @@
     height: auto;
     padding: 2rem 7rem;
     margin-bottom: 1rem;
+    min-width: 26vw;
 }
 
 #frusionName{
@@ -27,4 +32,71 @@
     min-width: 26vw;
     justify-content: center;
     align-items: center;
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 20rem;
+    width: calc(100% - 20rem);
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.modal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #E9E9E9;
+    border-radius: 2.5rem;
+    padding: 3rem;
+    min-height: 50vh;
+    min-width: 20vw;
+    gap: 1.5rem;
+}
+
+.titleModal{
+    font-size: 2rem;
+    color:#351431;
+}
+
+.buttonsModal{
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
+}
+
+
+
+
+
+.dropdown{
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    min-width: 17vw;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #D9D9D9;
+    color:gray;
+
+}
+
+.dropdown:empty{
+    border: none;
+}
+
+.dropdown-row{
+    cursor: pointer;
+    text-align: start;
+    margin: 2px 0;
+    padding-left: 2rem;
+}
+
+.search-inner{
+    display: flex;
 }

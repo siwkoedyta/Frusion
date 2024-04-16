@@ -31,7 +31,7 @@ export default function AddFruit({ onUpdate }) {
   return (
     <div className='methodPlace'>
       <div className='titleMethod'>Add box</div>
-      <div>
+      <div className='inputGap'>
         <input
           type="text"
           id="nameBoxInput"

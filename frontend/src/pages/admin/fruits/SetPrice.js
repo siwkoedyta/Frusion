@@ -36,25 +36,28 @@ export default function SetPrice({ fruits, onUpdate }) {
     <div className='methodPlace'>
 
       <div className='titleMethod'>Set the price</div>
-      <div>
-        <select id="fruit" name="fruit" value={selectedFruit} onChange={handleFruitChange}>
-          <option value="">Select a fruit</option>
-          {fruits.map(fruit => (
-            <option key={fruit.id} value={fruit.id}>{fruit.name}</option>
-          ))}
-        </select>
+      <div className='inputGap'>
+        <div>
+          <select id="fruit" name="fruit" value={selectedFruit} onChange={handleFruitChange}>
+            <option value="">Select a fruit</option>
+            {fruits.map(fruit => (
+              <option key={fruit.id} value={fruit.id}>{fruit.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <input
+            type="text"
+            id="price"
+            name="price"
+            value={newPrice}
+            onChange={handlePriceChange}
+            placeholder="Price"
+          />
+        </div>
       </div>
 
-      <div>
-        <input
-          type="text"
-          id="price"
-          name="price"
-          value={newPrice}
-          onChange={handlePriceChange}
-          placeholder="Price"
-        />
-      </div>
 
       <button className='buttonMethod' onClick={handleSetPrice}>Set</button>
     </div>

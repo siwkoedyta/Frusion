@@ -51,7 +51,7 @@
 input,
 select {
     width:20vw;
-    height: 64px;
+    height: 6vh;
     border: none;
     border-radius: 2.5rem;
     font-size: 1.2rem;
@@ -61,7 +61,6 @@ select {
     background: #FFF;
     display: block;
     box-sizing: border-box;
-    margin-bottom: 1rem;
 }
 
 input::placeholder{
@@ -72,6 +71,12 @@ input:focus,
 select:focus {
     outline: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.inputGap{
+  display: flex;
+  flex-direction: column;
+  gap:1rem;
 }
 
 button {

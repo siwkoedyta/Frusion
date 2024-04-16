@@ -12,6 +12,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useCurrentAdmin } from '../../../CurrentAdminProvider';
 import { getAllSummaryTrasactions } from '../../../api/transaction/getAllSummaryTrasactions';
+import Modal from './Modal'; 
+import Overlay from './Overlay';
 
 export default function Home() {
   const { currentAdmin, setCurrentAdmin } = useCurrentAdmin();
@@ -21,6 +23,7 @@ export default function Home() {
   const [fruits, setFruits] = useState([]);
   const [boxes, setBoxes] = useState([]);
   const [clients, setClients] = useState([]);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     if (!currentAdmin) {
@@ -31,13 +34,18 @@ export default function Home() {
   }, [currentAdmin, setCurrentAdmin]);
 
   useEffect(() => {
-    refreshTransactions();
-    refreshSummaryTransactions();
+    refreshData();
   }, [selectedDate]);
-  
-  const refreshTransactions = () => {
-    Promise.all([getAllClients(), getAllFruits(), getAllBoxes(), getAllTransactions()])
-      .then(([clientsData, fruitsData, boxesData, transactionsData]) => {
+
+  const refreshData = () => {
+    Promise.all([
+      getAllClients(),
+      getAllFruits(),
+      getAllBoxes(),
+      getAllTransactions(),
+      getAllSummaryTrasactions(selectedDate)
+    ])
+      .then(([clientsData, fruitsData, boxesData, transactionsData, summaryTransactionsData]) => {
         const filteredTransactions = transactionsData.filter(transaction => {
           const transactionDate = new Date(transaction.transactionDate);
           return transactionDate.toDateString() === selectedDate.toDateString();
@@ -46,15 +54,22 @@ export default function Home() {
         setFruits(fruitsData);
         setBoxes(boxesData);
         setTransactions(filteredTransactions);
+        setSummaryTransactions(summaryTransactionsData);
       })
-      .catch(errors => {alert(errors);});
+      .catch(errors => {
+        console.error('Error refreshing data:', errors);
+        alert('Error refreshing data. Please try again later.');
+      });
   };
 
-  const refreshSummaryTransactions = () => {
-    getAllSummaryTrasactions(selectedDate)
-      .then(data => setSummaryTransactions(data))
-      .catch(errors => alert(errors))
+  const openModal = () => {
+    setModalOpen(true);
   };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  
 
   return (
     <div className='page'>
@@ -69,14 +84,18 @@ export default function Home() {
         </div>
         <div className='mainContent'>
           <div id='buttonSummaryHome'>
-              <button id='buttonHome'>Buy fruit</button>
-              <div className='methodPlace' id='methodPlaceHome'>
-                <div className='titleSummary'>Summary</div>
-                <SummaryList summaryTransactions={summaryTransactions} onUpdate={refreshSummaryTransactions}/>
-              </div>
+            <button id='buttonHome' onClick={openModal}>Buy fruit</button>
+            <Overlay isOpen={isModalOpen} onClose={closeModal}>
+              <Modal onUpdate={refreshData} isOpen={isModalOpen} onClose={closeModal} fruits={fruits} boxes={boxes}/>
+            </Overlay>
+            
+            <div className='methodPlace' id='methodPlaceHome'>
+              <div className='titleSummary'>Summary</div>
+              <SummaryList summaryTransactions={summaryTransactions} onUpdate={refreshData}/>
+            </div>
           </div>
           <div>
-              <TransactionList clients={clients} fruits={fruits} boxes={boxes} transactions={transactions} onUpdate={refreshTransactions}/>
+            <TransactionList clients={clients} fruits={fruits} boxes={boxes} transactions={transactions} onUpdate={refreshData}/>
           </div>
         </div>
       </div>
