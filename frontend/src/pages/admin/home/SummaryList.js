@@ -8,13 +8,14 @@ export default function SummaryList({ summaryTransactions }) {
                         <div className='parametersSummary'>
                             <div className='priceSummary'>
                                 Price:
-                                <div className='price'>{transaction.avaragePrice.toFixed(2)}</div>
+                                <div className='price'>{transaction.averagePrice.toFixed(2)}</div>
                                 <div className='nominal'>zł</div>
                             </div>
                             <div className='boxesSummary'>
                                 Boxes:
-                                <div className='box'>{transaction.boxes[0].quantity}</div>
-                                <div className='typeBox'>{transaction.boxes[0].name}</div>
+                                    {transaction.boxes.map((box,index) => (
+                                        <div key={box.id} className='box'>{box.quantity} {box.name} {index !== transaction.boxes.length - 1 && ', '}</div>
+                                    ))}
                             </div>
                         </div>
                         <div className='valueTransaction'>

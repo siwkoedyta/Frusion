@@ -10,12 +10,25 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes }) => {
   const [dropdownTop, setDropdownTop] = useState(0);
   const secondInputRef = useRef(null);
 
-  useEffect(() => {
-    if (secondInputRef.current) {
-      const rect = secondInputRef.current.getBoundingClientRect();
-      setDropdownTop(rect.bottom); // Ustawienie górnej pozycji dropdowna na dnie drugiego inputa
-    }
-  }, []);
+  const filteredFruits = fruits.filter(fruit => !fruit.archived);
+  const filteredBoxes = boxes.filter(box => !box.archived);
+
+useEffect(() => {
+  if (secondInputRef.current) {
+    const rect = secondInputRef.current.getBoundingClientRect();
+    setDropdownTop(rect.bottom);
+  }
+
+  const dropdownFruit = filteredFruits.filter(fruit => {
+    const searchFruit = fruitId.toLowerCase();
+    const name = fruit.name.toLowerCase();
+    return searchFruit && name.startsWith(searchFruit) && name !== searchFruit;
+  });
+
+  if (dropdownFruit.length === 1) {
+    setFruitId(dropdownFruit[0].name);
+  }
+}, [fruitId, filteredFruits]);
 
   if (!isOpen) return null;
 
@@ -23,55 +36,57 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes }) => {
     setFruitId(event.target.value);
   };
 
-  const handleAddTransaction = async (e) => {
-    return addTransaction(clientId, fruitId, weightGross, boxId, numberOfBoxes)
-      .then(res => {
-        onClose();
-        onUpdate();
-      })
-      .catch(errors => alert(errors));
+  const handleAddTransaction = async () => {
+    try {
+      await addTransaction(clientId, fruitId, weightGross, boxId, numberOfBoxes);
+      onClose();
+      onUpdate();
+    } catch (error) {
+      alert(error);
+    }
   };
 
-  const onSearch = (searchFruit) => {
-    setFruitId(searchFruit);
+  const handleKeyPress = (event) => {
+    if (event.key.length === 1 && fruitId.length === filteredFruits[0].name.length) {
+      event.preventDefault();
+    }
   };
-
-  const filteredFruits = fruits.filter(fruit => !fruit.archived);
-  const filteredBoxes = boxes.filter(box => !box.archived);
 
   return (
     <div className="modal">
       <div className='titleModal'>Buy fruit</div>
 
-        <input type="text" placeholder="First and last name" value={clientId} onChange={e => setClientId(e.target.value)} />
+      <input type="text" placeholder="First and last name" value={clientId} onChange={e => setClientId(e.target.value)} />
 
+      <input ref={secondInputRef} type="text" value={fruitId} onChange={onChange} onKeyPress={handleKeyPress} placeholder='Fruit' />
 
-        <input ref={secondInputRef} type="text" value={fruitId} onChange={onChange} placeholder='Fruit' />
-        <div className='dropdown' style={{ top: dropdownTop }}>
-          {filteredFruits.filter(fruit => {
+      <div className='dropdown' style={{ top: dropdownTop }}>
+        {filteredFruits
+          .filter(fruit => {
             const searchFruit = fruitId.toLowerCase();
             const name = fruit.name.toLowerCase();
             return searchFruit && name.startsWith(searchFruit) && name !== searchFruit;
-          }).slice(0,10)
-            .map(fruit => (
-              <div  key={fruit.name} className='dropdown-row' onClick={()=>onSearch(fruit.name)}>
-                {fruit.name}
-              </div>
-            ))}
-        </div>
-
-
-        <input type="text" placeholder="Gross weight" value={weightGross} onChange={e => setWeightGross(e.target.value)} />
-
-        <select value={boxId} onChange={e => setBoxId(e.target.value)}>
-          <option key="" value="">Select a box</option>
-          {filteredBoxes.map(box => (
-            <option key={box.id} value={box.id}>{box.name}</option>
+          })
+          .slice(0, 10)
+          .map(fruit => (
+            <div key={fruit.name} className='dropdown-row' onClick={() => setFruitId(fruit.name)}>
+              {fruit.name}
+            </div>
           ))}
-        </select>
+      </div>
+
+      <input type="text" placeholder="Gross weight" value={weightGross} onChange={e => setWeightGross(e.target.value)} />
 
 
-        <input type="text" placeholder="Number of boxes" value={numberOfBoxes} onChange={e => setNumberOfBoxes(e.target.value)} />
+      <select value={boxId} onChange={e => setBoxId(e.target.value)}>
+        <option key="" value="">Select a box</option>
+        {filteredBoxes.map(box => (
+          <option key={box.id} value={box.id}>{box.name}</option>
+        ))}
+      </select>
+
+
+      <input type="text" placeholder="Number of boxes" value={numberOfBoxes} onChange={e => setNumberOfBoxes(e.target.value)} />
 
       <div className='buttonsModal'>
         <button onClick={handleAddTransaction}>Add</button>

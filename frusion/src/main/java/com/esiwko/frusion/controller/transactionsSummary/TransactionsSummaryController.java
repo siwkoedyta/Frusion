@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -72,13 +73,17 @@ public class TransactionsSummaryController {
                         return null;
                     }
                 })
-                .filter(box -> box != null)
+                .filter(Objects::nonNull)
                 .toList();
 
         double sumWeight = transactions.stream()
                 .mapToDouble(TransactionEntity::getWeight_net)
                 .sum();
 
-        return new Json.FruitSummary(fruitId, fruitName, averagePrice, boxes, sumWeight);
+        BigDecimal sumAmount = transactions.stream()
+                .map(TransactionEntity::getAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return new Json.FruitSummary(fruitId, fruitName, averagePrice, boxes, sumWeight, sumAmount);
     }
 }

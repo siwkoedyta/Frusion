@@ -11,7 +11,7 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useCurrentAdmin } from '../../../CurrentAdminProvider';
-import { getAllSummaryTrasactions } from '../../../api/transaction/getAllSummaryTrasactions';
+import { getAllSummaryTransactions } from '../../../api/transaction/getAllSummaryTransactions';
 import Modal from './Modal'; 
 import Overlay from './Overlay';
 
@@ -43,7 +43,7 @@ export default function Home() {
       getAllFruits(),
       getAllBoxes(),
       getAllTransactions(),
-      getAllSummaryTrasactions(selectedDate)
+      getAllSummaryTransactions(selectedDate, selectedDate)
     ])
       .then(([clientsData, fruitsData, boxesData, transactionsData, summaryTransactionsData]) => {
         const filteredTransactions = transactionsData.filter(transaction => {

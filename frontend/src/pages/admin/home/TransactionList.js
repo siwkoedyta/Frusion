@@ -14,11 +14,11 @@ export default function TransactionList({ clients, fruits, boxes, transactions }
                             {clients.find(client => client.id === transaction.clientId)?.lastName}
                         </div>
                         <div className='weightPriceTransaction'>
-                            <div className='weightTransaction'>{transaction.weightNet}</div>
+                            <div className='weightTransaction'>{transaction.weightNet.toFixed(2)}</div>
                             <div>kg</div>
                             <div className='priceTransaction'>
                                 <div className='multiplier'>x</div>
-                                <div className='price'>{transaction.price}</div>
+                                <div className='price'>{transaction.price.toFixed(2)}</div>
                                 <div>zł</div>
                             </div>
                         </div>
@@ -29,7 +29,7 @@ export default function TransactionList({ clients, fruits, boxes, transactions }
                     </div>
                     <div className="nameFruitValueTransaction">
                         <div className='featuredField  featuredFieldValueTransaction' id={`featuredField-${transaction.id}`}>
-                            <div className='valueTransaction'>{transaction.amount}</div> zł
+                            <div className='valueTransaction'>{transaction.amount.toFixed(2)}</div> zł
                         </div>
                         <div className="nameFruitTransaction">
                             {fruits.find(fruit => fruit.id === transaction.fruitId)?.name}

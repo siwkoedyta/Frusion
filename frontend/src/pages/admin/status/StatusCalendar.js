@@ -1,11 +1,8 @@
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import React, { useState } from 'react';
 
-export default function StatusCalendar() {
-  const [selectedStartDate, setSelectedStartDate] = useState(new Date());
-  const [selectedEndDate, setSelectedEndDate] = useState(new Date());
-
+export default function StatusCalendar({ selectedStartDate, setSelectedStartDate, selectedEndDate, setSelectedEndDate }) {
   return (
     <div className='calendar-container' id='statusCalendar'>
         <div id='startCalendar'>
@@ -24,7 +21,6 @@ export default function StatusCalendar() {
             onChange={date => setSelectedEndDate(date)}
           />
         </div>
-
     </div>
   );
 }

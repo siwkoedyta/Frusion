@@ -31,7 +31,7 @@ export default function RemoveFruit({ fruits, onUpdate }) {
         <select id="fruit" name="fruit" value={selectedFruit} onChange={handleFruitChange}>
           <option value="">Select a fruit</option>
           {fruits.map(fruit => (
-            <option key={fruit.id} value={fruit.id}>{fruit.id}</option>
+            <option key={fruit.id} value={fruit.id}>{fruit.name}</option>
           ))}
         </select>
       </div>

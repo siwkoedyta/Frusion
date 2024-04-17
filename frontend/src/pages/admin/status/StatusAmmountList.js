@@ -1,15 +1,19 @@
 import React from 'react';
-export default function StatusAmmountList() {
+
+export default function StatusAmmountList({ summaryTransactions }) {
   return (
     <div>
-      <div>
-          <div className='field' id='statusFieldAmount'>
-            <div>raspberry</div>
+      {summaryTransactions && summaryTransactions.map(transaction => (
+        <div key={transaction.fruitId} id={`${transaction.fruitId}`}>
+          <div className='field statusField' id={`${transaction.fruitId}`}>
+            <div>{transaction.fruitName}</div>
             <div id='statusPriceField'>
-                <div id='price'>2456,80</div>zł
+              <div id='price'>{transaction.sumAmount.toFixed(2)}</div>
+              <div>zł</div>
             </div>
           </div>
-      </div>
+        </div>
+      ))}
     </div>
   );
 }
