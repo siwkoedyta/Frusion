@@ -24,7 +24,7 @@ export default function AddFruit({ onUpdate }) {
 
   return (
     <div className='methodPlace'>
-      <div className='titleMethod'>Add fruit</div>
+      <div>Add fruit</div>
       <div>
         <input
           type="text"

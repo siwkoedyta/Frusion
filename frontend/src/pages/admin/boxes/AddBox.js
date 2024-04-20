@@ -30,7 +30,7 @@ export default function AddFruit({ onUpdate }) {
   };
   return (
     <div className='methodPlace'>
-      <div className='titleMethod'>Add box</div>
+      <div>Add box</div>
       <div className='inputGap'>
         <input
           type="text"

@@ -7,9 +7,8 @@ export default function StatusAmmountList({ summaryTransactions }) {
         <div key={transaction.fruitId} id={`${transaction.fruitId}`}>
           <div className='field statusField' id={`${transaction.fruitId}`}>
             <div>{transaction.fruitName}</div>
-            <div id='statusPriceField'>
-              <div id='price'>{transaction.sumAmount.toFixed(2)}</div>
-              <div>zł</div>
+            <div className='dataSmallerField'>
+              <div>{transaction.sumAmount.toFixed(2)}</div>&nbsp;zł
             </div>
           </div>
         </div>

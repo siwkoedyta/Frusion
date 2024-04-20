@@ -35,7 +35,7 @@ export default function SetPrice({ fruits, onUpdate }) {
   return (
     <div className='methodPlace'>
 
-      <div className='titleMethod'>Set the price</div>
+      <div>Set the price</div>
       <div className='inputGap'>
         <div>
           <select id="fruit" name="fruit" value={selectedFruit} onChange={handleFruitChange}>

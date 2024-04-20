@@ -1,14 +1,11 @@
 .nameSection{
+    display: flex;
+    align-items: center;
     font-size:2rem;
     font-weight: 500;
     color: #351431;
     margin-bottom: 1rem;
-}
-
-#statusMainContent > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 }
 
 #featuredFieldStatusBoxes, #featuredFieldStatusAmount{
@@ -21,11 +18,6 @@
 .statusField{
     min-width: 15vw;
     font-weight: 200;
-}
-
-#statusPriceField{
-    display: flex;
-    color: #9A9A9A;
 }
 
 #statusPriceFieldALL{
@@ -66,13 +58,17 @@
 }
 
 #endDate{
-    margin-right: -2.3rem;
+    margin-right: -1.5rem;
 }
 
 #startingDate{
-    margin-right: 0.5rem;
+    margin-right: 1rem;
 }
 
 #statusCalendar > * {
     margin-bottom: 1rem; 
+}
+
+#weightStatus{
+    min-width: 28vw;
 }

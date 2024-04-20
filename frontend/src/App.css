@@ -40,7 +40,7 @@
   margin-top: 1.5rem;
 }
 
-.mainContent{
+.mainContent {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -51,6 +51,7 @@
 input,
 select {
     width:20vw;
+    min-width: 15rem;
     height: 6vh;
     border: none;
     border-radius: 2.5rem;
@@ -113,8 +114,6 @@ button {
   font-size:2rem;
   font-weight: 500;
   color: #351431;
-  width: calc(100% - 4rem - 2rem);
-
 }
 
 .methodPlace {
@@ -126,20 +125,17 @@ button {
   height: auto;
   padding: 1rem 2rem;
   margin-bottom: 1rem;
-  min-width: 20vw;
   background-color: #D9D9D9;
   border-radius: 2.5rem;
   font-size: 2rem;
   font-weight: 500;
   color: #351431;
-}
-
-.titleMethod{
-  height: 5vh;;
+  min-width: 10rem;
+  gap: 1rem;
 }
 
 .buttonMethod{
-  margin-top: 1vh;
+  height: 4vh;
 }
 
 .field {
@@ -156,22 +152,19 @@ button {
   font-weight:500;
   font-size:1.5rem;
   margin-bottom:1rem;
-  white-space: nowrap; 
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
+
 .field > div:first-child {
-  max-width: 15rem; 
+  min-width: 15vw;
+  max-width: 10rem; 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.field-content {
-  max-width: calc(100% - 4rem);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.dataSmallerField{
+  display: flex;
+  color: #9A9A9A;
 }
 
 .calendar {
@@ -179,6 +172,18 @@ button {
   color: #9A9A9A;
   font-weight: 400;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  max-width: 12vw;
+  min-width: 5vw;
+  text-align: center;
+}
+
+.calendar-container {
+  display: flex;
+  justify-content: center;
+}
+
+.react-datepicker-wrapper {
+  display: inline-block;
 }
 
 .parameters, .parametersSummary, .nameFruitValueTransaction{
@@ -202,10 +207,7 @@ button {
   height: 5vh;
 }
 
-.calendar-container {
-  position: relative;
-  display: inline-block;
-}
+
 
 .dropdown{
   display: flex;

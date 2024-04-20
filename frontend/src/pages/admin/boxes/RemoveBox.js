@@ -26,7 +26,7 @@ export default function RemoveBox({ boxes, onUpdate }) {
 
   return (
     <div className='methodPlace'>
-      <div className='titleMethod'>Remove box</div>
+      <div>Remove box</div>
       <div>
         <select id="box" name="box" value={selectedBox} onChange={handleBoxChange}>
           <option key="" value="">Select a box</option>

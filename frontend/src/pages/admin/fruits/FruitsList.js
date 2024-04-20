@@ -5,8 +5,10 @@ export default function FruitsList({ fruits }) {
     <div>
       {fruits.map(fruit => (
         <div key={fruit.id} className='field' id={`field-${fruit.id}`}>
-          <div className='fruitName'>{fruit.name}</div>
-          <div>{fruit.price}</div>
+          <div>{fruit.name}</div>
+          <div className='dataSmallerField'>
+            <div>{fruit.price.toFixed(2)}</div>&nbsp;zł
+          </div>
         </div>
       ))}
     </div>

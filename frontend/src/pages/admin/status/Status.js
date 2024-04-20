@@ -66,9 +66,9 @@ export default function Status() {
           selectedEndDate={selectedEndDate}
           setSelectedEndDate={handleEndDateChange}
         />
-        <div className='mainContent' id='statusMainContent'>
+        <div className='mainContent'>
             <div>
-                <div className='nameSection'>Weight</div>
+                <div className='nameSection' id='weightStatus'>Weight</div>
                 <SummaryList summaryTransactions={summaryTransactions} />
             </div>
             <div>

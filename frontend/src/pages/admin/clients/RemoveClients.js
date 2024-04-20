@@ -26,7 +26,7 @@ export default function RemoveClients({ clients, onUpdate }) {
 
     return (
       <div className='methodPlace'>
-      <div className='titleMethod'>Remove client</div>
+      <div>Remove client</div>
         <div>
           <select name="client" value={selectedClient} onChange={handleClientChange}>
             <option value="">Select a client</option>

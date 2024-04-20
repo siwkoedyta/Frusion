@@ -37,37 +37,38 @@ export default function RegistrationPanel() {
     <div className='panels'>
         <Wave/>
         <div id='inputPanelLog'>
-            
             <div className='middle'>
                 <div id='titlePanelRegistration'>Create account</div>
-                <input 
-                type="text"
-                name="email"
-                placeholder="Email"
-                value={email}
-                onChange={event => setEmail(event.target.value)}
-                />
-                <input 
-                type="text"
-                name="password"
-                placeholder="Password"
-                value={password}
-                onChange={event => setPassword(event.target.value)}
-                />
-                <input 
-                type="text"
-                name="repeatPassword"
-                placeholder="Repeat password"
-                value={repeatPassword}
-                onChange={event => setRepeatPassword(event.target.value)}
-                />
-                <input 
-                type="text"
-                name="frusionName"
-                placeholder="Frusion name"
-                value={frusionName}
-                onChange={event => setFrusionName(event.target.value)}
-                />
+                <div className='inputGap'>
+                    <input 
+                    type="text"
+                    name="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={event => setEmail(event.target.value)}
+                    />
+                    <input 
+                    type="text"
+                    name="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={event => setPassword(event.target.value)}
+                    />
+                    <input 
+                    type="text"
+                    name="repeatPassword"
+                    placeholder="Repeat password"
+                    value={repeatPassword}
+                    onChange={event => setRepeatPassword(event.target.value)}
+                    />
+                    <input 
+                    type="text"
+                    name="frusionName"
+                    placeholder="Frusion name"
+                    value={frusionName}
+                    onChange={event => setFrusionName(event.target.value)}
+                    />
+                </div>
             </div>
 
             <div id='buttonsPanelRegistration'>

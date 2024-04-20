@@ -42,36 +42,38 @@ export default function AddClients({ onUpdate }) {
 
   return (
     <div className='methodPlace'>
-      <div className='titleMethod'>Add client</div>
+      <div>Add client</div>
       <div>
-      <input
+      <div className='inputGap'>
+        <input
+            type="text"
+            name="firstName"
+            value={firstName}
+            onChange={handleInputChangeFirstName}
+            placeholder="First name"
+          />        
+          <input
           type="text"
-          name="firstName"
-          value={firstName}
-          onChange={handleInputChangeFirstName}
-          placeholder="First name"
+          name="lastName"
+          value={lastName}
+          onChange={handleInputChangeLastName}
+          placeholder="Last name"
         />        
         <input
-        type="text"
-        name="lastName"
-        value={lastName}
-        onChange={handleInputChangeLastName}
-        placeholder="Last name"
-      />        
-      <input
-        type="text"
-        name="email"
-        value={email}
-        onChange={handleInputChangeEmail}
-        placeholder="Email"
-      />        
-      <input
-        type="text"
-        name="password"
-        value={password}
-        onChange={handleInputChangePassword}
-        placeholder="Password"
-      />
+          type="text"
+          name="email"
+          value={email}
+          onChange={handleInputChangeEmail}
+          placeholder="Email"
+        />        
+        <input
+          type="text"
+          name="password"
+          value={password}
+          onChange={handleInputChangePassword}
+          placeholder="Password"
+        />
+        </div>
       </div>
       <button className='buttonMethod' onClick={handleAddClient}>Add</button>
     </div>

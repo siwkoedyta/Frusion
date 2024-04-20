@@ -5,8 +5,10 @@ export default function BoxesList({ boxes }) {
     <div>
       {boxes.map(box => (
         <div key={box.id} className='field' id={`field-${box.id}`}>
-          <div className='field-content'>{box.name}</div>
-          <div>{box.weight}</div>
+          <div>{box.name}</div>
+          <div className='dataSmallerField'>
+            <div>{box.weight.toFixed(2)}</div>&nbsp;kg
+          </div>
         </div>
       ))}
     </div>

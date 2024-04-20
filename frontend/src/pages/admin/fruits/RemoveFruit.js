@@ -26,7 +26,7 @@ export default function RemoveFruit({ fruits, onUpdate }) {
 
   return (
     <div className='methodPlace'>
-      <div className='titleMethod'>Remove fruit</div>
+      <div>Remove fruit</div>
       <div>
         <select id="fruit" name="fruit" value={selectedFruit} onChange={handleFruitChange}>
           <option value="">Select a fruit</option>

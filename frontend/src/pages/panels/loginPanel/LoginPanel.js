@@ -21,13 +21,15 @@ export default function LoginPanel() {
       <div id='inputPanelLog'>
         <div className='middle'>
           <div id='informationPanelLog'>Sign in to your account</div>
-          <input 
-          placeholder="Email"
-          onChange={event => setEmail(event.target.value)}
-          />
-          <input placeholder="Password"
-            onChange={event => setPassword(event.target.value)}
-          />
+          <div className='inputGap'>
+            <input 
+            placeholder="Email"
+            onChange={event => setEmail(event.target.value)}
+            />
+            <input placeholder="Password"
+              onChange={event => setPassword(event.target.value)}
+            />
+            </div>
         </div>
         <div className='right' id='rightPanelLog'>
           <div className='buttonArrow'>
