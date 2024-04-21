@@ -15,6 +15,10 @@ import ClientChangePassword from './pages/client/clientChangePassword/ClientChan
 import Sidebar from './components/sidebar/Sidebar.js';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { CurrentAdminProvider } from './CurrentAdminProvider.js';
+import React, { useState, useEffect } from 'react';
+import { getAllFruits } from './api/fruit/getAllFruits';
+import { getAllBoxes } from './api/box/getAllBoxes.js';
+import { getAllClients } from './api/client/getAllClients.js';
 
 function App() {
   const location = useLocation();
@@ -22,18 +26,48 @@ function App() {
   const hideSidebarPaths = ['/LoginPanel', '/RegistrationPanel'];
   const shouldHideSidebar = hideSidebarPaths.includes(location.pathname);
 
+  const [fruits, setFruits] = useState([]);
+  const [boxes, setBoxes] = useState([]);
+  const [clients, setClients] = useState([]);
+
+
+  useEffect(() => {
+    refreshFruits();
+    refreshClients();
+    refreshBoxes();
+  }, []);
+
+  const refreshFruits = () => {
+    getAllFruits()
+      .then(data => setFruits(data.filter(fruit => !fruit.archived)))
+      .catch(errors => alert(errors));
+  };
+
+  const refreshBoxes = () => {
+    getAllBoxes()
+        .then(data => setBoxes(data.filter(box => !box.archived)))
+        .catch(errors => alert(errors));
+  }
+
+  const refreshClients = () => {
+    getAllClients()
+        .then(data => setClients(data.filter(client => !client.archived)))
+        .catch(errors => alert(errors));
+  }
+
+
   return (
     <div className="App">
       <div className="content-container">
         <CurrentAdminProvider>
           {!shouldHideSidebar && <Sidebar menuType='admin'/>}
-          <div className="main-content">
+          <div className="mainContent" >
             <Routes>
               <Route path='/Home' element={<Home/>}/>
               <Route path='/Status' element={<Status/>}/>
-              <Route path='/Fruits' element={<Fruits/>}/>
-              <Route path='/Boxes' element={<Boxes/>}/>
-              <Route path='/Clients' element={<Clients/>}/>
+              <Route path='/Fruits' element={<Fruits fruits={fruits} onUpdate={refreshFruits} />} />
+              <Route path='/Boxes' element={<Boxes boxes={boxes} onUpdate={refreshBoxes}/>}/>
+              <Route path='/Clients' element={<Clients clients={clients} onUpdate={refreshClients}/>}/>
               <Route path='/LoginPanel' element={<LoginPanel/>}/>
               <Route path='/RegistrationPanel' element={<RegistrationPanel/>}/>
             </Routes>

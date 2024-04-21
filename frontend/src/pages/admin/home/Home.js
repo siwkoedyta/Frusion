@@ -14,6 +14,7 @@ import { useCurrentAdmin } from '../../../CurrentAdminProvider';
 import { getAllSummaryTransactions } from '../../../api/transaction/getAllSummaryTransactions';
 import Modal from './Modal'; 
 import Overlay from './Overlay';
+import WaveSmall from '../../../components/waveSmall/WaveSmall.js';
 
 export default function Home() {
   const { currentAdmin, setCurrentAdmin } = useCurrentAdmin();
@@ -83,20 +84,25 @@ export default function Home() {
           />
         </div>
         <div className='mainContent'>
-          <div id='buttonSummaryHome'>
-            <button id='buttonHome' onClick={openModal}>Buy fruit</button>
-            <Overlay isOpen={isModalOpen} onClose={closeModal}>
-              <Modal onUpdate={refreshData} isOpen={isModalOpen} onClose={closeModal} fruits={fruits} boxes={boxes}/>
-            </Overlay>
-            
-            <div className='methodPlace' id='methodPlaceHome'>
-              <div className='titleSummary'>Summary</div>
-              <SummaryList summaryTransactions={summaryTransactions} onUpdate={refreshData}/>
+          <div className='mainContentInside'>
+            <WaveSmall/>
+
+            <div id='buttonSummaryHome'>
+              <button id='buttonHome' onClick={openModal}>Buy fruit</button>
+              <Overlay isOpen={isModalOpen} onClose={closeModal}>
+                <Modal onUpdate={refreshData} isOpen={isModalOpen} onClose={closeModal} fruits={fruits} boxes={boxes}/>
+              </Overlay>
+              
+              <div className='methodPlace' id='methodPlaceHome'>
+                <div className='titleSummary'>Summary</div>
+                <SummaryList summaryTransactions={summaryTransactions} onUpdate={refreshData}/>
+              </div>
+            </div>
+            <div>
+              <TransactionList clients={clients} fruits={fruits} boxes={boxes} transactions={transactions} onUpdate={refreshData}/>
             </div>
           </div>
-          <div>
-            <TransactionList clients={clients} fruits={fruits} boxes={boxes} transactions={transactions} onUpdate={refreshData}/>
-          </div>
+          
         </div>
       </div>
     </div>

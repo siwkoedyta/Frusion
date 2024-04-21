@@ -1,3 +1,4 @@
+/*---------------------Main---------------------*/
 .App {
   display: flex;
   justify-content: center;
@@ -41,11 +42,17 @@
 }
 
 .mainContent {
+  width: 100%;
+  background: #E9E9E9;
+}
+
+.mainContentInside{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   width: 100%;
   background: #E9E9E9;
+  gap:2rem;
 }
 
 input,
@@ -97,8 +104,8 @@ button {
   transition: 0.2s;
   border-radius: 2.5rem;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+  min-width: 8rem;
 }
-
 
 .featuredField{
   display: flex;
@@ -134,16 +141,11 @@ button {
   gap: 1rem;
 }
 
-.buttonMethod{
-  height: 4vh;
-}
-
 .field {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: fit-content;
-  width: 100vw;
   background: #FFF;
   border-radius: 2.5rem;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
@@ -151,7 +153,6 @@ button {
   width: calc(100% - 4rem);
   font-weight:500;
   font-size:1.5rem;
-  margin-bottom:1rem;
 }
 
 .field > div:first-child {
@@ -162,10 +163,7 @@ button {
   white-space: nowrap;
 }
 
-.dataSmallerField{
-  display: flex;
-  color: #9A9A9A;
-}
+/*---------------------Calendar---------------------*/
 
 .calendar {
   font-size: 1.5rem;
@@ -186,28 +184,8 @@ button {
   display: inline-block;
 }
 
-.parameters, .parametersSummary, .nameFruitValueTransaction{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-left: 0.5rem;
-}
 
-.parametersSummary{
-  font-size: 1.2rem;
-}
-
-.nameTransactionList{
-  color: #9A9A9A;
-}
-
-.titleSummary{
-  font-weight: 650;
-  height: 5vh;
-}
-
-
+/*---------------------Dropdown---------------------*/
 
 .dropdown{
   display: flex;
@@ -231,6 +209,133 @@ button {
   padding-left: 2rem;
 }
 
+
+/*---------------------Other---------------------*/
+
+
+.buttonMethod{
+  height: 4vh;
+}
+
+.dataSmallerField{
+  display: flex;
+  color: #9A9A9A;
+  min-width: 6rem;
+  justify-content: flex-end;
+}
+
+.parameters, .parametersSummary, .nameFruitValueTransaction{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.parametersSummary{
+  font-size: 1.2rem;
+}
+
+.nameTransactionList{
+  color: #9A9A9A;
+}
+
+.titleSummary{
+  font-weight: 650;
+  height: 5vh;
+}
+
 .search-inner{
   display: flex;
+}
+
+.featuredFieldTitleList{
+  margin-bottom:1rem;
+  min-width: 15rem;
+}
+
+
+
+/*---------------------MediaQuieres---------------------*/
+@media screen and (min-width: 700px) {
+  .waveSmall {
+    display: none;
+  }
+
+  .hamburgerMenu{
+    display: none;
+  }
+
+  #mainContentFruitBoxes{
+    padding-top:4.5rem;
+  }
+  
+}
+
+@media screen and (max-width: 700px){
+  .sidebar-container {
+    display: none;
+  }
+
+  .mainContent{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .hamburgerMenu{
+    margin-bottom: 1rem;
+  }
+
+}
+
+@media (min-width: 640px) and (max-width: 700px) {
+  .methods {
+    margin-top: 61px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .mainContentInsideContainer {
+    display: flex;
+    justify-content: center;
+  }
+
+  .mainContentInside {
+    width: 90vw;
+    display: flow;
+    gap:2rem;
+  }
+  
+  .mainContentInside > * {
+    margin-bottom: 2rem;
+  }
+  
+  .mainContentInside > *:last-child {
+    margin-bottom: 0; 
+  }
+
+  input, select {
+    width: 70vw;
+    min-width: 15rem;
+    height: 5vh;
+    min-height: 3rem;
+  }
+
+  .buttonMethod{
+    min-height: 3rem;
+  }
+
+  .featuredField, .methodPlace{
+    font-size: 1.5rem;
+  }
+
+  button{
+    font-size: 1.3rem;
+  }
+  
+  .field, input, select{
+    font-size: 1rem;
+  }
+
 }
