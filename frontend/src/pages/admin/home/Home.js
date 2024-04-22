@@ -14,7 +14,6 @@ import { useCurrentAdmin } from '../../../CurrentAdminProvider';
 import { getAllSummaryTransactions } from '../../../api/transaction/getAllSummaryTransactions';
 import Modal from './Modal'; 
 import Overlay from './Overlay';
-import WaveSmall from '../../../components/waveSmall/WaveSmall.js';
 
 export default function Home() {
   const { currentAdmin, setCurrentAdmin } = useCurrentAdmin();
@@ -84,8 +83,7 @@ export default function Home() {
           />
         </div>
         <div className='mainContent'>
-          <div className='mainContentInside'>
-            <WaveSmall/>
+          <div className='mainContentInsideHomeStatus'>
 
             <div id='buttonSummaryHome'>
               <button id='buttonHome' onClick={openModal}>Buy fruit</button>

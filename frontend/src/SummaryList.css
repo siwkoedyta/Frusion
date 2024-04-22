@@ -2,7 +2,8 @@
     display: flex;
     flex-direction: column;
     width: 26vw;
-    padding: 1rem;
+    padding: 1rem 2rem;
+    min-width: 15em;
 }
 
 #statusSummaryField{
@@ -29,7 +30,6 @@
 
 .weight{
     margin-right: 0.5rem;
-    margin-left: 2.4rem;
 }
 
 .price, .nominal, .box, .typeBox{
@@ -50,3 +50,45 @@
     margin-right: 1rem;
 }
 
+
+@media screen and (max-width: 1342px){
+    .summaryField {
+      width:45vw;
+    }
+} 
+
+@media screen and (max-width: 900px){
+    .summaryField {
+      width:65vw;
+    }
+} 
+
+@media screen and (max-width: 640px){
+    .nameFruit, .valueTransactionWeight {
+      font-size: 1.3rem;
+    }
+
+    .parametersSummary{
+        font-size: 1rem;
+    }
+
+    .summaryField{
+        min-width:calc(65vw + 2rem)
+    }
+
+} 
+
+@media screen and (max-width: 400px){
+    .nameFruit, .valueTransactionWeight {
+      font-size: 1rem;
+    }
+
+    .parametersSummary{
+        font-size: 0.8rem;
+    }
+
+    .titleSummary{
+        font-size: 1.3rem;
+    }
+
+} 

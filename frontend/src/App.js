@@ -20,6 +20,9 @@ import { getAllFruits } from './api/fruit/getAllFruits';
 import { getAllBoxes } from './api/box/getAllBoxes.js';
 import { getAllClients } from './api/client/getAllClients.js';
 
+import HamburgerMenu from './components/hamburgerMenu/hamburgerMenu.js';
+import WaveSmall from './components/waveSmall/WaveSmall.js';
+
 function App() {
   const location = useLocation();
 
@@ -29,13 +32,30 @@ function App() {
   const [fruits, setFruits] = useState([]);
   const [boxes, setBoxes] = useState([]);
   const [clients, setClients] = useState([]);
-
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
+  const [sidebarVisible, setSidebarVisible] = useState(!isMobile);
 
   useEffect(() => {
     refreshFruits();
     refreshClients();
     refreshBoxes();
   }, []);
+
+  useEffect(() => {
+    setSidebarVisible(false);
+  }, [location.pathname]);
+
+  const toggleSidebar = () => {
+    if (isMobile) {
+      setSidebarVisible(!sidebarVisible);
+      const body = document.getElementsByTagName('body')[0];
+      if (sidebarVisible) {
+        body.classList.remove('sidebarOpen');
+      } else {
+        body.classList.add('sidebarOpen');
+      }
+    }
+  };
 
   const refreshFruits = () => {
     getAllFruits()
@@ -47,30 +67,47 @@ function App() {
     getAllBoxes()
         .then(data => setBoxes(data.filter(box => !box.archived)))
         .catch(errors => alert(errors));
-  }
+  };
 
   const refreshClients = () => {
     getAllClients()
         .then(data => setClients(data.filter(client => !client.archived)))
         .catch(errors => alert(errors));
-  }
+  };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 900);
+      setSidebarVisible(!isMobile);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMobile]);
 
   return (
     <div className="App">
       <div className="content-container">
         <CurrentAdminProvider>
-          {!shouldHideSidebar && <Sidebar menuType='admin'/>}
-          <div className="mainContent" >
-            <Routes>
-              <Route path='/Home' element={<Home/>}/>
-              <Route path='/Status' element={<Status/>}/>
-              <Route path='/Fruits' element={<Fruits fruits={fruits} onUpdate={refreshFruits} />} />
-              <Route path='/Boxes' element={<Boxes boxes={boxes} onUpdate={refreshBoxes}/>}/>
-              <Route path='/Clients' element={<Clients clients={clients} onUpdate={refreshClients}/>}/>
-              <Route path='/LoginPanel' element={<LoginPanel/>}/>
-              <Route path='/RegistrationPanel' element={<RegistrationPanel/>}/>
-            </Routes>
+          {/* Sidebar */}
+          {(!isMobile || sidebarVisible) && !shouldHideSidebar && <Sidebar menuType='admin' isVisible={sidebarVisible} toggleSidebar={toggleSidebar} />}
+          
+          {/* Main Content */}
+          <div className={`mainContent ${isMobile && sidebarVisible ? 'sidebarVisible' : ''}`}>
+            <WaveSmall/>
+            <div className='page'>
+              <div className='mainContent'>
+                <HamburgerMenu onClick={toggleSidebar}/>
+                <Routes>
+                  <Route path='/Home' element={<Home/>}/>
+                  <Route path='/Status' element={<Status/>}/>
+                  <Route path='/Fruits' element={<Fruits fruits={fruits} onUpdate={refreshFruits} />} />
+                  <Route path='/Boxes' element={<Boxes boxes={boxes} onUpdate={refreshBoxes}/>}/>
+                  <Route path='/Clients' element={<Clients clients={clients} onUpdate={refreshClients}/>}/>
+                  <Route path='/LoginPanel' element={<LoginPanel/>}/>
+                  <Route path='/RegistrationPanel' element={<RegistrationPanel/>}/>
+                </Routes>
+              </div>
+            </div>
           </div>
         </CurrentAdminProvider>
       </div>
@@ -79,3 +116,5 @@ function App() {
 }
 
 export default App;
+
+

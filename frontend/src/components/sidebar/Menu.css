@@ -69,3 +69,9 @@
 }
 
 
+@media screen and (max-width: 640px) {
+    .menu{
+        font-size: 1.3rem;
+        gap:1.5rem;
+    }
+}

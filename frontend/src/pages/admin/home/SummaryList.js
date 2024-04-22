@@ -1,6 +1,6 @@
 export default function SummaryList({ summaryTransactions }) {
     return (
-        <div>
+        <div className="inputGap">
             {summaryTransactions.map(transaction => (
                 <div key={transaction.fruitId} className='field summaryField' id={`summaryField-${transaction.fruitId}`}>
                     <div className='nameFruit'>{transaction.fruitName}</div>
@@ -18,7 +18,7 @@ export default function SummaryList({ summaryTransactions }) {
                                     ))}
                             </div>
                         </div>
-                        <div className='valueTransaction'>
+                        <div className='valueTransactionWeight'>
                             <div className='weight'>{transaction.sumWeight.toFixed(2)}</div> kg
                         </div>
                     </div>

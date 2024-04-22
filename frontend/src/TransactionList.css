@@ -1,4 +1,4 @@
-.weightPriceTransaction, .valueTransaction, .priceTransaction, .boxesTransaction{
+.weightPriceTransaction, .valueTransaction, .priceTransaction, .boxesTransaction, .valueTransactionWeight{
     display: flex;
 }
 
@@ -35,7 +35,6 @@
 .featuredFieldValueTransaction{
     min-width: 10vw;
     max-width: 7rem;
-    margin-left: 1rem;
     font-size: 1.6rem;
     font-weight: 550;
 }
@@ -43,3 +42,60 @@
 .nameFruitTransaction{
     margin-right: 1.5rem;
 }
+
+.parameters{
+    min-width: 13rem;
+}
+
+@media screen and (max-width: 1342px){
+    .featuredFieldValueTransaction{
+        min-width: 15vw;
+    }
+} 
+
+@media screen and (max-width: 900px){
+    .featuredFieldValueTransaction{
+        min-width: 20vw;
+    }
+} 
+
+@media screen and (max-width: 640px){
+    .weightPriceTransaction, .nameTransactionList, .featuredFieldValueTransaction{
+        font-size: 1.3rem;
+    }
+
+    .priceTransaction, .boxesTransaction, .nameFruitTransaction{
+        font-size: 1rem;
+    }
+
+    .parameters{
+        min-width:11.5rem;
+    }
+
+    .featuredFieldValueTransaction{
+        padding: 1rem;
+    }
+} 
+
+
+@media screen and (max-width: 400px){
+    .weightPriceTransaction, .nameTransactionList, .featuredFieldValueTransaction{
+        font-size: 1rem;
+    }
+
+    .priceTransaction, .boxesTransaction, .nameFruitTransaction{
+        font-size: 0.8rem;
+    }
+
+    .parameters{
+        min-width:11.5rem;
+    }
+
+    .nameFruitTransaction{
+        margin-right: 0.5rem;
+    }
+
+    .featuredFieldValueTransaction{
+        padding: 0.5rem;
+    }
+} 

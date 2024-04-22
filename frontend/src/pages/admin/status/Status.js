@@ -7,7 +7,7 @@ import StatusCalendar from './StatusCalendar';
 import { authCurrentAdmin } from '../../../api/auth/authCurrentAdmin';
 import { useCurrentAdmin } from '../../../CurrentAdminProvider';
 import { getAllSummaryTransactions } from '../../../api/transaction/getAllSummaryTransactions';
-import WaveSmall from '../../../components/waveSmall/WaveSmall.js';
+
 
 export default function Status() {
   const { currentAdmin, setCurrentAdmin } = useCurrentAdmin();
@@ -68,7 +68,6 @@ export default function Status() {
           setSelectedEndDate={handleEndDateChange}
         />
         <div className='mainContent'>
-          <WaveSmall/>
           <div className='mainContentInside'>
             <div>
                 <div className='nameSection' id='weightStatus'>Weight</div>

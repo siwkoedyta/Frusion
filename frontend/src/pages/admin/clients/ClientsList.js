@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ClientsList({ clients }) {
   return (
-    <div>
+    <div className='inputGap'>
       {clients.map(client => (
         <div key={client.id} className='field fieldClient' id={`field-${client.id}`}>
           <div>{client.firstName} {client.lastName}</div>

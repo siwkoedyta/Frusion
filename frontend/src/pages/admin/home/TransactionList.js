@@ -1,6 +1,6 @@
 export default function TransactionList({ clients, fruits, boxes, transactions }) {
     return (
-        <div>
+        <div className="inputGap">
         {transactions.length === 0 ? (
           <div className="field transparent-field">
             No transactions available

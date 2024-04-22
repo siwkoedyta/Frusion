@@ -2,13 +2,9 @@
     justify-content: center;
 }
 
-#clientsListEmail{
-    font-size: 1.2rem;
-}
-
 .fieldClient{
     display: flex;
     flex-direction: column;
     align-items:flex-start;
-    min-width: calc(15vw + 6rem);
+    min-width: 20vw;
 }

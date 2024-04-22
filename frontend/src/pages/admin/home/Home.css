@@ -6,8 +6,8 @@
     min-width: 26vw;
 }
 
-#methodPlaceHome{
-    min-width: 27.5vw;
+#methodPlaceHome {
+    min-width: calc(26vw + 4rem);
 }
 
 #buttonHome{
@@ -16,7 +16,6 @@
     height: auto;
     padding: 2rem 7rem;
     margin-bottom: 1rem;
-    min-width: 26vw;
 }
 
 #frusionName{
@@ -29,11 +28,10 @@
 
 .transparent-field {
     display: flex;
-    min-width: 26vw;
+    min-width: calc(10vw + 19rem);
     justify-content: center;
     align-items: center;
 }
-
 
 .overlay {
     position: fixed;
@@ -71,6 +69,44 @@
     gap:1rem;
 }
 
+@media screen and (max-width: 1342px){
+    #methodPlaceHome {
+      min-width: calc(45vw + 4rem);
+    }
+    .homeField{
+        width: calc(45vw + 4rem);
+    }
+  } 
 
 
+@media screen and (max-width: 900px){
+    #methodPlaceHome {
+      min-width: calc(65vw + 4rem);
+    }
+    .homeField{
+        width: calc(65vw + 4rem);
+    }
+} 
 
+@media screen and (max-width: 640px){
+    #buttonHome{
+        font-size: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    #frusionName{
+        display: none;
+    }
+} 
+
+@media screen and (max-width: 400px){
+    #buttonHome{
+        font-size: 1.3rem;
+        font-weight: 700;
+        padding: 1rem;
+    }
+
+    #frusionName{
+        display: none;
+    }
+} 

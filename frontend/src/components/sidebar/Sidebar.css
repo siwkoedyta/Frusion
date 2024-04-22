@@ -1,4 +1,4 @@
-.sidebar-container {
+.sidebarContainer {
     width: 20rem;
     min-width: 20rem;
     max-width: 20rem;
@@ -9,3 +9,21 @@
     overflow-y: auto;
 }
 
+@media screen and (max-width: 640px) {
+    .sidebarHeader{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .closeSidebar{
+        color: #9A9A9A;
+        width: 30vw;
+    }
+
+    .sidebarContainer{
+        display: flex;
+        flex-direction: column;
+        gap:2rem;
+    }
+
+}
