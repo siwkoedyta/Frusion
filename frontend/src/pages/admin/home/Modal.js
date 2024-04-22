@@ -69,7 +69,7 @@ useEffect(() => {
           })
           .slice(0, 10)
           .map(fruit => (
-            <div key={fruit.name} className='dropdown-row' onClick={() => setFruitId(fruit.name)}>
+            <div key={fruit.id} className='dropdown-row' onClick={() => setFruitId(fruit.id)}>
               {fruit.name}
             </div>
           ))}

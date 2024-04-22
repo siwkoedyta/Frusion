@@ -167,6 +167,14 @@ button {
   min-width: 20vw;
 }
 
+.flexWrapContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 2vw;
+}
+
 /*---------------------Calendar---------------------*/
 
 .calendar {
@@ -179,9 +187,15 @@ button {
   text-align: center;
 }
 
-.calendar-container {
+#calendars {
   display: flex;
-  justify-content: center;
+  align-items: end; 
+  gap:1vw;
+}
+
+.calendar-flex-container {
+  display: flex;
+  align-items: center; /* Wyśrodkowanie zawartości w pionie */
 }
 
 .react-datepicker-wrapper {
@@ -277,25 +291,41 @@ button {
   #mainContentFruitBoxes, .contentInterior{
     padding-top:4.5rem;
   }
+  #calendars{
+    gap:3vw;
+  }
   
 }
 
-@media screen and (max-width: 1342px){
+@media screen and (max-width: 1372px){
   .calendar{
-      min-width: 22vw;
+    min-width: 22vw;
+  }
+  
+  .calendar-flex-container {
+    flex-direction: column;
+    align-items: flex-start;
   }
 } 
 
 
 @media screen and (max-width: 900px){
+  .contentInterior{
+    gap:1rem;
+  }
+
   .mainContent{
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+  }
+
+  .mainContentInsideHomeStatus{
+    gap:0rem;
   }
 
   .hamburgerMenu{
     margin-left: 5vw;
+    margin-bottom:1rem;
   }
 
   .calendar{
@@ -312,7 +342,7 @@ button {
     background-color: #D9D9D9; 
     animation: slideIn 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
   }
-  
+
   @keyframes slideIn {
     from {
       transform: translateX(-100%);
@@ -352,11 +382,20 @@ button {
     animation: slideOut 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 
   }
+
+  .mainContentInsideHomeStatus{
+    gap:2rem;
+  }
+
+  .flexWrapContainer{
+    min-width: 100vw;
+  }
   
 }
 
 
 @media screen and (max-width: 640px) {
+
   .methodPlace{
     padding: 1rem 1rem;
   }
@@ -364,6 +403,11 @@ button {
   .mainContentInsideContainer {
     display: flex;
     justify-content: center;
+  }
+
+  .contentInterior > div:not(:first-child){
+    margin-top: 0;
+    margin-bottom: 2vh;
   }
 
   .mainContentInside {
@@ -396,7 +440,7 @@ button {
   }
 
   button, .calendar{
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
   
   .field, input, select, #clientsListEmail{
@@ -407,6 +451,9 @@ button {
     min-width: 12rem;
   }
 
+  .flexWrapContainer{
+    gap:5vw;
+  }
 
 }
 

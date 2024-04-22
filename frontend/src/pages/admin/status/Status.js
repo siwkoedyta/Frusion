@@ -68,29 +68,33 @@ export default function Status() {
           setSelectedEndDate={handleEndDateChange}
         />
         <div className='mainContent'>
-          <div className='mainContentInside'>
+          <div className='mainContentInsideHomeStatus'>
             <div>
                 <div className='nameSection' id='weightStatus'>Weight</div>
-                <SummaryList summaryTransactions={summaryTransactions} />
+                <SummaryList  id='nameFruitStatus' summaryTransactions={summaryTransactions} />
             </div>
-            <div>
-                <div className='nameSection'>Boxes</div>
-                <div className='featuredField' id='featuredFieldStatusBoxes'>
-                  <div>ALL</div>
-                  <div>{calculateTotalBoxes()}</div>
-                </div>
-                <StatusBoxesList summaryTransactions={summaryTransactions} />
-            </div>
-            <div>
-                <div className='nameSection'>Amount</div>
-                <div className='featuredField' id='featuredFieldStatusAmount'>
-                    <div>ALL</div>
-                    <div id='statusPriceFieldALL'>
-                        <div id='statusPriceALL'>{calculateTotalAmount()}</div>zł
+            <div className='flexWrapContainer'>
+              <div>
+                    <div className='nameSection'>Boxes</div>
+                    <div className='featuredField' id='featuredFieldStatusBoxes'>
+                      <div>ALL</div>
+                      <div>{calculateTotalBoxes()}</div>
                     </div>
+                    <StatusBoxesList summaryTransactions={summaryTransactions} />
                 </div>
-                <StatusAmmountList summaryTransactions={summaryTransactions} />
+                <div>
+                    <div className='nameSection'>Amount</div>
+                    <div className='featuredField' id='featuredFieldStatusAmount'>
+                        <div>ALL</div>
+                        <div id='statusPriceFieldALL'>
+                            <div id='statusPriceALL'>{calculateTotalAmount()}</div>zł
+                        </div>
+                    </div>
+                    <StatusAmmountList summaryTransactions={summaryTransactions} />
+                </div>
             </div>
+
+
           </div>
 
         </div>

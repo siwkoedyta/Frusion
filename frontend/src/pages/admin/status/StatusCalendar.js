@@ -5,7 +5,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 export default function StatusCalendar({ selectedStartDate, setSelectedStartDate, selectedEndDate, setSelectedEndDate }) {
   return (
     <div className='calendar-container' id='statusCalendar'>
-        <div id='startCalendar'>
+      <div id='calendars' className='calendar-flex-container'>
+        <div id='startCalendar' className='calendar-item'>
           <div className='titleCalendar' id='startingDate'>Starting date:</div>
           <DatePicker
             className='calendar'
@@ -13,7 +14,7 @@ export default function StatusCalendar({ selectedStartDate, setSelectedStartDate
             onChange={date => setSelectedStartDate(date)}
           />
         </div>
-        <div id='endCalendar' >
+        <div id='endCalendar' className='calendar-item'>
           <div className='titleCalendar' id='endDate'>End date:</div>
           <DatePicker
             className='calendar'
@@ -21,6 +22,7 @@ export default function StatusCalendar({ selectedStartDate, setSelectedStartDate
             onChange={date => setSelectedEndDate(date)}
           />
         </div>
+      </div>
     </div>
   );
 }

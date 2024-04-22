@@ -47,7 +47,7 @@
     min-width: 13rem;
 }
 
-@media screen and (max-width: 1342px){
+@media screen and (max-width: 1372px){
     .featuredFieldValueTransaction{
         min-width: 15vw;
     }

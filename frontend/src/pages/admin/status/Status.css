@@ -72,3 +72,34 @@
 #weightStatus{
     min-width: 28vw;
 }
+
+@media screen and (max-width: 640px) {
+    .nameSection{
+        font-size: 1.3rem;
+    }
+    #startingDate, #endDate{
+        font-size: 1.1rem;
+    }
+
+    #startingDate{
+        margin-right: 0rem;
+    }
+
+    .titleCalendar{
+        min-width: 10rem;
+    }
+
+    #endDate{
+        margin-right: -1.7rem;
+    }
+
+    #statusCalendar{
+        margin-bottom: 0rem;
+    }
+    
+    #featuredFieldStatusBoxes, #featuredFieldStatusAmount{
+        font-size: 1rem;
+        font-weight: 600;
+        min-width: calc(65vw + 2rem);
+    }
+}
