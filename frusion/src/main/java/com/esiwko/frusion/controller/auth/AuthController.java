@@ -2,6 +2,7 @@ package com.esiwko.frusion.controller.auth;
 
 import com.esiwko.frusion.controller.errors.BadRequestEx;
 import com.esiwko.frusion.repo.pg.admins.AdminsPGRepo;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -33,4 +34,5 @@ public class AuthController {
 
         return new Json.AuthResponse(admin.getEmail(), admin.getFrusionName());
     }
+
 }
