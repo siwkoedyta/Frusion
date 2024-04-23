@@ -88,7 +88,7 @@ export default function Home() {
             <div id='buttonSummaryHome'>
               <button id='buttonHome' onClick={openModal}>Buy fruit</button>
               <Overlay isOpen={isModalOpen} onClose={closeModal}>
-                <Modal onUpdate={refreshData} isOpen={isModalOpen} onClose={closeModal} fruits={fruits} boxes={boxes}/>
+                <Modal onUpdate={refreshData} isOpen={isModalOpen} onClose={closeModal} fruits={fruits} boxes={boxes} clients={clients}/>
               </Overlay>
               
               <div className='methodPlace' id='methodPlaceHome'>
