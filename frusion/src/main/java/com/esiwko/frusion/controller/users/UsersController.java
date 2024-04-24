@@ -1,5 +1,7 @@
 package com.esiwko.frusion.controller.users;
 
+import com.esiwko.frusion.controller.auth.AuthDetails;
+import com.esiwko.frusion.controller.auth.JwtService;
 import com.esiwko.frusion.controller.errors.BadRequestEx;
 import com.esiwko.frusion.repo.pg.admins.AdminEntity;
 import com.esiwko.frusion.repo.pg.users.UserEntity;
@@ -14,10 +16,13 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 public class UsersController {
+    private final JwtService jwtService;
     private final UsersPGRepo usersRepo;
 
     @PostMapping("clients")
-    public Json.AddUserResponse add(@CookieValue("adminId") String adminId, @RequestBody Json.AddUserRequest req) {
+    public Json.AddUserResponse add(@CookieValue("accessToken") String token, @RequestBody Json.AddUserRequest req) {
+        val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
+
         var id = UUID.randomUUID().toString();
         if (req.firstName().isBlank() || req.lastName().isBlank() || req.email().isBlank() || req.password().isBlank()) throw new BadRequestEx("NAME_EMPTY");
 
@@ -38,13 +43,15 @@ public class UsersController {
     }
 
     @DeleteMapping("clients/{id}")
-    public Json.RemoveUserResponse remove(@CookieValue("adminId") String adminId, @PathVariable String id) {
+    public Json.RemoveUserResponse remove(@CookieValue("accessToken") String token, @PathVariable String id) {
+        val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
         usersRepo.setArchived(id, adminId);
         return new Json.RemoveUserResponse(id);
     }
 
     @GetMapping("clients")
-    public Collection<Json.User> getAll(@CookieValue("adminId") String adminId) {
+    public Collection<Json.User> getAll(@CookieValue("accessToken") String token) {
+        val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
         return usersRepo.findAllByAdminId(adminId)
                 .stream().map(u -> new Json.User(
                         u.getId(),

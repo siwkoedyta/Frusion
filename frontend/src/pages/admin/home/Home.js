@@ -3,20 +3,18 @@ import { getAllFruits } from '../../../api/fruit/getAllFruits';
 import { getAllBoxes } from '../../../api/box/getAllBoxes';
 import { getAllClients } from '../../../api/client/getAllClients';
 import { getAllTransactions } from '../../../api/transaction/getAllTransaction';
-import { authCurrentAdmin } from '../../../api/auth/authCurrentAdmin';
+import { authCurrent} from '../../../api/auth/authCurrent';
 import './Home.css'
 import SummaryList from './SummaryList';
 import TransactionList from './TransactionList';
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useCurrentAdmin } from '../../../CurrentAdminProvider';
 import { getAllSummaryTransactions } from '../../../api/transaction/getAllSummaryTransactions';
 import Modal from './Modal'; 
 import Overlay from './Overlay';
 
 export default function Home() {
-  const { currentAdmin, setCurrentAdmin } = useCurrentAdmin();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [transactions, setTransactions] = useState([]);
   const [summaryTransactions, setSummaryTransactions] = useState([]);
@@ -24,14 +22,6 @@ export default function Home() {
   const [boxes, setBoxes] = useState([]);
   const [clients, setClients] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (!currentAdmin) {
-      authCurrentAdmin()
-        .then(admin => setCurrentAdmin(admin))
-        .catch(error => console.error('Error fetching current admin:', error));
-    }
-  }, [currentAdmin, setCurrentAdmin]);
 
   useEffect(() => {
     refreshData();
@@ -74,7 +64,7 @@ export default function Home() {
   return (
     <div className='page'>
       <div className='contentInterior'>
-        <div id='frusionName'>{currentAdmin && currentAdmin.frusionName}</div>
+        <div id='frusionName'></div>
         <div className='calendar-container'>
           <DatePicker
             className='calendar'

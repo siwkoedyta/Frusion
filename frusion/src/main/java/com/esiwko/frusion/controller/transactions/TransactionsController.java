@@ -1,4 +1,6 @@
 package com.esiwko.frusion.controller.transactions;
+import com.esiwko.frusion.controller.auth.AuthDetails;
+import com.esiwko.frusion.controller.auth.JwtService;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.esiwko.frusion.controller.errors.BadRequestEx;
 import com.esiwko.frusion.repo.pg.admins.AdminEntity;
@@ -26,13 +28,17 @@ import java.util.UUID;
 @RequiredArgsConstructor
 
 public class TransactionsController {
+    private final JwtService jwtService;
+
     private final TransactionPGRepo transactionsRepo;
     private final FruitsPGRepo fruitsRepo;
     private final BoxesPGRepo boxesRepo;
     private final UsersPGRepo usersRepo;
 
     @PostMapping("/transactions")
-    public Json.AddTransactionResponse add(@CookieValue("adminId") String adminId, @RequestBody Json.AddTransactionRequest req) {
+    public Json.AddTransactionResponse add(@CookieValue("accessToken") String token, @RequestBody Json.AddTransactionRequest req) {
+        val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
+
         var id = UUID.randomUUID().toString();
 
         FruitEntity fruit = fruitsRepo.findById(req.fruitId()).orElseThrow(() -> new BadRequestEx("FRUIT_ILLEGAL"));
@@ -77,7 +83,9 @@ public class TransactionsController {
     }
 
     @GetMapping("transactions")
-    public Collection<Json.Transaction> getAll(@CookieValue("adminId") String adminId) {
+    public Collection<Json.Transaction> getAll(@CookieValue("accessToken") String token) {
+        val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
+
         return transactionsRepo.findAllByAdminId(adminId)
                 .stream().map(t -> new Json.Transaction(
                         t.getId(),

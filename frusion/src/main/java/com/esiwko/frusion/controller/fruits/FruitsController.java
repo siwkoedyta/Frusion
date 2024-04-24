@@ -1,5 +1,7 @@
 package com.esiwko.frusion.controller.fruits;
 
+import com.esiwko.frusion.controller.auth.AuthDetails;
+import com.esiwko.frusion.controller.auth.JwtService;
 import com.esiwko.frusion.controller.errors.BadRequestEx;
 import com.esiwko.frusion.repo.pg.admins.AdminEntity;
 import com.esiwko.frusion.repo.pg.fruits.FruitEntity;
@@ -15,10 +17,13 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 public class FruitsController {
+    private final JwtService jwtService;
     private final FruitsPGRepo fruitsRepo;
 
     @PostMapping("fruits")
-    public Json.AddFruitResponse add(@CookieValue("adminId") String adminId, @RequestBody Json.AddFruitRequest req) {
+    public Json.AddFruitResponse add(@CookieValue("accessToken") String token, @RequestBody Json.AddFruitRequest req) {
+        val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
+
         var id = UUID.randomUUID().toString();
         if (req.name().isBlank()) throw new BadRequestEx("NAME_EMPTY");
 
@@ -37,13 +42,16 @@ public class FruitsController {
     }
 
     @DeleteMapping("fruits/{id}")
-    public Json.RemoveFruitResponse remove(@CookieValue("adminId") String adminId, @PathVariable String id) {
+    public Json.RemoveFruitResponse remove(@CookieValue("accessToken") String token, @PathVariable String id) {
+        val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
         fruitsRepo.setArchived(id, adminId);
         return new Json.RemoveFruitResponse(id);
     }
 
     @GetMapping("fruits")
-    public Collection<Json.Fruit> getAll(@CookieValue("adminId") String adminId) {
+    public Collection<Json.Fruit> getAll(@CookieValue("accessToken") String token) {
+        val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
+
         return fruitsRepo.findAllByAdminId(adminId)
                 .stream().map(f -> new Json.Fruit(
                         f.getId(),

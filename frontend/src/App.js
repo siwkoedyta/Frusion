@@ -13,8 +13,7 @@ import RegistrationPanel from './pages/panels/registrationPanel/RegistrationPane
 import ClientHome from './pages/client/clientHome/ClientHome.js';
 import ClientChangePassword from './pages/client/clientChangePassword/ClientChangePassword.js';
 import Sidebar from './components/sidebar/Sidebar.js';
-import { Route, Routes, useLocation } from 'react-router-dom';
-import { CurrentAdminProvider } from './CurrentAdminProvider.js';
+import { Route, Routes, useLocation, Navigate  } from 'react-router-dom'
 import React, { useState, useEffect } from 'react';
 import { getAllFruits } from './api/fruit/getAllFruits';
 import { getAllBoxes } from './api/box/getAllBoxes.js';
@@ -23,9 +22,15 @@ import { getAllClients } from './api/client/getAllClients.js';
 import HamburgerMenu from './components/hamburgerMenu/hamburgerMenu.js';
 import WaveSmall from './components/waveSmall/WaveSmall.js';
 
+
+import { authCurrent } from './api/auth/authCurrent.js';
+import ClientMenu from './components/sidebar/ClientMenu.js';
+import AdminMenu from './components/sidebar/AdminMenu.js';
+
 function App() {
   const location = useLocation();
 
+  const [role, setRole] = useState(null);
   const hideSidebarPaths = ['/LoginPanel', '/RegistrationPanel'];
   const shouldHideSidebar = hideSidebarPaths.includes(location.pathname);
 
@@ -33,7 +38,19 @@ function App() {
   const [boxes, setBoxes] = useState([]);
   const [clients, setClients] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
-  const [sidebarVisible, setSidebarVisible] = useState(!isMobile);
+  const [sidebarVisible, setSidebarVisible] = useState(!isMobile)
+
+  useEffect(() => {
+    async function fetchUserRole() {
+      try {
+        const loggedInUser = await authCurrent();
+        setRole(loggedInUser.role);        
+      } catch (error) {
+        console.error('Error fetching user role:', error);
+      }
+    }
+    fetchUserRole();
+  }, []);
 
   useEffect(() => {
     refreshFruits();
@@ -65,14 +82,14 @@ function App() {
 
   const refreshBoxes = () => {
     getAllBoxes()
-        .then(data => setBoxes(data.filter(box => !box.archived)))
-        .catch(errors => alert(errors));
+      .then(data => setBoxes(data.filter(box => !box.archived)))
+      .catch(errors => alert(errors));
   };
 
   const refreshClients = () => {
     getAllClients()
-        .then(data => setClients(data.filter(client => !client.archived)))
-        .catch(errors => alert(errors));
+      .then(data => setClients(data.filter(client => !client.archived)))
+      .catch(errors => alert(errors));
   };
 
   useEffect(() => {
@@ -87,37 +104,32 @@ function App() {
   return (
     <div className="App">
       <div className="content-container">
-        <CurrentAdminProvider>
-          {/* Sidebar */}
-          {(!isMobile || sidebarVisible) && !shouldHideSidebar && <Sidebar menuType='admin' isVisible={sidebarVisible} toggleSidebar={toggleSidebar} />}
-          
-          {/* Main Content */}
-          <div className={`mainContent ${isMobile && sidebarVisible ? 'sidebarVisible' : ''}`}>
-            <WaveSmall/>
+
+          {!shouldHideSidebar && <Sidebar menuType={role} isVisible={!isMobile || sidebarVisible} toggleSidebar={toggleSidebar}></Sidebar>}
+          <div  className={`mainContent ${isMobile && sidebarVisible ? 'sidebarVisible' : ''}`}>
+            <WaveSmall />
             <div className='page'>
               <div className='mainContent'>
-                <HamburgerMenu onClick={toggleSidebar}/>
+                <HamburgerMenu onClick={toggleSidebar} />
                 <Routes>
-                  <Route path='/Home' element={<Home/>}/>
-                  <Route path='/Status' element={<Status/>}/>
+                  <Route path="/" element={<Navigate to="/LoginPanel" />} />
+                  <Route path='/ClientHome' element={<ClientHome />} />
+                  <Route path='/ClientChangePassword' element={<ClientChangePassword />} />
+                  <Route path='/Home' element={<Home />} />
+                  <Route path='/Status' element={<Status />} />
                   <Route path='/Fruits' element={<Fruits fruits={fruits} onUpdate={refreshFruits} />} />
-                  <Route path='/Boxes' element={<Boxes boxes={boxes} onUpdate={refreshBoxes}/>}/>
-                  <Route path='/Clients' element={<Clients clients={clients} onUpdate={refreshClients}/>}/>
-                  <Route path='/LoginPanel' element={<LoginPanel/>}/>
-                  <Route path='/RegistrationPanel' element={<RegistrationPanel/>}/>
+                  <Route path='/Boxes' element={<Boxes boxes={boxes} onUpdate={refreshBoxes} />} />
+                  <Route path='/Clients' element={<Clients clients={clients} onUpdate={refreshClients} />} />
+                  <Route path='/LoginPanel' element={<LoginPanel />} />
+                  <Route path='/RegistrationPanel' element={<RegistrationPanel />} />
                 </Routes>
               </div>
             </div>
           </div>
-        </CurrentAdminProvider>
+
       </div>
     </div>
   );
 }
 
 export default App;
-
-        
-
-
-

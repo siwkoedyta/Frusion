@@ -14,7 +14,7 @@ export default function Sidebar({ menuType, isVisible, toggleSidebar }) {
         <Logo />
         <div className="closeSidebar" onClick={toggleSidebar}><Arrow/></div>
       </div>
-      {menuType === 'admin' ? <AdminMenu /> : <ClientMenu />}
+      {menuType === 'ADMIN' ? <AdminMenu /> : <ClientMenu />}
     </aside>
   );
 }

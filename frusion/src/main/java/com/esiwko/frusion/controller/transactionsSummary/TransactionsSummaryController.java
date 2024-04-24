@@ -1,5 +1,7 @@
 package com.esiwko.frusion.controller.transactionsSummary;
 
+import com.esiwko.frusion.controller.auth.AuthDetails;
+import com.esiwko.frusion.controller.auth.JwtService;
 import com.esiwko.frusion.controller.errors.BadRequestEx;
 import com.esiwko.frusion.repo.pg.boxes.BoxEntity;
 import com.esiwko.frusion.repo.pg.boxes.BoxesPGRepo;
@@ -25,13 +27,17 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 public class TransactionsSummaryController {
+    private final JwtService jwtService;
+
     private final TransactionPGRepo transactionsRepo;
     private final BoxesPGRepo boxesRepo;
 
     @GetMapping("transactionsSummary")
-    public List<Json.FruitSummary> getAll(@CookieValue("adminId") String adminId,
+    public List<Json.FruitSummary> getAll(@CookieValue("accessToken") String token,
                                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
+
         List<TransactionEntity> transactions = transactionsRepo.getAllTransactions(adminId, startDate, endDate);
 
         return transactions.stream()

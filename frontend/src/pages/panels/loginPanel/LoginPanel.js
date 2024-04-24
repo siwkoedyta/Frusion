@@ -5,13 +5,26 @@ import Wave from '../../../components/wave/Wave.js';
 import Logo from '../../../components/logo/Logo.js';
 import Arrow from '../../../components/arrow/Arrow.js';
 import { auth } from '../../../api/auth/auth.js';
+import { authCurrent } from '../../../api/auth/authCurrent.js';
+
 
 export default function LoginPanel() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   async function handleSignIn(event) {
-    auth(email, password)
+    event.preventDefault();
+
+    try {
+      await auth(email, password);
+      const loggedInAdmin = await authCurrent(); // Uzyskujemy informacje o zalogowanym użytkowniku
+      console.log("Current user:", loggedInAdmin);
+      window.location.href = '/Home';
+    } catch (error) {
+      console.error('Authentication error:', error);
+      setError("Invalid email or password. Please try again.");
+    }
   }
 
   return (
@@ -23,18 +36,21 @@ export default function LoginPanel() {
           <div id='informationPanelLog'>Sign in to your account</div>
           <div className='inputGap'>
             <input 
-            placeholder="Email"
-            onChange={event => setEmail(event.target.value)}
+              placeholder="Email"
+              onChange={event => setEmail(event.target.value)}
             />
-            <input placeholder="Password"
+            <input 
+              placeholder="Password"
+              type="password"
               onChange={event => setPassword(event.target.value)}
             />
-            </div>
+          </div>
+          {error && <div className="errorMessage">{error}</div>} 
         </div>
         <div className='right' id='rightPanelLog'>
           <div className='buttonArrow'>
             <div className='captionButton'>Sign in</div>
-            <Link to="/Home" className='buttonPanel' onClick={handleSignIn}><Arrow/></Link>
+            <button className='buttonPanel' onClick={handleSignIn}><Arrow/></button>
           </div>
         </div>
         <div className='middle'>

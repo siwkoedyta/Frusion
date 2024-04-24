@@ -1,5 +1,6 @@
 package com.esiwko.frusion.repo.pg.users;
 
+import com.esiwko.frusion.repo.pg.admins.AdminEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +16,5 @@ public interface UsersPGRepo extends JpaRepository<UserEntity, String> {
     void setArchived(String userId, String adminId);
 
     List<UserEntity> findAllByAdminId(String adminId);
+    Optional<UserEntity> findByEmail(String email);
 }

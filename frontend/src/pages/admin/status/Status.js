@@ -4,24 +4,13 @@ import SummaryList from '../home/SummaryList';
 import StatusAmmountList from './StatusAmmountList';
 import StatusBoxesList from './StatusBoxesList';
 import StatusCalendar from './StatusCalendar';
-import { authCurrentAdmin } from '../../../api/auth/authCurrentAdmin';
-import { useCurrentAdmin } from '../../../CurrentAdminProvider';
 import { getAllSummaryTransactions } from '../../../api/transaction/getAllSummaryTransactions';
 
 
 export default function Status() {
-  const { currentAdmin, setCurrentAdmin } = useCurrentAdmin();
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
   const [summaryTransactions, setSummaryTransactions] = useState([]);
-
-  useEffect(() => {
-    if (!currentAdmin) {
-      authCurrentAdmin()
-        .then(admin => setCurrentAdmin(admin))
-        .catch(error => console.error('Error fetching current admin:', error));
-    }
-  }, [currentAdmin, setCurrentAdmin]);
 
   useEffect(() => {
     refreshData();

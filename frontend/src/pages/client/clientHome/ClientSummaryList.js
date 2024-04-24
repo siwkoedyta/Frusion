@@ -1,5 +1,5 @@
 
-export default function ClientTransactionList() {
+export default function ClientSummaryList() {
     return (
         <div className='field' id='homeField'>
             <div className='parameters'>

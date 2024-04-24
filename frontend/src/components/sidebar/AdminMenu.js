@@ -1,7 +1,7 @@
 import './Menu.css'
 import CustomLink from './CustomLink'
 
-export default function Menu(){
+export default function AdminMenu(){
     return(
         <ul className="menu">
             <CustomLink id="home" to='/Home'>Home</CustomLink>

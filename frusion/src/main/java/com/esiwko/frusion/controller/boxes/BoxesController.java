@@ -1,5 +1,7 @@
 package com.esiwko.frusion.controller.boxes;
 
+import com.esiwko.frusion.controller.auth.AuthDetails;
+import com.esiwko.frusion.controller.auth.JwtService;
 import com.esiwko.frusion.controller.errors.BadRequestEx;
 import com.esiwko.frusion.repo.pg.admins.AdminEntity;
 import com.esiwko.frusion.repo.pg.boxes.BoxEntity;
@@ -15,10 +17,13 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 public class BoxesController {
+    private final JwtService jwtService;
     private final BoxesPGRepo boxesRepo;
 
     @PostMapping("boxes")
-    public Json.AddBoxResponse add(@CookieValue("adminId") String adminId, @RequestBody Json.AddBoxRequest req) {
+    public Json.AddBoxResponse add(@CookieValue("accessToken") String token, @RequestBody Json.AddBoxRequest req) {
+        val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
+
         var id = UUID.randomUUID().toString();
         if (req.name().isBlank()) throw new BadRequestEx("NAME_EMPTY");
 
@@ -37,13 +42,15 @@ public class BoxesController {
     }
 
     @DeleteMapping("boxes/{id}")
-    public Json.RemoveBoxResponse remove(@CookieValue("adminId") String adminId, @PathVariable String id) {
+    public Json.RemoveBoxResponse remove(@CookieValue("accessToken") String token, @PathVariable String id) {
+        val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
         boxesRepo.setArchived(id, adminId);
         return new Json.RemoveBoxResponse(id);
     }
 
     @GetMapping("boxes")
-    public Collection<Json.Box> getAll(@CookieValue("adminId") String adminId) {
+    public Collection<Json.Box> getAll(@CookieValue("accessToken") String token) {
+        val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
         return boxesRepo.findAllByAdminId(adminId)
                 .stream().map(b -> new Json.Box(
                         b.getId(),

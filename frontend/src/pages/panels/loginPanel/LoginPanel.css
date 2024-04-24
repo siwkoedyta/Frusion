@@ -6,10 +6,6 @@
     display: flex;
 }
 
-#informationPanelLog{
-    height: 3vh;
-}
-
 #createAccountButtonPanelLog{
     all: unset;
     margin-left: 0.5rem;
