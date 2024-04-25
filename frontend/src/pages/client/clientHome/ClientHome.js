@@ -12,42 +12,7 @@ import { getAllSummaryTransactions } from '../../../api/transaction/getAllSummar
 
 export default function ClientHome() {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [transactions, setTransactions] = useState([]);
-  const [summaryTransactions, setSummaryTransactions] = useState([]);
-  const [fruits, setFruits] = useState([]);
-  const [boxes, setBoxes] = useState([]);
-  const [clients, setClients] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
-
-  useEffect(() => {
-    refreshData();
-  }, [selectedDate]);
-
-
-  const refreshData = () => {
-    Promise.all([
-      getAllClients(),
-      getAllFruits(),
-      getAllBoxes(),
-      getAllTransactions(),
-      getAllSummaryTransactions(selectedDate, selectedDate)
-    ])
-      .then(([clientsData, fruitsData, boxesData, transactionsData, summaryTransactionsData]) => {
-        const filteredTransactions = transactionsData.filter(transaction => {
-          const transactionDate = new Date(transaction.transactionDate);
-          return transactionDate.toDateString() === selectedDate.toDateString();
-        });
-        setClients(clientsData);
-        setFruits(fruitsData);
-        setBoxes(boxesData);
-        setTransactions(filteredTransactions);
-        setSummaryTransactions(summaryTransactionsData);
-      })
-      .catch(errors => {
-        console.error('Error refreshing data:', errors);
-        alert('Error refreshing data. Please try again later.');
-      });
-  };
 
   const openModal = () => {
     setModalOpen(true);
@@ -73,11 +38,11 @@ export default function ClientHome() {
           <div id='buttonSummaryHome'>
             <div className='methodPlace' id='methodPlaceHome'>
               <div className='titleSummary'>Summary</div>
-              <ClientSummaryList summaryTransactions={summaryTransactions} onUpdate={refreshData} />
+              <ClientSummaryList  />
             </div>
           </div>
           <div>
-            <ClientTransactionList transactions={transactions} fruits={fruits} boxes={boxes}/>
+            {/* <ClientTransactionList /> */}
           </div>
         </div>
       </div>

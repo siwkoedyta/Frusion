@@ -20,12 +20,9 @@ import { getAllBoxes } from './api/box/getAllBoxes.js';
 import { getAllClients } from './api/client/getAllClients.js';
 
 import HamburgerMenu from './components/hamburgerMenu/hamburgerMenu.js';
-import WaveSmall from './components/waveSmall/WaveSmall.js';
-
-
+import WaveSmall from './components/waveSmall/WaveSmall.js'
 import { authCurrent } from './api/auth/authCurrent.js';
-import ClientMenu from './components/sidebar/ClientMenu.js';
-import AdminMenu from './components/sidebar/AdminMenu.js';
+
 
 function App() {
   const location = useLocation();
@@ -52,11 +49,28 @@ function App() {
     fetchUserRole();
   }, []);
 
-  useEffect(() => {
-    refreshFruits();
-    refreshClients();
-    refreshBoxes();
-  }, []);
+  const isClient = role === 'USER';
+  const isAdmin = role === 'ADMIN';
+
+useEffect(() => {
+  async function fetchData() {
+    try {
+      if (role === 'ADMIN') {
+        await Promise.all([
+          refreshFruits(),
+          refreshBoxes(),
+          refreshClients()
+        ]);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  if (role) {
+    fetchData();
+  }
+}, [role]);
 
   useEffect(() => {
     setSidebarVisible(false);
@@ -104,29 +118,41 @@ function App() {
   return (
     <div className="App">
       <div className="content-container">
-
-          {!shouldHideSidebar && <Sidebar menuType={role} isVisible={!isMobile || sidebarVisible} toggleSidebar={toggleSidebar}></Sidebar>}
+  
+          {role && !shouldHideSidebar && <Sidebar menuType={role} isVisible={!isMobile || sidebarVisible} toggleSidebar={toggleSidebar}></Sidebar>}
           <div  className={`mainContent ${isMobile && sidebarVisible ? 'sidebarVisible' : ''}`}>
             <WaveSmall />
             <div className='page'>
               <div className='mainContent'>
                 <HamburgerMenu onClick={toggleSidebar} />
                 <Routes>
-                  <Route path="/" element={<Navigate to="/LoginPanel" />} />
-                  <Route path='/ClientHome' element={<ClientHome />} />
-                  <Route path='/ClientChangePassword' element={<ClientChangePassword />} />
-                  <Route path='/Home' element={<Home />} />
-                  <Route path='/Status' element={<Status />} />
-                  <Route path='/Fruits' element={<Fruits fruits={fruits} onUpdate={refreshFruits} />} />
-                  <Route path='/Boxes' element={<Boxes boxes={boxes} onUpdate={refreshBoxes} />} />
-                  <Route path='/Clients' element={<Clients clients={clients} onUpdate={refreshClients} />} />
-                  <Route path='/LoginPanel' element={<LoginPanel />} />
-                  <Route path='/RegistrationPanel' element={<RegistrationPanel />} />
-                </Routes>
+                  {/* Trasy dostępne dla klienta */}
+                  {isClient && (
+                    <>
+                      <Route path="/ClientHome" element={<ClientHome />} />
+                      <Route path="/ClientChangePassword" element={<ClientChangePassword />} />
+                    </>
+                  )}
+                  {/* Trasy dostępne dla admina */}
+                  {isAdmin && (
+                    <>
+                      <Route path="/Home" element={<Home />} />
+                      <Route path="/Status" element={<Status />} />
+                      <Route path="/Fruits" element={<Fruits fruits={fruits} onUpdate={refreshFruits} />} />
+                      <Route path="/Boxes" element={<Boxes boxes={boxes} onUpdate={refreshBoxes} />} />
+                      <Route path="/Clients" element={<Clients clients={clients} onUpdate={refreshClients} />} />
+                    </>
+                  )}
+                  {/* Wspólne trasy */}
+                  <Route path="/LoginPanel" element={<LoginPanel />} />
+                  <Route path="/RegistrationPanel" element={<RegistrationPanel />} />
+                  {/* Przekierowanie na odpowiednią trasę po zalogowaniu */}
+                  <Route path="/" element={role ? <Navigate to={isClient ? "/ClientHome" : "/Home"} /> : <Navigate to="/LoginPanel" />} />
+                </Routes> 
               </div>
             </div>
           </div>
-
+  
       </div>
     </div>
   );

@@ -22,8 +22,8 @@ export default function WaveSmall() {
             y2="51"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#775253" />
-            <stop offset="1" stop-color="#351431" />
+            <stop stopColor="#775253" />
+            <stop offset="1" stopColor="#351431" />
           </linearGradient>
         </defs>
       </svg>

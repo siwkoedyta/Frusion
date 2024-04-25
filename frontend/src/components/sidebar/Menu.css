@@ -21,6 +21,11 @@
     color: #e9e9e9; /* Kolor dla aktywnego linku */
 }
 
+.menu li{
+    color: #9A9A9A;
+    display: flex;
+}
+
 #home::before,
 #statusFrusion::before,
 #fruits::before,

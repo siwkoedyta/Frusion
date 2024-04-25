@@ -12,15 +12,19 @@ export default function LoginPanel() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  
   async function handleSignIn(event) {
     event.preventDefault();
-
+  
     try {
       await auth(email, password);
-      const loggedInAdmin = await authCurrent(); // Uzyskujemy informacje o zalogowanym użytkowniku
-      console.log("Current user:", loggedInAdmin);
-      window.location.href = '/Home';
+      const loggedInUser = await authCurrent();
+      console.log("Current user:", loggedInUser);
+      if(loggedInUser.role === "ADMIN"){
+        window.location.href = '/Home';
+      } else{
+        window.location.href = '/ClientHome';
+      }
     } catch (error) {
       console.error('Authentication error:', error);
       setError("Invalid email or password. Please try again.");
