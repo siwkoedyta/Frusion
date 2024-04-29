@@ -4,6 +4,7 @@ import { setFruitPrice } from '../../../api/fruit/setFruitPrice';
 export default function SetPrice({ fruits, onUpdate }) {
   const [selectedFruit, setSelectedFruit] = useState('');
   const [newPrice, setNewPrice] = useState('');
+  const [error, setError] = useState('');
 
   const handleFruitChange = (event) => {
     setSelectedFruit(event.target.value);
@@ -15,11 +16,11 @@ export default function SetPrice({ fruits, onUpdate }) {
 
   const handleSetPrice = async (e) => {
     if (!selectedFruit) {
-      alert('Please select a fruit');
+      setError('Select a fruit');
       return;
     }
     if (!newPrice) {
-      alert('Please enter a new price');
+      setError('Enter a new price');
       return;
     }
 
@@ -27,9 +28,10 @@ export default function SetPrice({ fruits, onUpdate }) {
     .then(() => {
       setSelectedFruit('');
       setNewPrice('');
+      setError('');
       onUpdate();
     })
-    .catch(errors => alert(errors));
+    .catch(errors => setError(errors));
   };
 
   return (
@@ -48,7 +50,7 @@ export default function SetPrice({ fruits, onUpdate }) {
 
         <div>
           <input
-            type="text"
+            type="number"
             id="price"
             name="price"
             value={newPrice}
@@ -58,7 +60,7 @@ export default function SetPrice({ fruits, onUpdate }) {
         </div>
       </div>
 
-
+      {error && <div className="errorMessageMethod">{error}</div>}
       <button className='buttonMethod' onClick={handleSetPrice}>Set</button>
     </div>
   );

@@ -10,6 +10,8 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
   const [boxId, setBoxId] = useState('');
   const [boxName, setBoxName] = useState('');
   const [numberOfBoxes, setNumberOfBoxes] = useState('');
+  const [error, setError] =  useState('');
+
 
   const [fruitDropdownTop, setFruitDropdownTop] = useState(0);
   const [boxDropdownTop, setBoxDropdownTop] = useState(0);
@@ -23,33 +25,41 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
   const filteredBoxes = boxes.filter(box => !box.archived);
   const filteredClients = clients.filter(client => !client.archived);
 
+  const clientIds = filteredClients.map(client => client.id);
+  const fruitIds = filteredFruits.map(fruit => fruit.id);
+  const boxIds = filteredBoxes.map(box => box.id);
+
+  const refsAndSetters = [
+    { ref: secondInputRef, setter: setFruitDropdownTop },
+    { ref: thirdInputRef, setter: setBoxDropdownTop },
+    { ref: fourthInputRef, setter: setClientDropdownTop }
+  ];
+
+  const setDropdownValues = (dropdown, setId, setName) => {
+    if (dropdown.length === 1) {
+      setId(dropdown[0].id);
+      setName(dropdown[0].name);
+    }
+  };
+
+  const generateDropdown = (items, itemName, inputValue) => {
+    return items.filter(item => {
+      const searchItem = inputValue.toLowerCase();
+      const name = item[itemName].toLowerCase();
+      return searchItem && name.startsWith(searchItem) && name !== searchItem;
+    });
+  };
+
   useEffect(() => {
-    if (secondInputRef.current) {
-      const rect = secondInputRef.current.getBoundingClientRect();
-      setFruitDropdownTop(rect.bottom);
-    }
-  
-    if (thirdInputRef.current) {
-      const rect = thirdInputRef.current.getBoundingClientRect();
-      setBoxDropdownTop(rect.bottom);
-    }
-  
-    if (fourthInputRef.current) {
-      const rect = fourthInputRef.current.getBoundingClientRect();
-      setClientDropdownTop(rect.bottom);
-    }
-  
-    const dropdownFruit = filteredFruits.filter(fruit => {
-      const searchFruit = fruitName.toLowerCase();
-      const name = fruit.name.toLowerCase();
-      return searchFruit && name.startsWith(searchFruit) && name !== searchFruit;
+    refsAndSetters.forEach(({ ref, setter }) => {
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
+        setter(rect.bottom);
+      }
     });
   
-    const dropdownBox = filteredBoxes.filter(box => {
-      const searchBox = boxName.toLowerCase();
-      const name = box.name.toLowerCase();
-      return searchBox && name.startsWith(searchBox) && name !== searchBox;
-    });
+    const dropdownFruit = generateDropdown(filteredFruits, 'name', fruitName);
+    const dropdownBox = generateDropdown(filteredBoxes, 'name', boxName);
   
     const dropdownClient = filteredClients.filter(client => {
       const searchClient = clientName.toLowerCase();
@@ -57,15 +67,8 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
       return searchClient && fullName.startsWith(searchClient) && fullName !== searchClient;
     });
 
-    if (dropdownFruit.length === 1) {
-      setFruitId(dropdownFruit[0].id);
-      setFruitName(dropdownFruit[0].name);
-    }
-
-    if (dropdownBox.length === 1) {
-      setBoxId(dropdownBox[0].id);
-      setBoxName(dropdownBox[0].name);
-    }
+    setDropdownValues(dropdownFruit, setFruitId, setFruitName);
+    setDropdownValues(dropdownBox, setBoxId, setBoxName);
 
     if (dropdownClient.length === 1) {
       setClientId(dropdownClient[0].id);
@@ -108,8 +111,29 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
 
   const handleAddTransaction = async () => {
     try {
+      if (clientName.trim() === '' || fruitName.trim() === '' || weightGross.trim() === '' || boxName.trim() === '' || numberOfBoxes.trim() === '') {
+        setError('All fields are required.');
+        return;
+      }
+
+      if (!clientIds.includes(clientId)) {
+        setError('Selected client does not exist.');
+        return;
+      }
+
+      if (!fruitIds.includes(fruitId)) {
+        setError('Selected fruit does not exist.');
+        return;
+      }
+
+      if (!boxIds.includes(boxId)) {
+        setError('Selected box does not exist.');
+        return;
+      }
+
       await addTransaction(clientId, fruitId, weightGross, boxId, numberOfBoxes);
       onClose();
+      setError('');
       onUpdate();
     } catch (error) {
       alert(error);
@@ -191,8 +215,9 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
           ))}
       </div>
 
-      <input type="text" placeholder="Number of boxes" value={numberOfBoxes} onChange={e => setNumberOfBoxes(e.target.value)} />
-
+      <input type="number" placeholder="Number of boxes" value={numberOfBoxes} onChange={e => setNumberOfBoxes(e.target.value)} />
+      
+      {error && <div className="errorMessageMethod">{error}</div>}
       <div className='buttonsModal'>
         <button onClick={handleAddTransaction}>Add</button>
         <button onClick={onClose}>Close</button>

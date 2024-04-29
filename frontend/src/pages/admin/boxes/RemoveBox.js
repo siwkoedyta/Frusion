@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { removeBox } from '../../../api/box/removeBox';
 
 export default function RemoveBox({ boxes, onUpdate }) {
+  const [error, setError] = useState('');
   const [selectedBox, setSelectedBox] = useState('');
 
   const handleBoxChange = (event) => {
@@ -10,17 +11,18 @@ export default function RemoveBox({ boxes, onUpdate }) {
 
   const handleRemoveBox = async () => {
     if (!selectedBox) {
-      alert('Please select a box');
+      setError('Please select a box');
       return;
     }
 
     removeBox(selectedBox)
     .then(() => {
       setSelectedBox('');
+      setError('');
       onUpdate()
     })
     .catch(error => {
-      alert('Error removing box: ' + error);
+      setError('Error removing box: ' + error);
     });
   };
 
@@ -35,6 +37,7 @@ export default function RemoveBox({ boxes, onUpdate }) {
           ))}
         </select>
       </div>
+      {error && <div className="errorMessageMethod">{error}</div>}
       <button className='buttonMethod' onClick={handleRemoveBox}>Remove</button>
     </div>
   );

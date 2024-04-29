@@ -2,7 +2,6 @@ import './App.css';
 import './Panels.css'
 import './TransactionList.css'
 import './SummaryList.css'
-import Wave from './components/wave/Wave.js';
 import Boxes from './pages/admin/boxes/Boxes.js';
 import Clients from './pages/admin/clients/Clients.js';
 import Fruits from './pages/admin/fruits/Fruits.js';
@@ -78,7 +77,7 @@ useEffect(() => {
 
   const toggleSidebar = () => {
     if (isMobile) {
-      setSidebarVisible(!sidebarVisible);
+      setSidebarVisible(!sidebarVisible); 
       const body = document.getElementsByTagName('body')[0];
       if (sidebarVisible) {
         body.classList.remove('sidebarOpen');
@@ -118,8 +117,7 @@ useEffect(() => {
   return (
     <div className="App">
       <div className="content-container">
-  
-          {role && !shouldHideSidebar && <Sidebar menuType={role} isVisible={!isMobile || sidebarVisible} toggleSidebar={toggleSidebar}></Sidebar>}
+          {role && (!isMobile || sidebarVisible) && !shouldHideSidebar && <Sidebar menuType={role} isVisible={sidebarVisible} toggleSidebar={toggleSidebar} />}
           <div  className={`mainContent ${isMobile && sidebarVisible ? 'sidebarVisible' : ''}`}>
             <WaveSmall />
             <div className='page'>
@@ -138,7 +136,7 @@ useEffect(() => {
                     <>
                       <Route path="/Home" element={<Home />} />
                       <Route path="/Status" element={<Status />} />
-                      <Route path="/Fruits" element={<Fruits fruits={fruits} onUpdate={refreshFruits} />} />
+                      <Route path="/Fruits" element={<Fruits fruits={fruits} onUpdate={refreshFruits}/>} />
                       <Route path="/Boxes" element={<Boxes boxes={boxes} onUpdate={refreshBoxes} />} />
                       <Route path="/Clients" element={<Clients clients={clients} onUpdate={refreshClients} />} />
                     </>

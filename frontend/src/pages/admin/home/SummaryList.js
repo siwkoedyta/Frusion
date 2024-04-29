@@ -7,7 +7,7 @@ export default function SummaryList({ summaryTransactions }) {
                     <div className='transaction'>
                         <div className='parametersSummary'>
                             <div className='priceSummary'>
-                                Price:
+                                Avarage price:
                                 <div className='price'>{transaction.averagePrice.toFixed(2)}</div>
                                 <div className='nominal'>zł</div>
                             </div>

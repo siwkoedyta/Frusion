@@ -271,14 +271,19 @@ button {
 
 .featuredFieldTitleList{
   margin-bottom:1rem;
+  min-width: 10vw;
 }
 
 #clientsListEmail{
   font-size: 1.2rem;
 }
 
-.errorMessage{
+.errorMessage, .errorMessageMethod{
   color: red;
+}
+
+.errorMessageMethod{
+  font-size: 1.2rem;
 }
 
 

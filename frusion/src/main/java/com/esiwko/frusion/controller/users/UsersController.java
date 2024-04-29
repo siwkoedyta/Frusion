@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -24,7 +26,10 @@ public class UsersController {
         val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
 
         var id = UUID.randomUUID().toString();
-        if (req.firstName().isBlank() || req.lastName().isBlank() || req.email().isBlank() || req.password().isBlank()) throw new BadRequestEx("NAME_EMPTY");
+        if (req.firstName().isBlank() || req.lastName().isBlank() || req.email().isBlank() || req.password().isBlank())
+            throw new BadRequestEx("NAME_EMPTY");
+
+        String hashedPassword = hashPassword(req.password());
 
         val admin = new AdminEntity();
         admin.setId(adminId);
@@ -34,7 +39,7 @@ public class UsersController {
                 req.firstName(),
                 req.lastName(),
                 req.email(),
-                req.password(),
+                hashedPassword,
                 admin,
                 false
         ));
@@ -61,5 +66,21 @@ public class UsersController {
                         u.getPassword(),
                         u.isArchived()
                 )).toList();
+    }
+
+    private String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder(2 * encodedHash.length);
+            for (byte b : encodedHash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new BadRequestEx("Encryption algorithm not found");
+        }
     }
 }

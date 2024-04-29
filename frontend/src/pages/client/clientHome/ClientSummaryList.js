@@ -15,7 +15,7 @@ export default function ClientSummaryList() {
                 </div>
 
             </div>
-            <div className='featuredField' id='featuredFieldValueTransaction'>
+            <div className='featuredField featuredFieldValueTransaction'>
                 <div className='valueTransaction'>1024,50</div> zł
             </div>
         </div>

@@ -4,6 +4,7 @@ import Arrow from '../../../components/arrow/Arrow.js';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { register } from '../../../api/auth/register.js';
+import { isValidEmail, isValidPassword, arePasswordsMatch } from '../../../utils/validation.js';
 
 export default function RegistrationPanel() {
     const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ export default function RegistrationPanel() {
     const handleCreate = async (e) => {
         e.preventDefault();
 
-        if (email.trim() === '' || password.trim() === '' || repeatPassword.trim() === '' || frusionName.trim() === '') {
+        if (email.trim() === '' || repeatPassword.trim() === '' || frusionName.trim() === '') {
             setError('Please enter all data.');
             return;
         }
@@ -24,12 +25,17 @@ export default function RegistrationPanel() {
             setError('Please enter a valid email address.');
             return;
         }
-
-        if (password !== repeatPassword) {
+    
+        if (!isValidPassword(password)) {
+            setError('Password must contain:\n- at least 4 letters,\n- a special character, and\n- a number.');
+            return;
+        }
+    
+        if (!arePasswordsMatch(password, repeatPassword)) {
             setError('Passwords do not match.');
             return;
         }
-
+    
         try {
             await register(email, password, frusionName);
             window.location.href = '/LoginPanel';
@@ -37,15 +43,10 @@ export default function RegistrationPanel() {
             setPassword('');
             setRepeatPassword('');
             setFrusionName('');
-
+    
         } catch (errors) {
             setError(errors);
         }
-    }
-
-    const isValidEmail = (email) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
     }
 
     return (

@@ -5,6 +5,7 @@ import { addBox } from '../../../api/box/addBox.js';
 export default function AddFruit({ onUpdate }) {
   const [boxName, setBoxName] = useState('');
   const [weight, setWeight] = useState('');
+  const [error, setError] = useState('');
 
   const handleInputChangeName = (event) => {
     setBoxName(event.target.value);
@@ -16,7 +17,12 @@ export default function AddFruit({ onUpdate }) {
 
   const handleAddBox = async (e) => {
     if (boxName.trim() === '') {
-      alert('Please enter the name of the fruit');
+      setError('Select the name of the box');
+      return;
+    }
+
+    if (weight.trim() === '') {
+      setError('Enter the weight of the box');
       return;
     }
 
@@ -24,9 +30,10 @@ export default function AddFruit({ onUpdate }) {
       .then(res => {
         setBoxName('')
         setWeight('')
+        setError('');
         onUpdate();
       })
-      .catch(errors => alert(errors))
+      .catch(errors => setError(errors))
   };
   return (
     <div className='methodPlace'>
@@ -41,7 +48,7 @@ export default function AddFruit({ onUpdate }) {
           placeholder="Name of the box"
         />
         <input
-          type="text"
+          type="number"
           id="nameBoxInput"
           name="weight"
           value={weight}
@@ -49,6 +56,7 @@ export default function AddFruit({ onUpdate }) {
           placeholder="Weight of the box"
         />
       </div>
+      {error && <div className="errorMessageMethod">{error}</div>}
       <button className='buttonMethod' onClick={handleAddBox}>Add</button>
     </div>
   );

@@ -70,22 +70,20 @@
 }
 
 @media screen and (max-width: 1372px){
-    #methodPlaceHome {
+    #methodPlaceHome,  .transparent-field, .homeField {
       min-width: calc(45vw + 4rem);
-    }
-    .homeField{
-        width: calc(45vw + 4rem);
     }
   } 
 
 
 @media screen and (max-width: 900px){
-    #methodPlaceHome {
-      min-width: calc(65vw + 4rem);
+    #methodPlaceHome, .transparent-field{
+      min-width: calc(65vw + 6rem);
     }
     .homeField{
         width: calc(65vw + 4rem);
     }
+
 } 
 
 @media screen and (max-width: 640px){
@@ -96,6 +94,10 @@
 
     #frusionName{
         display: none;
+    }
+
+    .transparent-field {
+        min-width: calc(65vw + 4rem);
     }
 } 
 
@@ -109,4 +111,5 @@
     #frusionName{
         display: none;
     }
+
 } 

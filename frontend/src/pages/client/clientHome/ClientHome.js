@@ -26,7 +26,7 @@ export default function ClientHome() {
     <div className='page'>
       <div className='contentInterior'>
 
-        <div className='calendar'>
+        <div className='calendar-container'>
           <DatePicker
             className='calendar'
             selected={selectedDate}
@@ -35,14 +35,16 @@ export default function ClientHome() {
         </div>
 
         <div className='mainContent'>
-          <div id='buttonSummaryHome'>
-            <div className='methodPlace' id='methodPlaceHome'>
-              <div className='titleSummary'>Summary</div>
-              <ClientSummaryList  />
+          <div className='mainContentInsideHomeStatus'>
+            <div id='buttonSummaryHome'>
+              <div className='methodPlace' id='methodPlaceHome'>
+                <div className='titleSummary'>Summary</div>
+                <ClientSummaryList  />
+              </div>
             </div>
-          </div>
-          <div>
-            {/* <ClientTransactionList /> */}
+            <div>
+              <ClientTransactionList />
+            </div>
           </div>
         </div>
       </div>

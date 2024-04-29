@@ -10,10 +10,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
-
     private final AdminsPGRepo adminsRepo;
     private final UsersPGRepo usersRepo;
     private final JwtService jwtService;
@@ -21,10 +23,10 @@ public class AuthController {
     @PostMapping("/auth")
     public void auth(@RequestBody Json.AuthRequest req, HttpServletResponse response) {
         val authDetails = adminsRepo.findByEmail(req.email())
-                .filter(a -> a.getPassword().equals(req.password()))
+                .filter(a -> a.getPassword().equals(encryptPassword(req.password())))
                 .map(a -> new AuthDetails(AuthDetails.Role.ADMIN, a.getId()))
                 .or(() -> usersRepo.findByEmail(req.email())
-                        .filter(u -> u.getPassword().equals(req.password()))
+                        .filter(u -> u.getPassword().equals(encryptPassword(req.password())))
                         .map(u -> new AuthDetails(AuthDetails.Role.USER, u.getId())))
                 .orElseThrow(() -> new BadRequestEx("INVALID_CREDENTIAL"));
 
@@ -44,5 +46,20 @@ public class AuthController {
 
         return new Json.AuthResponse(email, authDetails.role().name());
     }
-}
 
+    private String encryptPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder(2 * encodedHash.length);
+            for (byte b : encodedHash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Encryption algorithm not found", e);
+        }
+    }
+}

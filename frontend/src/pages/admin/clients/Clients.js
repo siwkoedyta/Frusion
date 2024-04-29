@@ -3,7 +3,6 @@ import ClientsList from './ClientsList';
 import AddClients from './AddClients';
 import RemoveClients from './RemoveClients';
 
-
 export default function Clients({ clients, onUpdate}) {
 
   return (

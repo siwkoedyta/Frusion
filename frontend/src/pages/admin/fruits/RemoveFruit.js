@@ -3,6 +3,7 @@ import { removeFruit } from '../../../api/fruit/removeFruit';
 
 export default function RemoveFruit({ fruits, onUpdate }) {
   const [selectedFruit, setSelectedFruit] = useState('');
+  const [error, setError] = useState('');
 
   const handleFruitChange = (event) => {
     setSelectedFruit(event.target.value);
@@ -10,17 +11,18 @@ export default function RemoveFruit({ fruits, onUpdate }) {
 
   const handleRemoveFruit = async () => {
     if (!selectedFruit) {
-      alert('Please select a fruit');
+      setError('Please select a fruit');
       return;
     }
 
     removeFruit(selectedFruit)
     .then(() => {
       setSelectedFruit('');
+      setError('');
       onUpdate()
     })
     .catch(error => {
-      alert('Error removing fruit: ' + error);
+      setError('Error removing fruit: ' + error);
     });
   };
 
@@ -35,6 +37,7 @@ export default function RemoveFruit({ fruits, onUpdate }) {
           ))}
         </select>
       </div>
+      {error && <div className="errorMessageMethod">{error}</div>}
       <button className='buttonMethod' onClick={handleRemoveFruit}>Remove</button>
     </div>
   );
