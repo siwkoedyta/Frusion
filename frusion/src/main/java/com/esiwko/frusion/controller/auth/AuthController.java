@@ -37,14 +37,21 @@ public class AuthController {
     @GetMapping("/auth/current")
     public Json.AuthResponse getCurrentAdmin(@CookieValue(value = "accessToken") String token) {
         val authDetails = jwtService.verify(token);
-        val email = switch (authDetails.role()) {
-            case ADMIN ->
-                    adminsRepo.findById(authDetails.id()).map(AdminEntity::getEmail).orElseThrow(() -> new BadRequestEx("ADMIN_NOT_FOUND"));
-            case USER ->
-                    usersRepo.findById(authDetails.id()).map(UserEntity::getEmail).orElseThrow(() -> new BadRequestEx("USER_NOT_FOUND"));
+        val response = switch (authDetails.role()) {
+            case ADMIN -> {
+                AdminEntity admin = adminsRepo.findById(authDetails.id())
+                        .orElseThrow(() -> new BadRequestEx("ADMIN_NOT_FOUND"));
+                yield new Json.AuthResponse(admin.getEmail(), authDetails.role().name(), admin.getFrusionName());
+            }
+            case USER -> {
+                String email = usersRepo.findById(authDetails.id())
+                        .map(UserEntity::getEmail)
+                        .orElseThrow(() -> new BadRequestEx("USER_NOT_FOUND"));
+                yield new Json.AuthResponse(email, authDetails.role().name(), null);
+            }
         };
 
-        return new Json.AuthResponse(email, authDetails.role().name());
+        return response;
     }
 
     private String encryptPassword(String password) {

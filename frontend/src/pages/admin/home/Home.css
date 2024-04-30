@@ -28,7 +28,7 @@
 
 .transparent-field {
     display: flex;
-    min-width: calc(10vw + 19rem);
+    min-width: 26vw;
     justify-content: center;
     align-items: center;
 }

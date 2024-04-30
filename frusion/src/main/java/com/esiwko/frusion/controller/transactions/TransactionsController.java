@@ -36,6 +36,7 @@ public class TransactionsController {
     private final UsersPGRepo usersRepo;
 
     @PostMapping("/transactions")
+
     public Json.AddTransactionResponse add(@CookieValue("accessToken") String token, @RequestBody Json.AddTransactionRequest req) {
         val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
 
@@ -87,6 +88,25 @@ public class TransactionsController {
         val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
 
         return transactionsRepo.findAllByAdminId(adminId)
+                .stream().map(t -> new Json.Transaction(
+                        t.getId(),
+                        t.getUser().getId(),
+                        t.getWeight_gross(),
+                        t.getBox_id(),
+                        t.getNumber_of_boxes(),
+                        t.getTransaction_date(),
+                        t.getWeight_net(),
+                        t.getAmount(),
+                        t.getPrice(),
+                        t.getFruit().getId()
+                )).toList();
+    }
+
+    @GetMapping("/transactions/user")
+    public Collection<Json.Transaction> getAllForUser(@CookieValue("accessToken") String token) {
+        val userId = jwtService.verify(token, AuthDetails.Role.USER);
+
+        return transactionsRepo.findAllByUserId(userId)
                 .stream().map(t -> new Json.Transaction(
                         t.getId(),
                         t.getUser().getId(),

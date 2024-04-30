@@ -47,6 +47,21 @@ public class TransactionsSummaryController {
                 .toList();
     }
 
+    @GetMapping("transactionsSummary/user")
+    public List<Json.FruitSummary> getAllForUser(@CookieValue("accessToken") String token,
+                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        val userId = jwtService.verify(token, AuthDetails.Role.USER);
+
+        List<TransactionEntity> transactions = transactionsRepo.getAllTransactionsForUser(userId, startDate, endDate);
+
+        return transactions.stream()
+                .collect(Collectors.groupingBy(t -> t.getFruit().getId()))
+                .values().stream()
+                .map(this::calculateFruitSummary)
+                .toList();
+    }
+
 
     private Json.FruitSummary calculateFruitSummary(Collection<TransactionEntity> transactions) {
         TransactionEntity firstTransaction = transactions.stream().findFirst().orElse(null);

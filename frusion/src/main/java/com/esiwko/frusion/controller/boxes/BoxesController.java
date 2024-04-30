@@ -60,4 +60,15 @@ public class BoxesController {
                 )).toList();
     }
 
+    @GetMapping("/boxes/user")
+    public Collection<Json.Box> getAllForUser() {
+        return boxesRepo.findAll().stream()
+                .map(b -> new Json.Box(
+                        b.getId(),
+                        b.getName(),
+                        b.getWeight(),
+                        b.isArchived()
+                )).toList();
+    }
+
 }

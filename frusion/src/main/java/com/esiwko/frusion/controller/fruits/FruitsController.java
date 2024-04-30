@@ -61,6 +61,17 @@ public class FruitsController {
                 )).toList();
     }
 
+    @GetMapping("/fruits/user")
+    public Collection<Json.Fruit> getAllForUser() {
+        return fruitsRepo.findAll().stream()
+                .map(f -> new Json.Fruit(
+                        f.getId(),
+                        f.getName(),
+                        f.getPrice(),
+                        f.isArchived()
+                )).toList();
+    }
+
     @PutMapping("fruits/{id}/price")
     public void setPrice(@PathVariable String id, @RequestBody Json.SetPriceRequest req) {
         fruitsRepo.setPrice(id, req.price());

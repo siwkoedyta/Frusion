@@ -12,7 +12,11 @@ import java.util.List;
 
 public interface TransactionPGRepo extends JpaRepository<TransactionEntity, String> {
     List<TransactionEntity> findAllByAdminId(String adminId);
+    List<TransactionEntity> findAllByUserId(String userId);
 
     @Query("select t from TransactionEntity t where t.admin.id = :adminId and t.transaction_date between :startDate and :endDate")
     List<TransactionEntity> getAllTransactions(String adminId, LocalDate startDate, LocalDate endDate);
+
+    @Query("select t from TransactionEntity t where t.user.id = :userId and t.transaction_date between :startDate and :endDate")
+    List<TransactionEntity> getAllTransactionsForUser(String userId, LocalDate startDate, LocalDate endDate);
 }

@@ -1,23 +1,29 @@
-
-export default function ClientSummaryList() {
+export default function ClientSummaryList({ summaryTransactions }) {
     return (
-        <div className='field' id='homeField'>
-            <div className='parameters'>
-                <div className='nameTransactionList'>raspberry</div>
-                <div className='weightPriceTransaction'>
-                    <div className='weightTransaction'>52,60</div>
-                    <div>kg</div>
-                    <div className='priceTransaction'>
-                        <div className='multiplier'>x</div>
-                        <div className='price'>5</div>
-                        <div>zł</div>
+        <div className="inputGap">
+            {summaryTransactions.map(transaction => (
+                <div key={transaction.fruitId} className='field summaryField' id={`summaryField-${transaction.fruitId}`}>
+                    <div className='nameFruit'>{transaction.fruitName}</div>
+                    <div className='transaction'>
+                        <div className='parametersSummary'>
+                            <div className='priceSummary'>
+                                Avarage price:
+                                <div className='price'>{transaction.averagePrice.toFixed(2)}</div>
+                                <div className='nominal'>zł</div>
+                            </div>
+                            <div className='boxesSummary'>
+                                Boxes:
+                                    {transaction.boxes.map((box,index) => (
+                                        <div key={box.id} className='box'>{box.quantity} {box.name} {index !== transaction.boxes.length - 1 && ', '}</div>
+                                    ))}
+                            </div>
+                        </div>
+                        <div className='valueTransactionWeight'>
+                            <div className='weight'>{transaction.sumWeight.toFixed(2)}</div> kg
+                        </div>
                     </div>
                 </div>
-
-            </div>
-            <div className='featuredField featuredFieldValueTransaction'>
-                <div className='valueTransaction'>1024,50</div> zł
-            </div>
+            ))}
         </div>
-    )
+    );
 }

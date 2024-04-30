@@ -109,6 +109,16 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
     }
   };
 
+  const onChangeNumberOfBoxes = (event) => {
+    const newValue = event.target.value;
+    if (!Number.isInteger(parseFloat(newValue))) {
+      setError('Number of boxes must be an integer.');
+      return;
+    }
+    setError('');
+    setNumberOfBoxes(newValue);
+  }; 
+
   const handleAddTransaction = async () => {
     try {
       if (clientName.trim() === '' || fruitName.trim() === '' || weightGross.trim() === '' || boxName.trim() === '' || numberOfBoxes.trim() === '') {
@@ -215,7 +225,7 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
           ))}
       </div>
 
-      <input type="number" placeholder="Number of boxes" value={numberOfBoxes} onChange={e => setNumberOfBoxes(e.target.value)} />
+      <input type="number" placeholder="Number of boxes" value={numberOfBoxes} onChange={onChangeNumberOfBoxes} />
       
       {error && <div className="errorMessageMethod">{error}</div>}
       <div className='buttonsModal'>
