@@ -4,16 +4,15 @@ import { getAllClients } from '../api/client/getAllClients';
 
 export function useClients() {
     const [clients, setClients] = useState([]);
-  
-    const refreshClients = () => {
-      getAllClients()
+
+
+    async function refreshClients(role) {
+      if (role === 'ADMIN') {
+        getAllClients()
         .then(data => setClients(data.filter(client => !client.archived)))
         .catch(errors => alert(errors));
+      }
     };
   
-    useEffect(() => {
-      refreshClients();
-    }, []);
-  
-    return clients;
+    return [clients, refreshClients];
   }

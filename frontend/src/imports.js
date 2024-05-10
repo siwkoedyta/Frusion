@@ -18,8 +18,6 @@ import { authCurrent } from './api/auth/authCurrent.js';
 import { useFruits } from './hooks/useFruits.js';
 import { useBoxes } from './hooks/useBoxes.js';
 import { useClients } from './hooks/useClients.js';
-import { useDataFetch } from './hooks/useDataFetch.js';
-
 
 export {
   Boxes,
@@ -37,6 +35,5 @@ export {
   authCurrent,
   useFruits,
   useBoxes,
-  useClients,
-  useDataFetch
+  useClients
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Route, Routes, useLocation, Navigate  } from 'react-router-dom';
 import { Boxes, Clients, Fruits, Home, LoginPanel, Status, RegistrationPanel, ClientHome, 
   ClientChangePassword, Sidebar, HamburgerMenu, WaveSmall, authCurrent, useFruits, useBoxes, 
-  useClients, useDataFetch } from './imports';
+  useClients } from './imports';
 
 function App() {
   const location = useLocation();
@@ -12,9 +12,9 @@ function App() {
   const hideSidebarPaths = ['/LoginPanel', '/RegistrationPanel'];
   const shouldHideSidebar = hideSidebarPaths.includes(location.pathname);
 
-  const [fruits, setFruits] = useState([]);
-  const [boxes, setBoxes] = useState([]);
-  const [clients, setClients] = useState([]);
+  const [fruits, refreshFruits] = useFruits([]);
+  const [boxes, refreshBoxes] = useBoxes();
+  const [clients, refreshClients] = useClients([]);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
   const [sidebarVisible, setSidebarVisible] = useState(!isMobile)
@@ -24,15 +24,16 @@ function App() {
       try {
         const loggedInUser = await authCurrent();
         setRole(loggedInUser.role); 
-        setFrusionName(loggedInUser.frusionName);       
+        setFrusionName(loggedInUser.frusionName);    
+        await refreshBoxes(loggedInUser.role);
+        await refreshFruits(loggedInUser.role);
+        await refreshClients(loggedInUser.role);
       } catch (error) {
         console.error('Error fetching user role:', error);
       }
     }
     fetchUserRole();
   }, []);
-
-  useDataFetch(role, setFruits, setBoxes, setClients);
 
   const isClient = role === 'USER';
   const isAdmin = role === 'ADMIN';
@@ -84,9 +85,9 @@ function App() {
                     <>
                       <Route path="/Home" element={<Home fruits={fruits} boxes={boxes} clients={clients} frusionName={frusionName}/>} />
                       <Route path="/Status" element={<Status/>} />
-                      <Route path="/Fruits" element={<Fruits fruits={fruits} onUpdate={useFruits}/>} />
-                      <Route path="/Boxes" element={<Boxes boxes={boxes} onUpdate={useBoxes} />} />
-                      <Route path="/Clients" element={<Clients clients={clients} onUpdate={useClients} />} />
+                      <Route path="/Fruits" element={<Fruits fruits={fruits} onUpdate={() => refreshFruits(role)}/>} />
+                      <Route path="/Boxes" element={<Boxes boxes={boxes} onUpdate={() => refreshBoxes(role)} />} />
+                      <Route path="/Clients" element={<Clients clients={clients} onUpdate={() => refreshClients(role)} />} />
                     </>
                   )}
                   {/* Wspólne trasy */}

@@ -15,26 +15,27 @@ export default function AddFruit({ onUpdate }) {
     setWeight(event.target.value);
   };
 
-  const handleAddBox = async (e) => {
+  const handleAddBox = async () => {
     if (boxName.trim() === '') {
       setError('Select the name of the box');
       return;
     }
-
+  
     if (weight.trim() === '') {
       setError('Enter the weight of the box');
       return;
     }
-
-    return addBox(boxName, parseFloat(weight))
-      .then(res => {
-        setBoxName('')
-        setWeight('')
-        setError('');
-        onUpdate();
-      })
-      .catch(errors => setError(errors))
+  
+    try {
+      await addBox(boxName, parseFloat(weight));
+      setBoxName('');
+      setWeight('');
+      onUpdate();
+    } catch (error) {
+      setError(error.message); // Set error message received from the server
+    }
   };
+
   return (
     <div className='methodPlace'>
       <div>Add box</div>
