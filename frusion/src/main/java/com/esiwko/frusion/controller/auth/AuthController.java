@@ -41,13 +41,12 @@ public class AuthController {
             case ADMIN -> {
                 AdminEntity admin = adminsRepo.findById(authDetails.id())
                         .orElseThrow(() -> new BadRequestEx("ADMIN_NOT_FOUND"));
-                yield new Json.AuthResponse(admin.getEmail(), authDetails.role().name(), admin.getFrusionName());
+                yield new Json.AuthResponse(admin.getId(), admin.getEmail(), authDetails.role().name(), admin.getFrusionName());
             }
             case USER -> {
-                String email = usersRepo.findById(authDetails.id())
-                        .map(UserEntity::getEmail)
+                UserEntity user = usersRepo.findById(authDetails.id())
                         .orElseThrow(() -> new BadRequestEx("USER_NOT_FOUND"));
-                yield new Json.AuthResponse(email, authDetails.role().name(), null);
+                yield new Json.AuthResponse(user.getId(), user.getEmail(), authDetails.role().name(), null);
             }
         };
 

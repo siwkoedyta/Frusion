@@ -13,4 +13,7 @@ public interface Json {
 
     record RemoveUserResponse(String id) {
     }
+
+    record ChangePasswordRequest(String currentPassword, String newPassword) {
+    }
 }

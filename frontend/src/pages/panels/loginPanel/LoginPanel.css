@@ -26,4 +26,37 @@
 #rightPanelLog{
     min-width: 20vw;
 }
-  
+
+
+.test{
+    display: block;
+}
+
+#logoWithNameLoginPanel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+#frusionNameLogin{
+    font-size: 2.5rem;
+    letter-spacing: 0.6rem;
+    text-transform: capitalize;
+    color: #351431;
+}
+
+
+
+@media screen and (min-width: 900px) {
+    #logoWithNameLoginPanel
+    {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    #logoNone{
+        display: none;
+    }
+}

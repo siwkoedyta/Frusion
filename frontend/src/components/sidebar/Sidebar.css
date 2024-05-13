@@ -9,15 +9,22 @@
     overflow-y: auto;
 }
 
+.sidebarHeader {
+    display: flex;
+    justify-content: space-between;
+  }
+
+
 @media screen and (max-width: 900px) {
     .sidebarHeader{
         display: flex;
         justify-content: space-between;
+        align-items: baseline;
     }
 
     .closeSidebar{
         color: #9A9A9A;
-        width: 30vw;
+        width: 6rem;
     }
 
     .sidebarContainer{
@@ -26,6 +33,25 @@
         gap:2rem;
         min-width: 50%;
         max-width: 50%;
+    }
+
+}
+
+
+@media screen and (max-width: 540px) {
+    .closeSidebar{
+        width: 12rem;
+    }
+
+}
+
+@media screen and (max-width: 470px) {
+    .closeSidebar{
+        width: 53rem;
+    }
+
+    .logoWithName{
+        display: none;
     }
 
 }

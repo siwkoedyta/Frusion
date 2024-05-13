@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, useLocation, Navigate  } from 'react-router-dom';
-import { Boxes, Clients, Fruits, Home, LoginPanel, Status, RegistrationPanel, ClientHome, 
-  ClientChangePassword, Sidebar, HamburgerMenu, WaveSmall, authCurrent, useFruits, useBoxes, 
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
+import { Boxes, Clients, Fruits, Home, LoginPanel, Status, RegistrationPanel, ClientHome,
+  ClientChangePassword, Sidebar, HamburgerMenu, WaveSmall, authCurrent, useFruits, useBoxes,
   useClients } from './imports';
 
 function App() {
@@ -18,13 +18,15 @@ function App() {
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
   const [sidebarVisible, setSidebarVisible] = useState(!isMobile)
+  const [userId, setUserId] = useState('');
 
   useEffect(() => {
     async function fetchUserRole() {
       try {
         const loggedInUser = await authCurrent();
-        setRole(loggedInUser.role); 
-        setFrusionName(loggedInUser.frusionName);    
+        setRole(loggedInUser.role);
+        setFrusionName(loggedInUser.frusionName);
+        setUserId(loggedInUser.id)
         await refreshBoxes(loggedInUser.role);
         await refreshFruits(loggedInUser.role);
         await refreshClients(loggedInUser.role);
@@ -44,7 +46,7 @@ function App() {
 
   const toggleSidebar = () => {
     if (isMobile) {
-      setSidebarVisible(!sidebarVisible); 
+      setSidebarVisible(!sidebarVisible);
       const body = document.getElementsByTagName('body')[0];
       if (sidebarVisible) {
         body.classList.remove('sidebarOpen');
@@ -66,40 +68,40 @@ function App() {
   return (
     <div className="App">
       <div className="content-container">
-          {role && (!isMobile || sidebarVisible) && !shouldHideSidebar && <Sidebar menuType={role} isVisible={sidebarVisible} toggleSidebar={toggleSidebar} />}
-          <div  className={`mainContent ${isMobile && sidebarVisible ? 'sidebarVisible' : ''}`}>
-            <WaveSmall />
-            <div className='page'>
-              <div className='mainContent'>
-                <HamburgerMenu onClick={toggleSidebar} />
-                <Routes>
-                  {/* Trasy dostępne dla klienta */}
-                  {isClient && (
-                    <>
-                      <Route path="/ClientHome" element={<ClientHome fruits={fruits} boxes={boxes}/>} />
-                      <Route path="/ClientChangePassword" element={<ClientChangePassword />} />
-                    </>
-                  )}
-                  {/* Trasy dostępne dla admina */}
-                  {isAdmin && (
-                    <>
-                      <Route path="/Home" element={<Home fruits={fruits} boxes={boxes} clients={clients} frusionName={frusionName}/>} />
-                      <Route path="/Status" element={<Status/>} />
-                      <Route path="/Fruits" element={<Fruits fruits={fruits} onUpdate={() => refreshFruits(role)}/>} />
-                      <Route path="/Boxes" element={<Boxes boxes={boxes} onUpdate={() => refreshBoxes(role)} />} />
-                      <Route path="/Clients" element={<Clients clients={clients} onUpdate={() => refreshClients(role)} />} />
-                    </>
-                  )}
-                  {/* Wspólne trasy */}
-                  <Route path="/LoginPanel" element={<LoginPanel />} />
-                  <Route path="/RegistrationPanel" element={<RegistrationPanel />} />
-                  {/* Przekierowanie na odpowiednią trasę po zalogowaniu */}
-                  <Route path="/" element={role ? <Navigate to={isClient ? "/ClientHome" : "/Home"} /> : <Navigate to="/LoginPanel" />} />
-                </Routes> 
-              </div>
+        {role && (!isMobile || sidebarVisible) && !shouldHideSidebar && <Sidebar menuType={role} isVisible={sidebarVisible} toggleSidebar={toggleSidebar} />}
+        <div className={`mainContent ${isMobile && sidebarVisible ? 'sidebarVisible' : ''}`}>
+          <WaveSmall />
+          <div className='page'>
+            <div className='mainContent'>
+              {!shouldHideSidebar && <HamburgerMenu onClick={toggleSidebar} />}
+              <Routes>
+                {/* Trasy dostępne dla klienta */}
+                {isClient && (
+                  <>
+                    <Route path="/ClientHome" element={<ClientHome fruits={fruits} boxes={boxes} />} />
+                    <Route path="/ClientChangePassword" element={<ClientChangePassword userId={userId} />} />
+                  </>
+                )}
+                {/* Trasy dostępne dla admina */}
+                {isAdmin && (
+                  <>
+                    <Route path="/Home" element={<Home fruits={fruits} boxes={boxes} clients={clients} frusionName={frusionName} />} />
+                    <Route path="/Status" element={<Status />} />
+                    <Route path="/Fruits" element={<Fruits fruits={fruits} onUpdate={() => refreshFruits(role)} />} />
+                    <Route path="/Boxes" element={<Boxes boxes={boxes} onUpdate={() => refreshBoxes(role)} />} />
+                    <Route path="/Clients" element={<Clients clients={clients} onUpdate={() => refreshClients(role)} />} />
+                  </>
+                )}
+                {/* Wspólne trasy */}
+                <Route path="/LoginPanel" element={<LoginPanel />} />
+                <Route path="/RegistrationPanel" element={<RegistrationPanel />} />
+                {/* Przekierowanie na odpowiednią trasę po zalogowaniu */}
+                <Route path="/" element={role ? <Navigate to={isClient ? "/ClientHome" : "/Home"} /> : <Navigate to="/LoginPanel" />} />
+              </Routes>
             </div>
           </div>
-  
+        </div>
+
       </div>
     </div>
   );

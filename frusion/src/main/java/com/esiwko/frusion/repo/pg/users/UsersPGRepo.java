@@ -17,4 +17,5 @@ public interface UsersPGRepo extends JpaRepository<UserEntity, String> {
 
     List<UserEntity> findAllByAdminId(String adminId);
     Optional<UserEntity> findByEmail(String email);
+    Optional<UserEntity> findByIdAndAndPassword(String id, String password);
 }

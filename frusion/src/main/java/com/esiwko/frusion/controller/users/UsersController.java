@@ -4,6 +4,7 @@ import com.esiwko.frusion.controller.auth.AuthDetails;
 import com.esiwko.frusion.controller.auth.JwtService;
 import com.esiwko.frusion.controller.errors.BadRequestEx;
 import com.esiwko.frusion.repo.pg.admins.AdminEntity;
+import com.esiwko.frusion.repo.pg.admins.AdminsPGRepo;
 import com.esiwko.frusion.repo.pg.users.UserEntity;
 import com.esiwko.frusion.repo.pg.users.UsersPGRepo;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -20,10 +22,17 @@ import java.util.UUID;
 public class UsersController {
     private final JwtService jwtService;
     private final UsersPGRepo usersRepo;
+    private final AdminsPGRepo adminsRepo;
 
     @PostMapping("clients")
     public Json.AddUserResponse add(@CookieValue("accessToken") String token, @RequestBody Json.AddUserRequest req) {
         val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
+
+        Optional<UserEntity> existingUser = usersRepo.findByEmail(req.email());
+        Optional<AdminEntity> existingAdmin = adminsRepo.findByEmail(req.email());
+        if (existingUser.isPresent() || existingAdmin.isPresent()) {
+            throw new BadRequestEx("User or admin with this email already exists.");
+        }
 
         var id = UUID.randomUUID().toString();
         if (req.firstName().isBlank() || req.lastName().isBlank() || req.email().isBlank() || req.password().isBlank())
@@ -66,6 +75,22 @@ public class UsersController {
                         u.getPassword(),
                         u.isArchived()
                 )).toList();
+    }
+
+    @PutMapping("clients/{id}/changePassword")
+    public void changePassword(@CookieValue("accessToken") String token, @PathVariable String id, @RequestBody Json.ChangePasswordRequest request) {
+        val userId = jwtService.verify(token, AuthDetails.Role.USER);
+        val user = usersRepo.findById(id).orElseThrow(() -> new BadRequestEx("User not found"));
+
+        // Sprawdzenie poprawności aktualnego hasła
+        val existingUser = usersRepo.findByIdAndAndPassword(id, hashPassword(request.currentPassword()));
+        if (existingUser.isEmpty()) {
+            throw new BadRequestEx("Invalid current password");
+        }
+
+        // Zmiana hasła użytkownika
+        user.setPassword(hashPassword(request.newPassword()));
+        usersRepo.save(user);
     }
 
     private String hashPassword(String password) {

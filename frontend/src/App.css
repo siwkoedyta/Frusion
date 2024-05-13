@@ -57,7 +57,7 @@
 input,
 select {
     width:20vw;
-    min-width: 15rem;
+    min-width: 17rem;
     height: 6vh;
     min-height: 4rem;
     border: none;
@@ -282,14 +282,19 @@ button {
   color: red;
 }
 
-.errorMessageMethod{
+.errorMessageMethod, .succesMessageMethod{
   font-size: 1.2rem;
+}
+
+.pageMiddle{
+  display: flex;
+  justify-content: center;
 }
 
 
 /*---------------------MediaQuieres---------------------*/
 @media screen and (min-width: 900px) {
-  .waveSmall, .closeSidebar {
+  .waveSmall, .closeSidebar, #frusionName{
     display: none;
   }
 
@@ -300,6 +305,7 @@ button {
   #mainContentFruitBoxes, .contentInterior{
     padding-top:4.5rem;
   }
+
   #calendars{
     gap:3vw;
   }
@@ -330,6 +336,10 @@ button {
 
   .mainContentInsideHomeStatus{
     gap:0rem;
+  }
+
+  .bigWave{
+    display: none;
   }
 
   .hamburgerMenu{
@@ -399,7 +409,7 @@ button {
   .flexWrapContainer{
     min-width: 100vw;
   }
-  
+
 }
 
 

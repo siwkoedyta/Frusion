@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './LoginPanel.css';
 import Wave from '../../../components/wave/Wave.js';
 import Logo from '../../../components/logo/Logo.js';
+import LogoWithNoName from '../../../components/logo/LogoWithNoName.js';
 import Arrow from '../../../components/arrow/Arrow.js';
 import { auth } from '../../../api/auth/auth.js';
 import { authCurrent } from '../../../api/auth/authCurrent.js';
@@ -26,7 +27,6 @@ export default function LoginPanel() {
         window.location.href = '/ClientHome';
       }
     } catch (error) {
-      console.error('Authentication error:', error);
       setError("Invalid email or password. Please try again.");
     }
   }
@@ -34,7 +34,16 @@ export default function LoginPanel() {
   return (
     <div className='panels'>
       <Wave/>
-      <Logo color="#351431" />
+
+      <div id="logoNone">
+        <Logo color="#351431"/>
+      </div>
+
+      <div id='logoWithNameLoginPanel'>
+        <LogoWithNoName/>
+        <h1 id='frusionNameLogin'>Frusion</h1>
+      </div>
+
       <div id='inputPanelLog'>
         <div className='middle'>
           <div id='informationPanelLog'>Sign in to your account</div>

@@ -68,7 +68,7 @@ export default function AddClients({ onUpdate }) {
             setError('');
             onUpdate();
         } catch (errors) {
-            setError(errors);
+            setError("User with this email already exists.");
         }
     };
 
