@@ -45,14 +45,17 @@ export default function LoginPanel() {
       </div>
 
       <div id='inputPanelLog'>
+
         <div className='middle'>
           <div id='informationPanelLog'>Sign in to your account</div>
           <div className='inputGap'>
             <input 
+              className='inputPanels'
               placeholder="Email"
               onChange={event => setEmail(event.target.value)}
             />
             <input 
+              className='inputPanels'
               placeholder="Password"
               type="password"
               onChange={event => setPassword(event.target.value)}
@@ -60,19 +63,23 @@ export default function LoginPanel() {
           </div>
           {error && <div className="errorMessage">{error}</div>} 
         </div>
+        
         <div className='right' id='rightPanelLog'>
           <div className='buttonArrow'>
             <div className='captionButton'>Sign in</div>
             <button className='buttonPanel' onClick={handleSignIn}><Arrow/></button>
           </div>
         </div>
+
         <div className='middle'>
           <div id='createAccountPanelLog'>
             <div>Don't have an account?</div>
             <Link to="/RegistrationPanel" id='createAccountButtonPanelLog'>Create</Link>
           </div>
         </div>
+
       </div>
+
     </div>
   );
 }

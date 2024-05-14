@@ -57,6 +57,7 @@ export default function RegistrationPanel() {
                     <div id='titlePanelRegistration'>Create account</div>
                     <div className='inputGap'>
                         <input 
+                            className='inputPanels'
                             type="text"
                             name="email"
                             placeholder="Email"
@@ -64,6 +65,7 @@ export default function RegistrationPanel() {
                             onChange={event => setEmail(event.target.value)}
                         />
                         <input 
+                            className='inputPanels'
                             type="password"
                             name="password"
                             placeholder="Password"
@@ -71,6 +73,7 @@ export default function RegistrationPanel() {
                             onChange={event => setPassword(event.target.value)}
                         />
                         <input 
+                            className='inputPanels'
                             type="password"
                             name="repeatPassword"
                             placeholder="Repeat password"
@@ -78,6 +81,7 @@ export default function RegistrationPanel() {
                             onChange={event => setRepeatPassword(event.target.value)}
                         />
                         <input 
+                            className='inputPanels'
                             type="text"
                             name="frusionName"
                             placeholder="Frusion name"
@@ -89,14 +93,14 @@ export default function RegistrationPanel() {
                 </div>
 
                 <div id='buttonsPanelRegistration'>
-                    <div className='left'>
+                    <div className='leftRegistration'>
                         <div className='buttonArrow'>
                             <Link to="/LoginPanel" className='buttonPanel' id='signInButtonPanelRegistration'><Arrow/></Link>
                             <div className='captionButton'>Sign in</div>
                         </div>
                     </div>
 
-                    <div className='right'>
+                    <div className='rightRegistration'>
                         <div className='buttonArrow'>
                             <div className='captionButton'>Create</div>
                             <Link to="/LoginPanel" className='buttonPanel' onClick={handleCreate}><Arrow/></Link>

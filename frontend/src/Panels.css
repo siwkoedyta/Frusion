@@ -10,6 +10,7 @@
 .buttonArrow{
     align-items: center;
     height: 12vh;
+    justify-content: right;
 }
 
 .captionButton{
@@ -65,5 +66,38 @@
 
 .right{
     justify-content: right;
-    min-width: 10vw;
+    width:20vw;
+    min-width: 23rem;
+}
+
+.rightRegistration{
+    justify-content: right;
+    width:12vw;
+    min-width: 13em;
+}
+
+@media screen and (max-width: 900px) {
+    .right
+    {
+        width: 48vw;
+        min-width: 15rem;
+    }
+
+    #titlePanelRegistration{
+        margin-top: 4rem;
+    }
+
+}
+
+
+@media screen and (max-width: 640px) {
+    .right
+    {
+        width: 67vw;
+    }
+
+    .captionButton{
+        font-size: 1.5rem;
+    }
+
 }

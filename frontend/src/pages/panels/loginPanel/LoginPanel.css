@@ -17,14 +17,11 @@
     width: 100vw;
     justify-content: center;
     align-items: center;
+
 }
 
 #signInButtonPanelRegistration{
     transform: scaleX(-1); 
-}
-
-#rightPanelLog{
-    min-width: 20vw;
 }
 
 
@@ -53,10 +50,23 @@
     {
         display: none;
     }
+
+    .inputPanels{
+        min-width: 25rem;
+    }
 }
 
 @media screen and (max-width: 900px) {
     #logoNone{
         display: none;
+    }
+
+    #logoWithNameLoginPanel{
+        margin-top: 4rem;
+    }
+
+    .inputPanels{
+        width: 50vw;
+        min-width: 25rem;
     }
 }
