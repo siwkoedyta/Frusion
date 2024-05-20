@@ -7,8 +7,8 @@ import { Boxes, Clients, Fruits, Home, LoginPanel, Status, RegistrationPanel, Cl
 function App() {
   const location = useLocation();
 
-  const [role, setRole] = useState(null);
-  const [frusionName, setFrusionName] = useState('');
+  const [auth, setAuth] = useState(null);
+
   const hideSidebarPaths = ['/LoginPanel', '/RegistrationPanel'];
   const shouldHideSidebar = hideSidebarPaths.includes(location.pathname);
 
@@ -18,15 +18,12 @@ function App() {
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
   const [sidebarVisible, setSidebarVisible] = useState(!isMobile)
-  const [userId, setUserId] = useState('');
 
   useEffect(() => {
     async function fetchUserRole() {
       try {
         const loggedInUser = await authCurrent();
-        setRole(loggedInUser.role);
-        setFrusionName(loggedInUser.frusionName);
-        setUserId(loggedInUser.id)
+        setAuth(loggedInUser);
         await refreshBoxes(loggedInUser.role);
         await refreshFruits(loggedInUser.role);
         await refreshClients(loggedInUser.role);
@@ -36,9 +33,6 @@ function App() {
     }
     fetchUserRole();
   }, []);
-
-  const isClient = role === 'USER';
-  const isAdmin = role === 'ADMIN';
 
   useEffect(() => {
     setSidebarVisible(false);
@@ -68,7 +62,7 @@ function App() {
   return (
     <div className="App">
       <div className="content-container">
-        {role && (!isMobile || sidebarVisible) && !shouldHideSidebar && <Sidebar menuType={role} isVisible={sidebarVisible} toggleSidebar={toggleSidebar} />}
+        {auth?.role && (!isMobile || sidebarVisible) && !shouldHideSidebar && <Sidebar menuType={auth?.role} isVisible={sidebarVisible} toggleSidebar={toggleSidebar} />}
         <div className={`mainContent ${isMobile && sidebarVisible ? 'sidebarVisible' : ''}`}>
           <WaveSmall />
           <div className='page'>
@@ -76,27 +70,27 @@ function App() {
               {!shouldHideSidebar && <HamburgerMenu onClick={toggleSidebar} />}
               <Routes>
                 {/* Trasy dostępne dla klienta */}
-                {isClient && (
+                {auth?.role === "USER" && (
                   <>
                     <Route path="/ClientHome" element={<ClientHome fruits={fruits} boxes={boxes} />} />
-                    <Route path="/ClientChangePassword" element={<ClientChangePassword userId={userId} />} />
+                    <Route path="/ClientChangePassword" element={<ClientChangePassword userId={auth?.id} />} />
                   </>
                 )}
                 {/* Trasy dostępne dla admina */}
-                {isAdmin && (
+                {auth?.role === "ADMIN" && (
                   <>
-                    <Route path="/Home" element={<Home fruits={fruits} boxes={boxes} clients={clients} frusionName={frusionName} />} />
+                    <Route path="/Home" element={<Home fruits={fruits} boxes={boxes} clients={clients} frusionName={auth?.frusionName} />} />
                     <Route path="/Status" element={<Status />} />
-                    <Route path="/Fruits" element={<Fruits fruits={fruits} onUpdate={() => refreshFruits(role)} />} />
-                    <Route path="/Boxes" element={<Boxes boxes={boxes} onUpdate={() => refreshBoxes(role)} />} />
-                    <Route path="/Clients" element={<Clients clients={clients} onUpdate={() => refreshClients(role)} />} />
+                    <Route path="/Fruits" element={<Fruits fruits={fruits} onUpdate={() => refreshFruits(auth?.role)} />} />
+                    <Route path="/Boxes" element={<Boxes boxes={boxes} onUpdate={() => refreshBoxes(auth?.role)} />} />
+                    <Route path="/Clients" element={<Clients clients={clients} onUpdate={() => refreshClients(auth?.role)} />} />
                   </>
                 )}
                 {/* Wspólne trasy */}
                 <Route path="/LoginPanel" element={<LoginPanel />} />
                 <Route path="/RegistrationPanel" element={<RegistrationPanel />} />
                 {/* Przekierowanie na odpowiednią trasę po zalogowaniu */}
-                <Route path="/" element={role ? <Navigate to={isClient ? "/ClientHome" : "/Home"} /> : <Navigate to="/LoginPanel" />} />
+                <Route path="/" element={auth ? <Navigate to={auth?.role === "USER" ? "/ClientHome" : "/Home"} /> : <Navigate to="/LoginPanel" />} />
               </Routes>
             </div>
           </div>

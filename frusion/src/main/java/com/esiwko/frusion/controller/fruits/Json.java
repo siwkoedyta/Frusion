@@ -17,4 +17,5 @@ public interface Json {
 
     record RemoveFruitResponse(String id) {
     }
+
 }
