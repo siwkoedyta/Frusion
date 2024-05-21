@@ -3,8 +3,7 @@ package com.esiwko.frusion.controller.fruits;
 import com.esiwko.frusion.controller.auth.AuthDetails;
 import com.esiwko.frusion.controller.auth.JwtService;
 import com.esiwko.frusion.controller.errors.BadRequestEx;
-import com.esiwko.frusion.messagingrabbitmq.MessagingRabbitmqApplication;
-import com.esiwko.frusion.messagingrabbitmq.Receiver;
+import com.esiwko.frusion.messagingrabbitmq.MessageSenderService;
 import com.esiwko.frusion.repo.pg.admins.AdminEntity;
 import com.esiwko.frusion.repo.pg.fruits.FruitEntity;
 import com.esiwko.frusion.repo.pg.fruits.FruitsPGRepo;
@@ -12,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -25,8 +25,9 @@ public class FruitsController {
     private final JwtService jwtService;
     private final FruitsPGRepo fruitsRepo;
     private final RabbitTemplate rabbitTemplate;
-    private static final String TOPIC_EXCHANGE_NAME = "spring-boot-exchange";
-    private final Receiver receiver;
+
+    @Autowired
+    private MessageSenderService messageSenderService;
 
     @PostMapping("fruits")
     public Json.AddFruitResponse add(@CookieValue("accessToken") String token, @RequestBody Json.AddFruitRequest req) {
@@ -81,13 +82,11 @@ public class FruitsController {
     }
 
     @PutMapping("fruits/{id}/price")
-    public void setPrice(@PathVariable String id, @RequestBody Json.SetPriceRequest req) throws InterruptedException {
-        fruitsRepo.setPrice(id, req.price());
+    public void setPrice(@PathVariable String id, @RequestBody Json.SetPriceRequest req) {
+        BigDecimal newPrice = req.price();
+        fruitsRepo.setPrice(id, newPrice);
 
-        String routingKey = "fruit.price.updated";
-        String message = id + ":" + req.price();
-        rabbitTemplate.convertAndSend(MessagingRabbitmqApplication.topicExchangeName, routingKey, message);
-        System.out.println("Sending message: " + message);
+        Json.PriceChange priceChange = new Json.PriceChange("PRICE_CHANGED", id, newPrice);
+        messageSenderService.sendMessage(priceChange);
     }
-
 }

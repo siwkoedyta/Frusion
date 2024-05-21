@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import RabbitMQConsumer from './RabbitMQConsumer';
 import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import { Boxes, Clients, Fruits, Home, LoginPanel, Status, RegistrationPanel, ClientHome,
   ClientChangePassword, Sidebar, HamburgerMenu, WaveSmall, authCurrent, useFruits, useBoxes,
@@ -61,6 +62,7 @@ function App() {
 
   return (
     <div className="App">
+      <RabbitMQConsumer />
       <div className="content-container">
         {auth?.role && (!isMobile || sidebarVisible) && !shouldHideSidebar && <Sidebar menuType={auth?.role} isVisible={sidebarVisible} toggleSidebar={toggleSidebar} />}
         <div className={`mainContent ${isMobile && sidebarVisible ? 'sidebarVisible' : ''}`}>

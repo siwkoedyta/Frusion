@@ -18,4 +18,6 @@ public interface Json {
     record RemoveFruitResponse(String id) {
     }
 
+    record PriceChange(String type, String fruitId, BigDecimal newPrice) {
+    }
 }
