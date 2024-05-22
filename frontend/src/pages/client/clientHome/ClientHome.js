@@ -1,20 +1,26 @@
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAllTransactionsClient } from '../../../api/transaction/getAllTransactionsClient';
-import { authCurrent } from '../../../api/auth/authCurrent';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ClientSummaryList from './ClientSummaryList';
 import ClientTransactionList from './ClientTrasactionList';
 import { getAllSummaryTransactionsClient } from '../../../api/transaction/getAllSummaryTransactionsClient';
+import Notification from '../../../components/notification/Notification';
 
-export default function ClientHome({ fruits, boxes }) {
+export default function ClientHome({ fruits, boxes, messages }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [summaryTransactions, setSummaryTransactions] = useState([]);
   const [transactions, setTransactions] = useState([]);
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     refreshData();
   }, [selectedDate]);
+
+  useEffect(() => {
+    setNotifications(messages);
+  }, [messages]);
+
 
   const refreshData = () => {
     Promise.all([
@@ -35,9 +41,23 @@ export default function ClientHome({ fruits, boxes }) {
       });
   };
 
+  const handleRemoveNotification = (id) => {
+    console.log("Liczba elementów w notifications:", notifications.length);
+    console.log("Zawartość notifications:", notifications);
+
+    setNotifications(prevNotifications => prevNotifications.filter(notification => notification.id !== id));
+    console.log("Liczba elementów w notifications:", notifications.length);
+  };
+
   return (
     <div className='page'>
       <div className='contentInterior'>
+        <div id="messageContainer" className="notification-container">
+          {notifications.map((message, index) => (
+            <Notification key={index} message={message} fruits={fruits} onRemove={handleRemoveNotification} />
+          ))}
+        </div>
+
         <div className='calendar-container'>
           <DatePicker
             className='calendar'
@@ -50,11 +70,11 @@ export default function ClientHome({ fruits, boxes }) {
             <div id='buttonSummaryHome'>
               <div className='methodPlace' id='methodPlaceHome'>
                 <div className='titleSummary'>Summary</div>
-                <ClientSummaryList summaryTransactions={summaryTransactions} onUpdate={refreshData}/>
+                <ClientSummaryList summaryTransactions={summaryTransactions} onUpdate={refreshData} />
               </div>
             </div>
             <div>
-              <ClientTransactionList fruits={fruits} boxes={boxes} transactions={transactions} onUpdate={refreshData}/>
+              <ClientTransactionList fruits={fruits} boxes={boxes} transactions={transactions} onUpdate={refreshData} />
             </div>
           </div>
         </div>

@@ -227,7 +227,49 @@ button {
   padding-left: 2rem;
 }
 
+/*---------------------Notifications---------------------*/
 
+.notification-container {
+  display: flex;
+  flex-direction: column-reverse; /* Nowe powiadomienia na górze */
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.notification {
+  background-color: #669966 ;
+  color: white;
+  padding: 16px;
+  border-radius: 2.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.5s ease-out, fadeOut 0.5s ease-in 4.5s forwards;
+  cursor: pointer;
+  margin-bottom: 10px; /* Odstęp między powiadomieniami */
+}
+
+.notification:hover {
+  background-color: #669966 ;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
 /*---------------------Other---------------------*/
 
 

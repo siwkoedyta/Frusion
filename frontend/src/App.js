@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import RabbitMQConsumer from './RabbitMQConsumer';
 import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import { Boxes, Clients, Fruits, Home, LoginPanel, Status, RegistrationPanel, ClientHome,
   ClientChangePassword, Sidebar, HamburgerMenu, WaveSmall, authCurrent, useFruits, useBoxes,
   useClients } from './imports';
+import useSSE from './hooks/sseHook';
 
 function App() {
   const location = useLocation();
-
   const [auth, setAuth] = useState(null);
-
   const hideSidebarPaths = ['/LoginPanel', '/RegistrationPanel'];
   const shouldHideSidebar = hideSidebarPaths.includes(location.pathname);
 
@@ -18,7 +16,12 @@ function App() {
   const [clients, refreshClients] = useClients([]);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
-  const [sidebarVisible, setSidebarVisible] = useState(!isMobile)
+  const [sidebarVisible, setSidebarVisible] = useState(!isMobile);
+
+  const messages = useSSE('http://localhost:8080/api/messages');
+  console.log({messages});
+
+
 
   useEffect(() => {
     async function fetchUserRole() {
@@ -62,7 +65,6 @@ function App() {
 
   return (
     <div className="App">
-      <RabbitMQConsumer />
       <div className="content-container">
         {auth?.role && (!isMobile || sidebarVisible) && !shouldHideSidebar && <Sidebar menuType={auth?.role} isVisible={sidebarVisible} toggleSidebar={toggleSidebar} />}
         <div className={`mainContent ${isMobile && sidebarVisible ? 'sidebarVisible' : ''}`}>
@@ -71,33 +73,28 @@ function App() {
             <div className='mainContent'>
               {!shouldHideSidebar && <HamburgerMenu onClick={toggleSidebar} />}
               <Routes>
-                {/* Trasy dostępne dla klienta */}
                 {auth?.role === "USER" && (
                   <>
-                    <Route path="/ClientHome" element={<ClientHome fruits={fruits} boxes={boxes} />} />
+                    <Route path="/ClientHome" element={<ClientHome fruits={fruits} boxes={boxes} messages={messages} />} />
                     <Route path="/ClientChangePassword" element={<ClientChangePassword userId={auth?.id} />} />
                   </>
                 )}
-                {/* Trasy dostępne dla admina */}
                 {auth?.role === "ADMIN" && (
                   <>
                     <Route path="/Home" element={<Home fruits={fruits} boxes={boxes} clients={clients} frusionName={auth?.frusionName} />} />
                     <Route path="/Status" element={<Status />} />
-                    <Route path="/Fruits" element={<Fruits fruits={fruits} onUpdate={() => refreshFruits(auth?.role)} />} />
+                    <Route path="/Fruits" element={<Fruits fruits={fruits}onUpdate={() => refreshFruits(auth?.role)} />} />
                     <Route path="/Boxes" element={<Boxes boxes={boxes} onUpdate={() => refreshBoxes(auth?.role)} />} />
                     <Route path="/Clients" element={<Clients clients={clients} onUpdate={() => refreshClients(auth?.role)} />} />
                   </>
                 )}
-                {/* Wspólne trasy */}
                 <Route path="/LoginPanel" element={<LoginPanel />} />
                 <Route path="/RegistrationPanel" element={<RegistrationPanel />} />
-                {/* Przekierowanie na odpowiednią trasę po zalogowaniu */}
                 <Route path="/" element={auth ? <Navigate to={auth?.role === "USER" ? "/ClientHome" : "/Home"} /> : <Navigate to="/LoginPanel" />} />
               </Routes>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
