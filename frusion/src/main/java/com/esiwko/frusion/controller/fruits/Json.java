@@ -1,6 +1,7 @@
 package com.esiwko.frusion.controller.fruits;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 public interface Json {
     record Fruit(String id, String name, BigDecimal price, boolean archived) {
@@ -18,6 +19,6 @@ public interface Json {
     record RemoveFruitResponse(String id) {
     }
 
-    record PriceChange(String type, String fruitId, BigDecimal newPrice) {
+    record PriceChange(String type, String fruitId, BigDecimal newPrice, Long time) {
     }
 }

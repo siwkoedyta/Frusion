@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -86,7 +87,7 @@ public class FruitsController {
         BigDecimal newPrice = req.price();
         fruitsRepo.setPrice(id, newPrice);
 
-        Json.PriceChange priceChange = new Json.PriceChange("PRICE_CHANGED", id, newPrice);
+        Json.PriceChange priceChange = new Json.PriceChange("PRICE_CHANGED", id, newPrice, Instant.now().toEpochMilli());
         messageSenderService.sendMessage(priceChange);
     }
 }

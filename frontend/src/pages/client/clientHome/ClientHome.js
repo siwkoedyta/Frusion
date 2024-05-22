@@ -11,16 +11,10 @@ export default function ClientHome({ fruits, boxes, messages }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [summaryTransactions, setSummaryTransactions] = useState([]);
   const [transactions, setTransactions] = useState([]);
-  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     refreshData();
   }, [selectedDate]);
-
-  useEffect(() => {
-    setNotifications(messages);
-  }, [messages]);
-
 
   const refreshData = () => {
     Promise.all([
@@ -41,20 +35,12 @@ export default function ClientHome({ fruits, boxes, messages }) {
       });
   };
 
-  const handleRemoveNotification = (id) => {
-    console.log("Liczba elementów w notifications:", notifications.length);
-    console.log("Zawartość notifications:", notifications);
-
-    setNotifications(prevNotifications => prevNotifications.filter(notification => notification.id !== id));
-    console.log("Liczba elementów w notifications:", notifications.length);
-  };
-
   return (
     <div className='page'>
       <div className='contentInterior'>
         <div id="messageContainer" className="notification-container">
-          {notifications.map((message, index) => (
-            <Notification key={index} message={message} fruits={fruits} onRemove={handleRemoveNotification} />
+          {messages.map((message, index) => (
+            <Notification key={index} message={message} fruits={fruits} />
           ))}
         </div>
 

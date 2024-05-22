@@ -9,7 +9,7 @@ const useSSE = (url) => {
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.type === 'PRICE_CHANGED') {
-        setMessages((prevMessages) => [data]);
+        setMessages(prevMessages => [...prevMessages, data]);
       }
     };
 
@@ -22,6 +22,13 @@ const useSSE = (url) => {
       eventSource.close();
     };
   }, [url]);
+
+  useEffect(() => {
+    setInterval(() => {
+      const expirationTime = new Date().getTime() - 5 * 60000
+      setMessages(prevMessages => prevMessages.filter(msg => msg.time >= expirationTime ))
+    }, 5000);
+  }, []);
 
   return messages;
 };

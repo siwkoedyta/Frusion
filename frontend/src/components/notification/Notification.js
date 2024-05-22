@@ -4,12 +4,6 @@ const Notification = ({ message, fruits, onRemove }) => {
   const fruit = fruits.find(fruit => fruit.id === message.fruitId);
   const fruitName = fruit ? fruit.name : 'Unknown';
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onRemove(message.id);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, [message.id, onRemove]);
 
   return (
     <div className="notification">
