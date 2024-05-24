@@ -1,21 +1,27 @@
 # Frusion - fruit purchase
 
 ## Introduction
-This document provides an overview of the Frusion application, an online fruit purchasing platform using Docker containers. It will make the work of people with a collection point and their customers easier. The application consists of several containers, each of which serves a specific purpose.
+Frusion is a web application written in Java using the Spring framework, which aims to facilitate the work of fruit outlet owners. The application allows managing fruit data, prices and sending notifications to users. The application uses Docker containers. 
 
-## Docker Containers
+## Technologies
+- Backend: Java, Spring Framework
+- MVC (Model-View-Controller)
+- Spring Data JPA
+- Spring Boot
+- Database: PostgreSQL, pgAdmin
+- Front-end: JavaScript, React
+- Queues: RabbitMQ
 
-#### NGINX (Web Server):</br>
-Responsible for serving static files and handling HTTP requests.</br>
+## Functionalities
+- Management of fruit data
+- Handling of purchase transactions
+- Time reports
+- Access to customers
+- Control of crates and fruit
+- Dynamic notifications of price changes
 
-#### PHP:</br>
-Manages dynamic content and interactions on the server-side.</br>
-
-#### PostgreSQL (pgsql):</br>
-A database container for storing user information, transactions, and other relevant data.</br>
-
-#### pgAdmin4:</br>
-Provides a web-based interface for PostgreSQL administration.</br>
+## Using
+Once the backend and frontend applications are up and running, the user interface will be available at http://localhost:3000. API endpoints are available at http://localhost:8080.
 
 ## Application Features
 ### User Authentication
@@ -94,10 +100,9 @@ The user can change the password to a different one. To do this, enter the passw
 ![image](https://github.com/siwkoedyta/Frusion/assets/127204259/02f49cd8-6511-44f7-9ad5-7611b3fcbed5)
 
 
-
+### Examples of mobile views
 ![image](https://github.com/siwkoedyta/Frusion/assets/127204259/c1921b47-9963-4886-a109-3f041f484871)
 ![image](https://github.com/siwkoedyta/Frusion/assets/127204259/159a7841-2724-4d61-8ccc-38f0a56271c5)
-![image](https://github.com/siwkoedyta/Frusion/assets/127204259/7adfbba0-3c48-4ec5-9f1f-53c1eb73df35)
 
 
 ### Getting Started
