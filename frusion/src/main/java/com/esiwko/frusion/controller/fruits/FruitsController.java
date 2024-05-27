@@ -85,6 +85,10 @@ public class FruitsController {
     @PutMapping("fruits/{id}/price")
     public void setPrice(@PathVariable String id, @RequestBody Json.SetPriceRequest req) {
         BigDecimal newPrice = req.price();
+
+        if (newPrice.compareTo(BigDecimal.ZERO) < 0) {
+            throw new BadRequestEx("PRICE_CANNOT_BE_NEGATIVE");
+        }
         fruitsRepo.setPrice(id, newPrice);
 
         Json.PriceChange priceChange = new Json.PriceChange("PRICE_CHANGED", id, newPrice, Instant.now().toEpochMilli());

@@ -12,7 +12,6 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
   const [numberOfBoxes, setNumberOfBoxes] = useState('');
   const [error, setError] =  useState('');
 
-
   const [fruitDropdownTop, setFruitDropdownTop] = useState(0);
   const [boxDropdownTop, setBoxDropdownTop] = useState(0);
   const [clientDropdownTop, setClientDropdownTop] = useState(0);
@@ -57,10 +56,10 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
         setter(rect.bottom);
       }
     });
-  
+
     const dropdownFruit = generateDropdown(filteredFruits, 'name', fruitName);
     const dropdownBox = generateDropdown(filteredBoxes, 'name', boxName);
-  
+
     const dropdownClient = filteredClients.filter(client => {
       const searchClient = clientName.toLowerCase();
       const fullName = `${client.firstName} ${client.lastName}`.toLowerCase();
@@ -117,7 +116,12 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
     }
     setError('');
     setNumberOfBoxes(newValue);
-  }; 
+  };
+
+  const onChangeWeightGross = (event) => {
+    const value = event.target.value.replace(',', '.');
+    setWeightGross(value);
+  };
 
   const handleAddTransaction = async () => {
     try {
@@ -146,7 +150,7 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
       setError('');
       onUpdate();
     } catch (error) {
-      alert(error);
+        setError('Net weight cannot be negative.');
     }
   };
 
@@ -162,7 +166,7 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
       const fullNameLength = item.firstName.length + item.lastName.length + 1;
       return item && item.firstName && item.lastName && event.target.value.toLowerCase() === `${item.firstName.toLowerCase()} ${item.lastName.toLowerCase()}` && event.target.value.length === fullNameLength;
     });
-  
+
     if (selectedItem && event.key.length === 1 && event.target.value.length === selectedItem.firstName.length + selectedItem.lastName.length + 1) {
       event.preventDefault();
     }
@@ -172,7 +176,7 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
     <div className="modal">
       <div className='titleModal'>Buy fruit</div>
 
-      <input ref={fourthInputRef} type="text" value={clientName} onChange={onChangeClient} onKeyPress={(e) => handleKeyPressClient(e, filteredClients)} placeholder="First and last name" />
+      <input className="inputModal" ref={fourthInputRef} type="text" value={clientName} onChange={onChangeClient} onKeyPress={(e) => handleKeyPressClient(e, filteredClients)} placeholder="First and last name" />
 
       <div className='dropdown' style={{ top: clientDropdownTop }}>
         {filteredClients
@@ -189,7 +193,7 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
           ))}
       </div>
 
-      <input ref={secondInputRef} type="text" value={fruitName} onChange={onChangeFruit} onKeyPress={(e) => handleKeyPress(e, filteredFruits)} placeholder='Fruit' />
+      <input className="inputModal" ref={secondInputRef} type="text" value={fruitName} onChange={onChangeFruit} onKeyPress={(e) => handleKeyPress(e, filteredFruits)} placeholder='Fruit' />
 
       <div className='dropdown' style={{ top: fruitDropdownTop }}>
         {filteredFruits
@@ -206,9 +210,9 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
           ))}
       </div>
 
-      <input type="text" placeholder="Gross weight" value={weightGross} onChange={e => setWeightGross(e.target.value)} />
+      <input className="inputModal" type="text" placeholder="Gross weight" value={weightGross} onChange={onChangeWeightGross} />
 
-      <input ref={thirdInputRef} type="text" value={boxName} onChange={onChangeBox} onKeyPress={(e) => handleKeyPress(e, filteredBoxes)} placeholder='Box' />
+      <input className="inputModal" ref={thirdInputRef} type="text" value={boxName} onChange={onChangeBox} onKeyPress={(e) => handleKeyPress(e, filteredBoxes)} placeholder='Box' />
 
       <div className='dropdown' style={{ top: boxDropdownTop }}>
         {filteredBoxes
@@ -225,12 +229,12 @@ const Modal = ({ onUpdate, isOpen, onClose, fruits, boxes, clients }) => {
           ))}
       </div>
 
-      <input type="number" placeholder="Number of boxes" value={numberOfBoxes} onChange={onChangeNumberOfBoxes} />
-      
+      <input className="inputModal" type="number" placeholder="Number of boxes" value={numberOfBoxes} onChange={onChangeNumberOfBoxes} />
+
       {error && <div className="errorMessageMethod">{error}</div>}
       <div className='buttonsModal'>
-        <button onClick={handleAddTransaction}>Add</button>
-        <button onClick={onClose}>Close</button>
+        <button className='buttonModal' onClick={handleAddTransaction}>Add</button>
+        <button className='buttonModal' onClick={onClose}>Close</button>
       </div>
     </div>
   );

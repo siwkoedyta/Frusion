@@ -26,6 +26,7 @@ public class BoxesController {
 
         var id = UUID.randomUUID().toString();
         if (req.name().isBlank()) throw new BadRequestEx("NAME_EMPTY");
+        if (req.weight() < 0) throw new BadRequestEx("WEIGHT_NEGATIVE");
 
         val admin = new AdminEntity();
         admin.setId(adminId);

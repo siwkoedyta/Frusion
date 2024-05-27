@@ -36,7 +36,6 @@ public class TransactionsController {
     private final UsersPGRepo usersRepo;
 
     @PostMapping("/transactions")
-
     public Json.AddTransactionResponse add(@CookieValue("accessToken") String token, @RequestBody Json.AddTransactionRequest req) {
         val adminId = jwtService.verify(token, AuthDetails.Role.ADMIN);
 
@@ -45,10 +44,6 @@ public class TransactionsController {
         FruitEntity fruit = fruitsRepo.findById(req.fruitId()).orElseThrow(() -> new BadRequestEx("FRUIT_ILLEGAL"));
         BoxEntity box = boxesRepo.findById(req.boxId()).orElseThrow(() -> new BadRequestEx("BOX_ILLEGAL"));
         UserEntity user = usersRepo.findById(req.userId()).orElseThrow(() -> new BadRequestEx("USER_ILLEGAL"));
-
-        if (fruit == null || box == null) {
-            throw new BadRequestEx("Invalid fruit or box ID");
-        }
 
         val admin = new AdminEntity();
         admin.setId(adminId);
@@ -63,6 +58,10 @@ public class TransactionsController {
         BigDecimal boxWeightTotal = BigDecimal.valueOf(boxWeight * numberOfBoxes);
         BigDecimal weightGrossBigDecimal = BigDecimal.valueOf(weightGross);
         BigDecimal weightNet = weightGrossBigDecimal.subtract(boxWeightTotal);
+
+        if (weightNet.compareTo(BigDecimal.ZERO) < 0) {
+            throw new BadRequestEx("WEIGHT_NET_NEGATIVE");
+        }
 
         BigDecimal amount = weightNet.multiply(price).setScale(2, BigDecimal.ROUND_HALF_UP);
 

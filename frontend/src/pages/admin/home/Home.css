@@ -69,24 +69,54 @@
     gap:1rem;
 }
 
+
+@media screen and (max-width: 2000px){
+    .modal{
+        min-width: 20rem;
+    }
+} 
+
 @media screen and (max-width: 1372px){
     #methodPlaceHome,  .transparent-field, .homeField {
       min-width: calc(45vw + 4rem);
     }
-  } 
+} 
 
 
 @media screen and (max-width: 900px){
     #methodPlaceHome, .transparent-field{
       min-width: calc(65vw + 6rem);
     }
+
+    .inputModal{
+        width: 45vw;
+    }
+
+    .modal{
+        min-width: 50vw;
+    }
+
+    .overlay{
+        left: 0;
+        width: 100%;
+    }
+
     .homeField{
         width: calc(65vw + 4rem);
     }
 
+    .buttonModal{
+        width: 30vw;
+    }
+
+
 } 
 
 @media screen and (max-width: 640px){
+    .inputModal{
+        width: 50vw;
+    }
+
     #buttonHome{
         font-size: 1.5rem;
         padding: 1.5rem;
@@ -98,6 +128,10 @@
 
     .transparent-field {
         min-width: calc(65vw + 4rem);
+    }
+
+    .titleModal{
+        font-size: 1.7rem;
     }
 } 
 

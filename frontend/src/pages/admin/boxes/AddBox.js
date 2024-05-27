@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { addBox } from '../../../api/box/addBox.js';
 
-
-export default function AddFruit({ onUpdate }) {
+export default function AddBox({ onUpdate }) {
   const [boxName, setBoxName] = useState('');
   const [weight, setWeight] = useState('');
   const [error, setError] = useState('');
@@ -25,14 +24,20 @@ export default function AddFruit({ onUpdate }) {
       setError('Enter the weight of the box');
       return;
     }
+
+    if (parseFloat(weight) < 0) {
+      setError('Weight cannot be negative');
+      return;
+    }
   
     try {
       await addBox(boxName, parseFloat(weight));
       setBoxName('');
       setWeight('');
+      setError('');
       onUpdate();
     } catch (error) {
-      setError(error.message); // Set error message received from the server
+      setError(error.message);
     }
   };
 
@@ -50,7 +55,7 @@ export default function AddFruit({ onUpdate }) {
         />
         <input
           type="number"
-          id="nameBoxInput"
+          id="weightBoxInput"
           name="weight"
           value={weight}
           onChange={handleInputChangeWeight}

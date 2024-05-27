@@ -105,7 +105,7 @@ button {
   transition: 0.2s;
   border-radius: 2.5rem;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
-  min-width: 8rem;
+  min-width: 10rem;
 }
 
 .featuredField{
@@ -336,7 +336,7 @@ button {
 
 /*---------------------MediaQuieres---------------------*/
 @media screen and (min-width: 900px) {
-  .waveSmall, .closeSidebar, #frusionName{
+  .waveSmall, .closeSidebar{
     display: none;
   }
 
@@ -457,6 +457,10 @@ button {
 
 @media screen and (max-width: 640px) {
 
+  .buttonMethod {
+    height: 1vh;
+  }
+
   .methodPlace{
     padding: 1rem 1rem;
   }
@@ -489,10 +493,6 @@ button {
     width: 70vw;
     min-width: 15rem;
     height: 5vh;
-    min-height: 3rem;
-  }
-
-  .buttonMethod{
     min-height: 3rem;
   }
 

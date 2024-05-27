@@ -14,7 +14,7 @@ export default function SetPrice({ fruits, onUpdate }) {
     setNewPrice(event.target.value);
   };
 
-  const handleSetPrice = async (e) => {
+  const handleSetPrice = async () => {
     if (!selectedFruit) {
       setError('Select a fruit');
       return;
@@ -24,19 +24,24 @@ export default function SetPrice({ fruits, onUpdate }) {
       return;
     }
 
-    return setFruitPrice(selectedFruit, parseFloat(newPrice))
-    .then(() => {
+    if (parseFloat(newPrice) < 0) {
+      setError('Price cannot be negative');
+      return;
+    }
+
+    try {
+      await setFruitPrice(selectedFruit, parseFloat(newPrice));
       setSelectedFruit('');
       setNewPrice('');
       setError('');
       onUpdate();
-    })
-    .catch(errors => setError(errors));
+    } catch (errors) {
+      setError(errors.message || 'An error occurred while setting the price');
+    }
   };
 
   return (
     <div className='methodPlace'>
-
       <div>Set the price</div>
       <div className='inputGap'>
         <div>
@@ -47,7 +52,6 @@ export default function SetPrice({ fruits, onUpdate }) {
             ))}
           </select>
         </div>
-
         <div>
           <input
             type="number"
@@ -59,7 +63,6 @@ export default function SetPrice({ fruits, onUpdate }) {
           />
         </div>
       </div>
-
       {error && <div className="errorMessageMethod">{error}</div>}
       <button className='buttonMethod' onClick={handleSetPrice}>Set</button>
     </div>
